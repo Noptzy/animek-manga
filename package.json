@@ -1,0 +1,32 @@
+{
+  "name": "animek1",
+  "module": "app.js",
+  "type": "commonjs",
+  "private": true,
+  "scripts": {
+    "start": "nodemon app.js",
+    "dev": "nodemon app.js"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "axios": "^1.12.2",
+    "cheerio": "^1.1.2",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.1.0",
+    "mkdirp": "^3.0.1",
+    "morgan": "^1.10.1",
+    "node-cron": "^4.2.1",
+    "nodemon": "^3.1.10",
+    "p-limit": "^7.1.1",
+    "puppetter": "^1.0.1",
+    "winston": "^3.18.3",
+    "winston-daily-rotate-file": "^5.0.0"
+  }
+}
