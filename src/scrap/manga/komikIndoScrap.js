@@ -162,7 +162,61 @@ class komikIndoScrap {
         }
     }
 
-    async 
+    async getKomikIndoSearch(query) {
+        const encodedQuery = encodeURIComponent(query);
+        const url = `${komikIndoUrl}?s=${encodedQuery}`;
+        try {
+            const res = await axios.get(url, { headers: { 'User-Agent': UA } });
+            const $ = cheerio.load(res.data);
+            const searchResults = [];
+
+            const $mainContainer = $('.listupd .film-list');
+
+            if ($mainContainer.length === 0) {
+                if ($('h1:contains("Komik Hasil Pencarian")').length > 0) {
+                    logger.info(`Search for "${query}" completed, but returned no manga results.`);
+                } else {
+                    logger.error(`Search results container not found for query: ${query}.`);
+                }
+                return { query, data: [] };
+            }
+
+            $mainContainer.find('.animepost').each((index, element) => {
+                const $element = $(element);
+                const $link = $element.find('.animposx a').first();
+                const mangaUrl = $link.attr('href');
+
+                const posterRaw = $element.find('img').attr('src');
+                const title = $element.find('.bigors h4 a').text().trim();
+
+                const ratingText = $element.find('.rating i').text().trim() || null;
+
+                if (mangaUrl && title) {
+                    const slugMatch = mangaUrl.match(/\/komik\/(.+?)\/?$/);
+                    const slug = slugMatch ? slugMatch[1] : null;
+
+                    const poster_url = posterRaw || $element.find('img').attr('data-src');
+
+                    searchResults.push({
+                        title,
+                        slug,
+                        url: mangaUrl,
+                        poster_url,
+                        rating: ratingText,
+                    });
+                }
+            });
+
+            return {
+                query,
+                data: searchResults,
+                totalResults: searchResults.length,
+            };
+        } catch (error) {
+            logger.error(`Error during search for "${query}": ${error.message}`);
+            return { query, data: [], error: error.message };
+        }
+    }
 }
 
 module.exports = new komikIndoScrap();

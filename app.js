@@ -25,7 +25,7 @@ app.use((req, res) => {
     return res.status(404).json({ error: '404 not found' });
 });
 
-app.use('/hi', (req, res) => {
+app.use('/home', (req, res) => {
     return res.status(200).json({ message: "Animek Backend is Working!"})
 })
 
