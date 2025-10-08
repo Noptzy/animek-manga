@@ -25,6 +25,10 @@ app.use((req, res) => {
     return res.status(404).json({ error: '404 not found' });
 });
 
+app.use('/', (req, res) => {
+    return res.status(200).json({ message: "Animek Backend is Working!"})
+})
+
 app.listen(port, () => {
     logger.info(`Server is running on port ${port}`);
 });
