@@ -8,71 +8,6 @@ const maxPage = process.env.MANGA_MAX_PAGE;
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36';
 
 class komikIndoScrap {
-    async getKomikIndoManga(page) {
-        const url = page > 1 ? `${komikIndoUrl}manga/page/${page}/` : `${komikIndoUrl}manga/`;
-
-        try {
-            const response = await axios.get(url, { headers: { 'User-Agent': UA } });
-            const $ = cheerio.load(response.data);
-            const mangaList = [];
-
-            const $mainContainer = $('.listupd .film-list');
-
-            if ($mainContainer.length === 0) {
-                logger.error(`Container .listupd .film-list not found on page ${page}. Check site structure.`);
-                return { page: parseInt(page), totalPage: 1, data: [], hasNext: false };
-            }
-
-            $mainContainer.find('.animepost').each((index, element) => {
-                const $element = $(element);
-                const $link = $element.find('.animposx a').first();
-                const mangaUrl = $link.attr('href');
-
-                const posterRaw = $element.find('img').attr('src');
-                const title = $element.find('.bigors h4 a').text().trim();
-
-                const latestChapterLink = $element.find('.lsch a');
-                const latestChapterTitle = latestChapterLink.text().trim();
-                const latestChapterUrl = latestChapterLink.attr('href');
-
-                const dateUpdate = $element.find('.datech').text().trim();
-
-                if (mangaUrl && title) {
-                    const slugMatch = mangaUrl.match(/\/komik\/(.+?)\/?$/);
-                    const slug = slugMatch ? slugMatch[1] : null;
-
-                    const poster_url = posterRaw || $element.find('img').attr('data-src');
-
-                    mangaList.push({
-                        title,
-                        slug,
-                        url: mangaUrl,
-                        poster_url,
-                        latest_chapter: {
-                            title: latestChapterTitle,
-                            url: latestChapterUrl,
-                            updated_ago: dateUpdate,
-                        },
-                    });
-                }
-            });
-
-            const nextLink = $('.pagination a.next').attr('href');
-            const lastPageElement = $('.pagination .page-numbers:not(.dots)').last().text();
-            const totalPage = parseInt(lastPageElement) || (nextLink ? parseInt(lastPageElement) + 1 : page);
-
-            return {
-                page: parseInt(page),
-                totalPage: totalPage,
-                data: mangaList,
-                hasNext: !!nextLink,
-            };
-        } catch (error) {
-            logger.error(`Error fetching KomikIndo list page ${page}:`, error.message);
-            return { page: parseInt(page), totalPage: 1, data: [], hasNext: false };
-        }
-    }
-
     async getKomikIndoDetail(slug) {
         const url = `${komikIndoUrl}komik/${slug}/`;
         try {
@@ -100,21 +35,33 @@ class komikIndoScrap {
             let synopsisText = $('#sinopsis .entry-content p').text();
 
             mangaDetail.synopsis = synopsisText.replace(/\s+/g, ' ').trim();
+            
+            if (mangaDetail.status === 'Tamat') {
+                mangaDetail.status = 'Completed';
+            } else {
+                mangaDetail.status = 'Ongoing';
+            }
 
             const chapterList = [];
             $('#chapter_list ul li').each((i, el) => {
                 const $li = $(el);
                 const chapterLink = $li.find('a');
+                const fullUrl = chapterLink.attr('href') || '';
+
+                const cleanUrl = fullUrl.replace(komikIndoUrl, '').replace(/^\/+/, '').replace(/\/$/, '') + '/';
 
                 chapterList.push({
                     chapter_number: $li.find('chapter').text().trim(),
                     title: chapterLink.attr('title'),
-                    url: chapterLink.attr('href'),
+                    url: cleanUrl,
                     release_ago: $li.find('.dt a').text().trim(),
                 });
             });
 
-            mangaDetail.chapters = chapterList.reverse();
+            const reversedChapters = chapterList.reverse();
+
+            mangaDetail.total_chapters = reversedChapters.length;
+            mangaDetail.chapters = reversedChapters;
 
             return mangaDetail;
         } catch (error) {
@@ -131,34 +78,36 @@ class komikIndoScrap {
             const res = await axios.get(url, { headers: { 'User-Agent': UA } });
             const $ = cheerio.load(res.data);
 
-            const imageUrls = [];
-
             const title = $('.dtlx h1.entry-title').text().trim().replace('Komik', '').trim();
-            const nextChapterUrl = $('.navig .nextprev a[rel="next"]').attr('href');
 
+            const imageUrls = [];
             $('#Baca_Komik .img-landmine img').each((i, el) => {
-                const $img = $(el);
-                const src = $img.attr('src');
-                if (src) {
-                    imageUrls.push(src.trim());
-                }
+                const src = $(el).attr('src');
+                if (src) imageUrls.push(src.trim());
             });
 
-            let nextChapterUrlSlug = null;
+            const nextChapterRaw = $('.navig .nextprev a[rel="next"]').attr('href') || null;
 
-            if (nextChapterUrl) {
-                nextChapterUrlSlug = nextChapterUrl.replace(komikIndoUrl, '');
+            let nextChapterSlug = null;
+            if (nextChapterRaw) {
+                try {
+                    const parsed = new URL(nextChapterRaw);
+                    nextChapterSlug = parsed.pathname.replace(/^\/+/, '');
+                } catch {
+                    nextChapterSlug = nextChapterRaw.replace(komikIndoUrl, '').replace(/^\/+/, '');
+                }
 
-                nextChapterUrlSlug = nextChapterUrlSlug.replace(/\/$/, '');
+                nextChapterSlug = nextChapterSlug.replace(/\/$/, '');
             }
+
             return {
-                title: title,
+                title,
                 images: imageUrls,
-                next_chapter_url: '/' + nextChapterUrlSlug,
+                next_chapter_url: nextChapterSlug ? `/${nextChapterSlug}/` : null,
             };
         } catch (error) {
             logger.error(`Error Scraping chapter images for ${url}`, error.message);
-            return { images: [], next_chapter_url: null };
+            return { title: null, images: [], next_chapter_url: null };
         }
     }
 
@@ -218,14 +167,43 @@ class komikIndoScrap {
         }
     }
 
-    async getKomikIndoManga() {
-        const url = `${komikIndoUrl}manga`;
+    async getKomikIndoManga(page) {
+        const pageNum = parseInt(page) || 1;
+        const url = pageNum > 1 ? `${komikIndoUrl}manga/page/${pageNum}/` : `${komikIndoUrl}manga/`;
+
         try {
-            const res = await axios.get(url, { headers: { 'User-Agent': UA } });
-            const $ = cheerio.load(res.data);
-            const mangaHomepage = [];
+            const response = await axios.get(url, { headers: { 'User-Agent': UA } });
+            const $ = cheerio.load(response.data);
+            const mangaList = [];
 
             const $mainContainer = $('.listupd .film-list');
+
+            const nextLinkRaw = $('.pagination a.next').attr('href');
+            let totalPage = pageNum;
+
+            $('.pagination a.page-numbers').each((i, el) => {
+                const pageNumText = $(el).text().trim();
+                const pageNumValue = parseInt(pageNumText);
+
+                if (!isNaN(pageNumValue) && pageNumValue > totalPage) {
+                    totalPage = pageNumValue;
+                }
+            });
+
+            let next_page_num = null;
+            if (nextLinkRaw) {
+                const path = nextLinkRaw.replace(komikIndoUrl, '/').replace(/^\/\//, '/');
+                const match = path.match(/\/page\/(\d+)\//);
+
+                if (match && match[1]) {
+                    next_page_num = parseInt(match[1]);
+                }
+            }
+
+            if ($mainContainer.length === 0) {
+                logger.error(`Container .listupd .film-list not found on page ${pageNum}.`);
+                return { page: pageNum, totalPage: 1, data: [], hasNext: false };
+            }
 
             $mainContainer.find('.animepost').each((index, element) => {
                 const $element = $(element);
@@ -234,30 +212,65 @@ class komikIndoScrap {
 
                 const posterRaw = $element.find('img').attr('src');
                 const title = $element.find('.bigors h4 a').text().trim();
-                const latest_chapter_url = $element.find('.lsch a').attr('href')
+                const latestChapterLink = $element.find('.lsch a');
+                const latestChapterTitle = latestChapterLink.text().trim();
+                const latestChapterUrl = latestChapterLink.attr('href');
+                const dateUpdate = $element.find('.datech').text().trim();
 
                 if (mangaUrl && title) {
                     const slugMatch = mangaUrl.match(/\/komik\/(.+?)\/?$/);
                     const slug = slugMatch ? slugMatch[1] : null;
 
-                    const poster_url = posterRaw || $element.find('img').attr('src');
+                    const poster_url = posterRaw || $element.find('img').attr('data-src');
 
-                    mangaHomepage.push({
+                    let cleanMangaPath = null;
+                    if (mangaUrl) {
+                        try {
+                            const parsed = new URL(mangaUrl);
+                            cleanMangaPath = parsed.pathname.replace(/^\/+/, '');
+                        } catch (e) {
+                            cleanMangaPath = mangaUrl.replace(komikIndoUrl, '').replace(/^\/+/, '');
+                        }
+                        cleanMangaPath = cleanMangaPath.replace(/^komik\//, '');
+                        if (cleanMangaPath && !cleanMangaPath.endsWith('/')) cleanMangaPath = `${cleanMangaPath}/`;
+                    }
+
+                    let cleanLatestPath = null;
+                    if (latestChapterUrl) {
+                        try {
+                            const parsedL = new URL(latestChapterUrl);
+                            cleanLatestPath = parsedL.pathname.replace(/^\/+/, '');
+                        } catch (e) {
+                            cleanLatestPath = latestChapterUrl.replace(komikIndoUrl, '').replace(/^\/+/, '');
+                        }
+                        cleanLatestPath = cleanLatestPath.replace(/^komik\//, '');
+                        if (cleanLatestPath && !cleanLatestPath.endsWith('/')) cleanLatestPath = `${cleanLatestPath}/`;
+                    }
+
+                    mangaList.push({
                         title,
                         slug,
-                        url: mangaUrl,
                         poster_url,
-                        latest_chapter_url
+                        latest_chapter: {
+                            title: latestChapterTitle,
+                            url: `/manga/komik-indo/chapter/` + cleanLatestPath || latestChapterUrl,
+                            updated_ago: dateUpdate,
+                        },
                     });
                 }
             });
+
             return {
-                data: mangaHomepage,
-                totalMangas: mangaHomepage.length,
+                data: mangaList,
+                page: pageNum,
+                totalPage: totalPage,
+                next_page_num: next_page_num,
+                hasNext: !!nextLinkRaw,
+                totalMangas: mangaList.length,
             };
         } catch (error) {
-            logger.error(`Error Scraping KomikIndo Manga`, error.message);
-            return [];
+            logger.error(`Error fetching KomikIndo list page ${page}:`, error.message);
+            return { page: parseInt(page), totalPage: 1, data: [], hasNext: false };
         }
     }
 }
