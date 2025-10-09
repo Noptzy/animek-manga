@@ -217,6 +217,49 @@ class komikIndoScrap {
             return { query, data: [], error: error.message };
         }
     }
+
+    async getKomikIndoManga() {
+        const url = `${komikIndoUrl}manga`;
+        try {
+            const res = await axios.get(url, { headers: { 'User-Agent': UA } });
+            const $ = cheerio.load(res.data);
+            const mangaHomepage = [];
+
+            const $mainContainer = $('.listupd .film-list');
+
+            $mainContainer.find('.animepost').each((index, element) => {
+                const $element = $(element);
+                const $link = $element.find('.animposx a').first();
+                const mangaUrl = $link.attr('href');
+
+                const posterRaw = $element.find('img').attr('src');
+                const title = $element.find('.bigors h4 a').text().trim();
+                const latest_chapter_url = $element.find('.lsch a').attr('href')
+
+                if (mangaUrl && title) {
+                    const slugMatch = mangaUrl.match(/\/komik\/(.+?)\/?$/);
+                    const slug = slugMatch ? slugMatch[1] : null;
+
+                    const poster_url = posterRaw || $element.find('img').attr('src');
+
+                    mangaHomepage.push({
+                        title,
+                        slug,
+                        url: mangaUrl,
+                        poster_url,
+                        latest_chapter_url
+                    });
+                }
+            });
+            return {
+                data: mangaHomepage,
+                totalMangas: mangaHomepage.length,
+            };
+        } catch (error) {
+            logger.error(`Error Scraping KomikIndo Manga`, error.message);
+            return [];
+        }
+    }
 }
 
 module.exports = new komikIndoScrap();
