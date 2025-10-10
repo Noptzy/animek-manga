@@ -2,6 +2,7 @@ require('dotenv').config();
 const axios = require('axios');
 const cheerio = require('cheerio');
 const logger = require('../../utils/logger.js');
+const qs = require('qs');
 
 const komikIndoUrl = process.env.KOMIK_INDO_URL || 'https://komikindo.ch/';
 const maxPage = process.env.MANGA_MAX_PAGE;
@@ -35,7 +36,7 @@ class komikIndoScrap {
             let synopsisText = $('#sinopsis .entry-content p').text();
 
             mangaDetail.synopsis = synopsisText.replace(/\s+/g, ' ').trim();
-            
+
             if (mangaDetail.status === 'Tamat') {
                 mangaDetail.status = 'Completed';
             } else {
@@ -53,7 +54,7 @@ class komikIndoScrap {
                 chapterList.push({
                     chapter_number: $li.find('chapter').text().trim(),
                     title: chapterLink.attr('title'),
-                    url: cleanUrl,
+                    url: `/manga/komik-indo/chapter/` + cleanUrl,
                     release_ago: $li.find('.dt a').text().trim(),
                 });
             });
@@ -149,7 +150,6 @@ class komikIndoScrap {
                     searchResults.push({
                         title,
                         slug,
-                        url: mangaUrl,
                         poster_url,
                         rating: ratingText,
                     });
@@ -271,6 +271,100 @@ class komikIndoScrap {
         } catch (error) {
             logger.error(`Error fetching KomikIndo list page ${page}:`, error.message);
             return { page: parseInt(page), totalPage: 1, data: [], hasNext: false };
+        }
+    }
+
+    async getKomikindoMangaByFilter(page, filters = {}) {
+        const pageNum = parseInt(page) || 1;
+
+        const filtersToEncode = { ...filters };
+        delete filtersToEncode.page;
+
+        const queryString = qs.stringify(filtersToEncode, {
+            arrayFormat: 'brackets',
+            skipNulls: true,
+            encode: true,
+        });
+
+        const path = pageNum > 1 ? `daftar-manga/page/${pageNum}/` : `daftar-manga/`;
+        const url = `${komikIndoUrl}${path}?${queryString}`;
+
+        try {
+            const response = await axios.get(url, { headers: { 'User-Agent': UA } });
+            const $ = cheerio.load(response.data);
+            const mangaList = [];
+
+            const nextLinkRaw = $('.pagination a.next').attr('href');
+            let totalPage = pageNum;
+
+            $('.pagination a.page-numbers').each((i, el) => {
+                const pageNumText = $(el).text().trim();
+                const pageNumValue = parseInt(pageNumText);
+                if (!isNaN(pageNumValue) && pageNumValue > totalPage) {
+                    totalPage = pageNumValue;
+                }
+            });
+
+            let next_page_num = null;
+            if (nextLinkRaw) {
+                const pathNext = nextLinkRaw.replace(komikIndoUrl, '/').replace(/^\/\//, '/');
+                const match = pathNext.match(/\/page\/(\d+)\//);
+
+                if (match && match[1]) {
+                    next_page_num = parseInt(match[1]);
+                }
+            }
+
+            const $mainContainer = $('.listupd .film-list');
+
+            if ($mainContainer.length === 0) {
+                logger.error(`Container .listupd .film-list not found on URL: ${url}`);
+                return { page: pageNum, totalPage: 1, data: [], hasNext: false};
+            }
+
+            $mainContainer.find('.animepost').each((index, element) => {
+                const $element = $(element);
+                const $link = $element.find('.animposx a').first();
+                const mangaUrl = $link.attr('href');
+
+                const posterRaw = $element.find('img').attr('src');
+                const title = $element.find('.bigors h4 a').text().trim();
+
+                const ratingValue = $element.find('.adds .rating i').text().trim() || null;
+
+                if (mangaUrl && title) {
+                    const slugMatch = mangaUrl.match(/\/komik\/(.+?)\/?$/);
+                    const slug = slugMatch ? slugMatch[1] : null;
+                    const poster_url = posterRaw || $element.find('img').attr('data-src');
+
+                    let cleanMangaPath = mangaUrl ? mangaUrl.replace(komikIndoUrl, '').replace(/^\/+/, '') : null;
+
+                    if (cleanMangaPath) {
+                        cleanMangaPath = cleanMangaPath.replace(/^komik\//, '');
+                        cleanMangaPath = `/komik-indo/manga/${cleanMangaPath.replace(/\/$/, '')}/`;
+                    }
+
+                    mangaList.push({
+                        title,
+                        slug,
+                        poster_url,
+                        url: cleanMangaPath,
+                        rating: ratingValue
+                    });
+                }
+            });
+
+            return {
+                mangaList,
+                page: pageNum,
+                totalPage: totalPage,
+                next_page_num: next_page_num,
+                hasNext: !!nextLinkRaw,
+                totalMangas: mangaList.length,
+            };
+        } catch (error) {
+            logger.error(`Error fetching KomikIndo filtered list page ${pageNum}: ${error.message}`);
+            return { page: pageNum, totalPage: 1, data: [], hasNext: false, error: error.message};
         }
     }
 }
