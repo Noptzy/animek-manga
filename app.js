@@ -19,15 +19,16 @@ app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }));
 app.use(rateLimiter);
 app.use(morgan('dev'));
+
+app.use('/docs', (req, res) => {
+    return res.send('Documentation is here https://nopsy.gitbook.io/animek/')
+})
 app.use('/api/v1', apiV1);
 
 app.use((req, res) => {
     return res.status(404).json({ error: '404 not found' });
 });
 
-app.use('/docs', (req, res) => {
-    return res.send('Documentation is here https://nopsy.gitbook.io/animek/')
-})
 
 app.listen(port, () => {
     logger.info(`Server is running on port ${port}`);
