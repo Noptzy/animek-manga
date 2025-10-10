@@ -25,8 +25,8 @@ app.use((req, res) => {
     return res.status(404).json({ error: '404 not found' });
 });
 
-app.use('/home', (req, res) => {
-    return res.status(200).json({ message: "Animek Backend is Working!"})
+app.use('/docs', (req, res) => {
+    return res.send('Documentation is here https://nopsy.gitbook.io/animek/')
 })
 
 app.listen(port, () => {
