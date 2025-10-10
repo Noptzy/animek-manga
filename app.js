@@ -21,7 +21,7 @@ app.use(rateLimiter);
 app.use(morgan('dev'));
 
 app.use('/docs', (req, res) => {
-    return res.send('Documentation is here https://nopsy.gitbook.io/animek/')
+    res.redirect('https://nopsy.gitbook.io/animek/');
 })
 app.use('/api/v1', apiV1);
 
