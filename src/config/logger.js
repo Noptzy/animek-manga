@@ -23,8 +23,7 @@ const consoleFormat = winston.format.combine(
 );
 
 const transports = [];
-
-const logDir = process.env.LOG_DIR || path.join(process.cwd(), 'logs');
+const logDir = process.env.LOG_DIR || path.join('/tmp', 'logs');
 try {
     if (!fs.existsSync(logDir)) fs.mkdirSync(logDir, { recursive: true });
 } catch (error) {
