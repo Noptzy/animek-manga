@@ -10,7 +10,7 @@
     "prisma:migrate": "dotenv -- prisma migrate dev",
     "prisma:studio": "dotenv -- prisma studio",
     "db:seed": "dotenv -- prisma db seed",
-    "postinstall":"prisma generate"
+    "postinstall": "prisma generate"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
@@ -48,7 +48,7 @@
     "puppetter": "^1.0.1",
     "qs": "^6.14.0",
     "sharp": "^0.34.4",
-    "uuid": "^13.0.0",
+    "uuid": "8.3.2",
     "winston": "^3.18.3",
     "winston-daily-rotate-file": "^5.0.0"
   }
