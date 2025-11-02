@@ -25,6 +25,10 @@ exports.getAllMangas = async (req, res) => {
         const page = parseInt(req.query.page) || 1;
         const data = await komikIndoScrap.getKomikIndoManga(page);
 
+        if (data.error) {
+            return res.status(500).json(resHandler.error('Scraping Failed', { message: data.error }, 500).toJSON());
+        }
+
         return res.status(200).json({
             success: true,
             message: `Success Get Mangas at page ${page}`,
@@ -32,7 +36,7 @@ exports.getAllMangas = async (req, res) => {
             data,
         });
     } catch (error) {
-        logger.error(`Error fetching mangas ${error.message}`);
+        logger.error(`Error fetching mangas`, error);
         res.json(resHandler.error('Internal Server Error').toJSON());
     }
 };
@@ -79,24 +83,20 @@ exports.getMangaSearch = async (req, res) => {
 // TODO Benerin error yg ga jelas any, tbtb pas pake filter ga bisa tapi pas pake ga pke filter bisa
 exports.getFilteredManga = async (req, res) => {
     const page = Number.parseInt(req.query.page) || 1;
-    let filters = { ...req.query }; // Gunakan let
+    let filters = { ...req.query }; 
     delete filters.page;
 
-    // --- SOLUSI: MEMAKSA FILTER MULTI-VALUE MENJADI ARRAY ---
     const arrayFilters = ['genre', 'demografis', 'konten', 'tema'];
 
     arrayFilters.forEach((key) => {
-        // Periksa jika filter ada dan BUKAN array (berarti hanya 1 value, dikembalikan sebagai string oleh Express)
         if (filters[key] && !Array.isArray(filters[key])) {
-            filters[key] = [filters[key]]; // Paksa menjadi array
+            filters[key] = [filters[key]]; 
         }
     });
-    // --- END SOLUSI ---
 
     try {
         const data = await komikIndoScrap.getKomikindoMangaByFilter(page, filters);
 
-        // Pengecekan data kosong yang benar (Anda menggunakan mangaList di scraper)
         if (!data || data.mangaList?.length === 0) {
             if (data?.error) {
                 // Cek error dari scraper
@@ -109,7 +109,6 @@ exports.getFilteredManga = async (req, res) => {
                 .json(resHandler.error('No manga found with the specified filters.', null, 404).toJSON());
         }
 
-        // Jika data ditemukan
         return res.status(200).json({
             success: true,
             message: 'Success Get Filtered Manga',
@@ -117,7 +116,7 @@ exports.getFilteredManga = async (req, res) => {
             data,
         });
     } catch (error) {
-        logger.error(`Error fetching filtered mangas: ${error.message}`);
+        logger.error(`Error fetching filtered mangas`, error);
         return res.status(500).json(resHandler.error('Internal Server Error').toJSON());
     }
 };

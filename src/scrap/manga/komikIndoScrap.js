@@ -270,7 +270,7 @@ class komikIndoScrap {
             };
         } catch (error) {
             logger.error(`Error fetching KomikIndo list page ${page}:`, error.message);
-            return { page: parseInt(page), totalPage: 1, data: [], hasNext: false };
+            return { page: parseInt(page), totalPage: 1, data: [], hasNext: false, error: error.message };
         }
     }
 

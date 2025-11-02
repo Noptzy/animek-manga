@@ -1,4 +1,6 @@
 const winston = require('winston');
+const fs = require('fs');
+const path = require('path');
 
 const consoleFormat = winston.format.combine(
     winston.format.colorize(),
@@ -22,6 +24,13 @@ const consoleFormat = winston.format.combine(
 
 const transports = [];
 
+const logDir = process.env.LOG_DIR || path.join(process.cwd(), 'logs');
+try {
+    if (!fs.existsSync(logDir)) fs.mkdirSync(logDir, { recursive: true });
+} catch (error) {
+    console.error('Could not create log directory', error);
+}
+
 transports.push(
     new winston.transports.Console({
         level: process.env.NODE_ENV === 'development' ? 'debug' : 'info',
@@ -29,6 +38,28 @@ transports.push(
         handleExceptions: false,
     }),
 );
+
+transports.push(
+    new winston.transports.File({
+        filename: path.join(logDir, 'error.log'),
+        level: 'error',
+        handleExceptions: true,
+        maxsize: 5 * 1024 * 1024,
+        maxFiles: 3,
+        tailable: true,
+    }),
+);
+
+transports.push(
+    new winston.transports.File({
+        filename: path.join(logDir, 'warn.log'),
+        level: 'warning',
+        handleExceptions: false,
+        maxsize: 5 * 1024 * 1024,
+        maxFiles: 3,
+        tailable: true,
+    }), 
+)
 
 const logger = winston.createLogger({
     level: process.env.NODE_ENV === 'development' ? 'debug' : 'info',

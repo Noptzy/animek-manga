@@ -1,0 +1,15 @@
+node_modules
+# Keep environment variables out of version control
+.env
+
+public
+
+logs
+
+prisma.config.ts.bak
+
+images
+
+prisma/seed.js
+
+docs

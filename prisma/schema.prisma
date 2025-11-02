@@ -1,0 +1,154 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL") 
+}
+
+model User {
+  id        String    @id @default(uuid()) @db.Uuid
+  email     String    @unique @db.Text
+  name      String?   @db.Text
+  photoUrl  String?   @map("photo_url") @db.Text
+  roleId    Int       @default(1) @map("role") @db.Integer
+  password  String?   @db.Text
+  isActive  Boolean?  @default(true) @map("is_active")
+  metadata  Json?     @default("{}") @db.JsonB
+  createdAt DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt DateTime? @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
+
+  role         Role           @relation(fields: [roleId], references: [id], onDelete: Restrict)
+  // TODO tambahkan relasi dengan favorite dan sorting berdasarkan jenis misal manga, anime dll
+  favorites    Favorite[]
+  notifications Notification[]
+
+  @@map("users")
+}
+
+model Manga {
+  id          String    @id @default(uuid()) @db.Uuid
+  title       String    @db.Text
+  titleId     String    @map("title_id") @db.Text
+  slug        String    @unique @db.Text
+  posterUrl   String?   @map("poster_url") @db.Text
+  status      String?   @db.Text
+  author      String?   @db.Text
+  illustrator String?   @db.Text
+  altTitle    String?   @map("alt_title") @db.Text
+  synopsis    String?   @db.Text
+  rating      Decimal?  @db.Decimal(3, 2)
+  sourceUrl   String?   @map("source_url") @db.Text
+  scrapedAt   DateTime? @map("scraped_at") @db.Timestamp(0)
+  readerAge   String    @map("reader_age") @db.Text
+  createdAt   DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt   DateTime? @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
+
+  genres    MangaGenre[]
+  chapters  Chapter[]
+  favorites Favorite[]
+
+  @@index([createdAt])
+  @@map("mangas")
+}
+
+model Genre {
+  id   String @id @default(uuid()) @db.Uuid
+  name String @unique @db.Text
+  slug String @unique @db.Text
+
+  mangas MangaGenre[]
+
+  @@map("genres")
+}
+
+model MangaGenre {
+  mangaId String @map("manga_id") @db.Uuid
+  genreId String @map("genre_id") @db.Uuid
+
+  manga Manga @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  genre Genre @relation(fields: [genreId], references: [id], onDelete: Cascade)
+
+  @@id([mangaId, genreId])
+  @@map("manga_genres")
+}
+
+model Chapter {
+  id            String    @id @default(uuid()) @db.Uuid
+  mangaId       String?   @map("manga_id") @db.Uuid
+  chapterIndex  String    @map("chapter_index") @db.Text
+  title         String?   @db.Text
+  url           String    @db.Text
+  publishedAt   DateTime? @map("published_at") @db.Timestamp(0)
+  createdAt     DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt     DateTime? @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
+
+  manga         Manga?    @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+
+  @@unique([mangaId, chapterIndex])
+  @@map("chapters")
+}
+
+model Favorite {
+  id        String    @id @default(uuid()) @db.Uuid
+  userId    String?   @map("user_id") @db.Uuid
+  mangaId   String?   @map("manga_id") @db.Uuid
+  createdAt DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
+
+  manga     Manga?    @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  user      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, mangaId])
+  @@map("favorites")
+}
+
+model Notification {
+  id        String    @id @default(uuid()) @db.Uuid
+  userId    String?   @map("user_id") @db.Uuid
+  type      String    @db.Text
+  payload   Json?     @db.JsonB
+  isRead    Boolean?  @default(false) @map("is_read")
+  createdAt DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
+
+  user      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notifications")
+}
+
+model ScrapeLog {
+  id        String    @id @default(uuid()) @db.Uuid
+  source    String?   @db.Text
+  endpoint  String?   @db.Text
+  slug      String?   @db.Text
+  response  Json?     @db.JsonB
+  status    String?   @db.Text
+  error     String?   @db.Text
+  scrapedAt DateTime? @default(now()) @map("scraped_at") @db.Timestamp(0)
+
+  @@map("scrape_logs")
+}
+
+model AuditLog {
+  id         String    @id @default(uuid()) @db.Uuid
+  actorId    String?   @map("actor_id") @db.Uuid
+  action     String?   @db.Text
+  objectType String?   @map("object_type") @db.Text
+  objectId   String?   @map("object_id") @db.Uuid
+  changes    Json?     @db.JsonB
+  createdAt  DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
+
+  @@map("audit_logs")
+}
+
+model Role {
+  id        Int      @id @db.Integer
+  title     String   @db.Text
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
+
+  users     User[]
+
+  @@map("role")
+}

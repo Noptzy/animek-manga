@@ -1,0 +1,27 @@
+{
+  "query": "chainsaw man",
+  "data": [
+    {
+      "title": "Chainsaw Man",
+      "slug": "303616-chainsaw-man",
+      "url": "https://komikindo.ch/komik/303616-chainsaw-man/",
+      "poster_url": "https://komikindo.ch/wp-content/uploads/2022/07/Komik-Chainsaw-Man-203x319.jpg",
+      "rating": "8.41"
+    },
+    {
+      "title": "Futsuu ni Kiite Kure",
+      "slug": "futsuu-ni-kiite-kure",
+      "url": "https://komikindo.ch/komik/futsuu-ni-kiite-kure/",
+      "poster_url": "https://komikindo.ch/wp-content/uploads/2022/10/Komik-Just-Listen-to-the-Song-213x319.jpg",
+      "rating": "7.26"
+    },
+    {
+      "title": "Sayonara Eri",
+      "slug": "sayonara-eri",
+      "url": "https://komikindo.ch/komik/sayonara-eri/",
+      "poster_url": "https://komikindo.ch/wp-content/uploads/2022/06/Komik-Sayonara-Eri-236x236.jpg",
+      "rating": "8.34"
+    }
+  ],
+  "totalResults": 3
+}
