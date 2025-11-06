@@ -16,6 +16,7 @@ const corsOptions = {
     origin: allowedOrigins,
 };
 
+app.set('trust proxy', 1);
 app.use(express.json());
 app.disable('etag');
 app.use(cors(corsOptions));
