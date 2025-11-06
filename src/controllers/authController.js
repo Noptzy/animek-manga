@@ -37,6 +37,9 @@ exports.login = async (req, res) => {
         if (error.code === 'INVALID_CREDENTIALS') {
             return res.status(401).json(resHandler.error('Invalid credentials').toJSON());
         }
+        if (error.code === 'ACCOUNT_INACTIVE') {
+            return res.status(403).json(resHandler.error('Your Account Is Not Active Anymore').toJSON());
+        }
         logger.error('Login failed', error, { route: '/auth/login' });
         return res.status(500).json(resHandler.error('error', null).toJSON());
     }

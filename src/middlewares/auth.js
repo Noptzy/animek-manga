@@ -15,7 +15,6 @@ module.exports = async function auth(req, res, next) {
       return res.status(401).json(resHandler.error('Unauthorized').toJSON());
     }
 
-    // Invalidate tokens issued before lastLogoutAt
     const user = await userRepository.profile(decoded.id);
     const lastLogoutAt = user && user.metadata && user.metadata.lastLogoutAt;
     if (lastLogoutAt) {
@@ -24,6 +23,10 @@ module.exports = async function auth(req, res, next) {
       if (!isNaN(lastLogoutMs) && tokenIatMs < lastLogoutMs) {
         return res.status(401).json(resHandler.error('Token expired by logout').toJSON());
       }
+    }
+
+    if (user && user.isActive === false) {
+      return res.status(403).json(resHandler.error('Your Account Is Not Active Anymore').toJSON());
     }
 
     req.user = { id: decoded.id, name: decoded.name, email: decoded.email };

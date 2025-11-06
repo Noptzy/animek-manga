@@ -73,6 +73,7 @@ class userRepository {
                 email: true,
                 password: true,
                 roleId: true,
+                isActive: true,
             },
         });
     }

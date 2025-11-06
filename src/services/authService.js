@@ -32,6 +32,11 @@ class AuthService {
             err.code = 'INVALID_CREDENTIALS';
             throw err;
         }
+        if (user.isActive === false) {
+            const err = new Error('Account inactive');
+            err.code = 'ACCOUNT_INACTIVE';
+            throw err;
+        }
         const ok = await bcrypt.compare(password, user.password);
         if (!ok) {
             const err = new Error('Invalid credentials');

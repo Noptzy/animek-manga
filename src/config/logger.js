@@ -11,12 +11,11 @@ const consoleFormat = winston.format.combine(
         if (userId) logMessage += ` [User: ${userId}]`;
         logMessage += `: ${message}`;
 
-        if (Object.keys(meta).length > 0 && Object.keys(meta).some((key) => key !== 'error')) {
-            const metaWithoutError = { ...meta };
-            delete metaWithoutError.error;
-            if (Object.keys(metaWithoutError).length > 0) {
-                logMessage += ` ${JSON.stringify(metaWithoutError)}`;
-            }
+        if (Object.keys(meta).length > 0) {
+            logMessage += ` ${JSON.stringify(meta)}`;
+        }
+        if (meta.error && meta.error.stack) {
+            logMessage += `\n${meta.error.stack}`;
         }
         return logMessage;
     }),

@@ -44,7 +44,8 @@ const minimalPayload = (user) => {
         id: user.id,
         name: user.name,
         email: user.email,
-        role_id: user.roleId
+        role_id: user.roleId,
+        isActive: user.isActive
     };
 };
 

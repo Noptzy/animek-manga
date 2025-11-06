@@ -241,7 +241,7 @@ exports.updateUser = async (req, res) => {
 
     try {
         const body = req.body || {};
-        const { name, email, password, photoUrl, isActive, roleId } = body;
+        const { name, email, password, photoUrl, isActive } = body;
 
         if (email) {
             const existing = await userService.findUser({ email });
@@ -258,7 +258,6 @@ exports.updateUser = async (req, res) => {
         if (password !== undefined) payload.password = password; 
         if (photoUrl !== undefined) payload.photoUrl = photoUrl;
         if (typeof isActive !== 'undefined') payload.isActive = isActive;
-        if (typeof roleId !== 'undefined') payload.roleId = roleId;
 
         if (req.file && req.file.buffer) {
             await photoService.ensureDirsAndDefault();

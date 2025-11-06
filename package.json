@@ -9,8 +9,7 @@
     "prisma:generate": "dotenv -- prisma generate",
     "prisma:migrate": "dotenv -- prisma migrate dev",
     "prisma:studio": "dotenv -- prisma studio",
-    "db:seed": "dotenv -- prisma db seed",
-    "postinstall": "prisma generate"
+    "db:seed": "dotenv -- prisma db seed"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
