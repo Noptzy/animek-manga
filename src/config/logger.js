@@ -2,6 +2,8 @@ const winston = require('winston');
 const fs = require('fs');
 const path = require('path');
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 const consoleFormat = winston.format.combine(
     winston.format.colorize(),
     winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
@@ -34,44 +36,50 @@ const fileFormat = winston.format.combine(
 );
 
 const transports = [];
-const logDir = process.env.LOG_DIR || path.join(__dirname, '..', '..', 'logs');
-try {
-    if (!fs.existsSync(logDir)) fs.mkdirSync(logDir, { recursive: true });
-} catch (error) {
-    console.error('Could not create log directory', error);
-}
 
 transports.push(
     new winston.transports.Console({
         level: process.env.NODE_ENV === 'development' ? 'debug' : 'info',
         format: consoleFormat,
-        handleExceptions: false,
+        handleExceptions: false, 
     }),
 );
 
-transports.push(
-    new winston.transports.File({
-        filename: path.join(logDir, 'error.log'),
-        level: 'error',
-        format: fileFormat,
-        handleExceptions: true,
-        maxsize: 5 * 1024 * 1024,
-        maxFiles: 3,
-        tailable: true,
-    }),
-);
+if (!isProduction) {
+    const logDir = process.env.LOG_DIR || path.join(__dirname, '..', '..', 'logs');
+    
+    try {
+        if (!fs.existsSync(logDir)) {
+            fs.mkdirSync(logDir, { recursive: true });
+        }
 
-transports.push(
-    new winston.transports.File({
-        filename: path.join(logDir, 'warn.log'),
-        level: 'warning',
-        format: fileFormat,
-        handleExceptions: false,
-        maxsize: 5 * 1024 * 1024,
-        maxFiles: 3,
-        tailable: true,
-    }),
-);
+        transports.push(
+            new winston.transports.File({
+                filename: path.join(logDir, 'error.log'),
+                level: 'error',
+                format: fileFormat,
+                handleExceptions: true,
+                maxsize: 5 * 1024 * 1024,
+                maxFiles: 3,
+                tailable: true,
+            }),
+        );
+
+        transports.push(
+            new winston.transports.File({
+                filename: path.join(logDir, 'warn.log'),
+                level: 'warning',
+                format: fileFormat,
+                handleExceptions: false,
+                maxsize: 5 * 1024 * 1024,
+                maxFiles: 3,
+                tailable: true,
+            }),
+        );
+    } catch (error) {
+        console.error('Gagal membuat direktori log (Abaikan jika di serverless):', error.message);
+    }
+}
 
 const logger = winston.createLogger({
     level: process.env.NODE_ENV === 'development' ? 'debug' : 'info',
