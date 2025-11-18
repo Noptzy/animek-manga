@@ -165,7 +165,7 @@ class komikIndoScrap {
             logger.error(`Error during search for "${query}": ${error.message}`);
             return { query, data: [], error: error.message };
         }
-    }
+    }   
 
     async getKomikIndoManga(page) {
         const pageNum = parseInt(page) || 1;

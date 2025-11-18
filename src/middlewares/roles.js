@@ -3,7 +3,6 @@ const userRepository = require('../repositories/userRepository');
 
 const requireAuthUser = async (req) => {
   if (req.user && req.user.id) return req.user;
-  // Fallback: try to read from token-decoded userId already set by auth middleware
   throw new Error('UNAUTHORIZED');
 };
 
@@ -25,7 +24,6 @@ exports.requireMember = async (req, res, next) => {
     const u = await requireAuthUser(req);
     const prof = await userRepository.profile(u.id);
     if (!prof || (prof.roleId !== 1 && prof.roleId !== 2)) {
-      // both member(1) and admin(2) allowed as "member or higher"
       return res.status(403).json(resHandler.error('Forbidden').toJSON());
     }
     next();

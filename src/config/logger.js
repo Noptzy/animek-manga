@@ -21,8 +21,20 @@ const consoleFormat = winston.format.combine(
     }),
 );
 
+const fileFormat = winston.format.combine(
+    winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+    winston.format.errors({ stack: true }),
+    winston.format.printf(({ timestamp, level, message, ...meta }) => {
+        let logMessage = `${timestamp} [${level}]: ${message}`;
+        if (Object.keys(meta).length > 0) {
+            logMessage += ` ${JSON.stringify(meta)}`;
+        }
+        return logMessage;
+    }),
+);
+
 const transports = [];
-const logDir = process.env.LOG_DIR || path.join('/tmp', 'logs');
+const logDir = process.env.LOG_DIR || path.join(__dirname, '..', '..', 'logs');
 try {
     if (!fs.existsSync(logDir)) fs.mkdirSync(logDir, { recursive: true });
 } catch (error) {
@@ -41,6 +53,7 @@ transports.push(
     new winston.transports.File({
         filename: path.join(logDir, 'error.log'),
         level: 'error',
+        format: fileFormat,
         handleExceptions: true,
         maxsize: 5 * 1024 * 1024,
         maxFiles: 3,
@@ -52,12 +65,13 @@ transports.push(
     new winston.transports.File({
         filename: path.join(logDir, 'warn.log'),
         level: 'warning',
+        format: fileFormat,
         handleExceptions: false,
         maxsize: 5 * 1024 * 1024,
         maxFiles: 3,
         tailable: true,
-    }), 
-)
+    }),
+);
 
 const logger = winston.createLogger({
     level: process.env.NODE_ENV === 'development' ? 'debug' : 'info',

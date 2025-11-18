@@ -13,3 +13,5 @@ images
 prisma/seed.js
 
 docs
+
+test

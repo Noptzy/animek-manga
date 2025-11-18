@@ -31,7 +31,6 @@ model User {
 model Manga {
   id          String    @id @default(uuid()) @db.Uuid
   title       String    @db.Text
-  titleId     String    @map("title_id") @db.Text
   slug        String    @unique @db.Text
   posterUrl   String?   @map("poster_url") @db.Text
   status      String?   @db.Text
@@ -39,10 +38,8 @@ model Manga {
   illustrator String?   @db.Text
   altTitle    String?   @map("alt_title") @db.Text
   synopsis    String?   @db.Text
-  rating      Decimal?  @db.Decimal(3, 2)
   sourceUrl   String?   @map("source_url") @db.Text
   scrapedAt   DateTime? @map("scraped_at") @db.Timestamp(0)
-  readerAge   String    @map("reader_age") @db.Text
   createdAt   DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
   updatedAt   DateTime? @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
 
@@ -81,7 +78,6 @@ model Chapter {
   chapterIndex  String    @map("chapter_index") @db.Text
   title         String?   @db.Text
   url           String    @db.Text
-  publishedAt   DateTime? @map("published_at") @db.Timestamp(0)
   createdAt     DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
   updatedAt     DateTime? @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
 

@@ -33,16 +33,13 @@ app.use('/docs', (req, res) => {
 
 app.use('/api/v1', apiV1);
 
-app.use('/', (req, res) => {
-    return res.status(200).json({
-        message: 'you can check the docs at /docs',
-    });
-});
-
 app.use((req, res) => {
-    return res.status(404).json({ error: '404 not found' });
+    return res.status(404).json({ error: '404 not found', message: 'you can see docs at /docs' });
 });
 
 app.listen(port, () => {
     logger.info(`Server is running on port ${port}`);
 });
+
+const recentMangaWorker = require('./src/workers/recentMangaWorker.js');
+recentMangaWorker.start();

@@ -1,4 +1,3 @@
-// controllers/users/photoController.js
 const multer = require('multer');
 const logger = require('../../utils/logger');
 const userService = require('../../services/userService');
@@ -34,19 +33,12 @@ exports.uploadProfilePhoto = [
             await photoService.ensureDirsAndDefault();
 
             const existing = await userService.profileUser(userId);
-
-            // simpan file dan dapatkan filename + URL untuk response
             const saved = await photoService.saveProfileImage(req.file.buffer, req);
-
-            // hapus photo lama (DB mungkin menyimpan filename atau absolute URL)
             if (existing && existing.photoUrl) {
                 await photoService.deleteFileFromUrl(existing.photoUrl, req).catch(() => {});
             }
-
-            // Simpan path relatif untuk photoUrl agar konsisten: public/photoProfile/<filename>
             const relativePath = `public/photoProfile/${saved.filename}`;
 
-            // Simpan nama file asli di metadata
             const mergedMeta = Object.assign({}, (existing && existing.metadata) || {}, {
                 profileOriginalName: req.file.originalname,
             });
@@ -57,10 +49,10 @@ exports.uploadProfilePhoto = [
                 success: true,
                 message: 'Profile photo uploaded',
                 data: {
-                    photoUrl: saved.fileUrl, // URL lengkap untuk client
-                    thumbnail: saved.thumbUrl, // URL thumbnail
-                    filename: saved.filename, // nama file unik di server
-                    dbPhotoUrl: relativePath, // nilai yang disimpan di kolom photoUrl
+                    photoUrl: saved.fileUrl,
+                    thumbnail: saved.thumbUrl, 
+                    filename: saved.filename, 
+                    dbPhotoUrl: relativePath, 
                     originalName: req.file.originalname,
                 },
             });
