@@ -6,7 +6,7 @@
       "use": "@vercel/node",
       "config": {
         "installCommand": "npm install",
-        "buildCommand": "npm run vercel-build"
+        "buildCommand": "prisma generate"
       }
     }
   ],
