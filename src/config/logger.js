@@ -45,7 +45,9 @@ transports.push(
     }),
 );
 
-if (!isProduction) {
+const isVercel = process.env.VERCEL_ENV === 'production';
+
+if (!isProduction && !isVercel) {
     const logDir = process.env.LOG_DIR || path.join(__dirname, '..', '..', 'logs');
     
     try {

@@ -9,6 +9,7 @@
     "prisma:generate": "dotenv -- prisma generate",
     "prisma:migrate": "dotenv -- prisma migrate dev",
     "prisma:studio": "dotenv -- prisma studio",
+    "vercel-build": "prisma generate",
     "db:seed": "dotenv -- prisma db seed"
   },
   "prisma": {
