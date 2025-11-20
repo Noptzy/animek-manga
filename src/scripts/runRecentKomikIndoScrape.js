@@ -28,7 +28,7 @@ async function runRecentScrape() {
             logger.info(`Found ${mangaListPage.data.length} manga to process from recent page ${page}.`);
 
             for (const mangaSummary of mangaListPage.data) {
-                const { slug } = mangaSummary;
+                const { slug, latest_chapter } = mangaSummary;
                 if (!slug) {
                     logger.warn('Found a manga summary without a slug, skipping.', mangaSummary);
                     continue;
@@ -49,24 +49,81 @@ async function runRecentScrape() {
                     });
 
                     const existingManga = await mangaRepository.findMangaBySlug(slug);
-                    const mangaDetail = await komikIndoScrap.getKomikIndoDetail(slug);
 
-                    if (mangaDetail) {
-                        logger.info(`[SAVING/UPDATING] Saving details for manga '${slug}'.`);
-                        await mangaRepository.upsertManga(mangaDetail);
-                        logger.info(`[SUCCESS] Successfully saved/updated '${slug}'.`);
+                    if (!existingManga) {
+                        // New manga - scrape everything
+                        logger.info(`[NEW] Found new manga '${slug}'. Scraping all details...`);
+                        const mangaDetail = await komikIndoScrap.getKomikIndoDetail(slug);
 
-                        logStatus = 'success';
-                        action = existingManga ? 'updated' : 'created';
-                        logResponse = {
-                            message: `Manga ${slug} ${action}. Chapters: ${mangaDetail.chapters.length}`,
-                            totalChapters: mangaDetail.chapters.length,
-                            action: action
-                        };
+                        if (mangaDetail) {
+                            await mangaRepository.upsertManga(mangaDetail);
+                            logger.info(`[SUCCESS] Created new manga '${slug}' with ${mangaDetail.chapters.length} chapters.`);
+                            logStatus = 'success';
+                            action = 'created';
+                            logResponse = {
+                                message: `New manga ${slug} created with ${mangaDetail.chapters.length} chapters`,
+                                totalChapters: mangaDetail.chapters.length,
+                                action: action
+                            };
+                        } else {
+                            logger.error(`[FAILED] Could not retrieve details for new manga: ${slug}`);
+                            logStatus = 'failed';
+                            logError = `Could not retrieve details for new manga: ${slug}`;
+                        }
                     } else {
-                        logger.error(`[FAILED] Could not retrieve details for manga: ${slug}`);
-                        logStatus = 'failed';
-                        logError = `Could not retrieve details for manga: ${slug}`;
+                        // Existing manga - check for new chapters efficiently
+                        const latestChapterUrl = latest_chapter ? latest_chapter.url : null;
+
+                        if (!latestChapterUrl) {
+                            logger.warn(`[SKIP] Manga '${slug}' has no latest chapter information. Skipping.`);
+                            logStatus = 'skipped';
+                            action = 'skipped';
+                            logResponse = {
+                                message: `Manga '${slug}' has no latest chapter information.`,
+                                action: action
+                            };
+                        } else {
+                            const chapterExists = await mangaRepository.checkChapterExists(slug, latestChapterUrl);
+
+                            if (chapterExists) {
+                                // Latest chapter already exists in DB
+                                logger.info(`[SKIP] Manga '${slug}' is up-to-date. Latest chapter '${latestChapterUrl}' already exists.`);
+                                logStatus = 'skipped';
+                                action = 'skipped';
+                                logResponse = {
+                                    message: `Manga '${slug}' is up-to-date. No new chapters.`,
+                                    latestChapter: latestChapterUrl,
+                                    action: action
+                                };
+                            } else {
+                                // New chapters detected, so we scrape details and update
+                                logger.info(`[UPDATE] Manga '${slug}' has new chapters. Last known chapter not found. Scraping details...`);
+                                const mangaDetail = await komikIndoScrap.getKomikIndoDetail(slug);
+
+                                if (mangaDetail) {
+                                    const oldChapterCount = existingManga.chapters ? existingManga.chapters.length : 0;
+                                    const newChapterCount = mangaDetail.chapters.length;
+                                    const addedCount = newChapterCount - oldChapterCount;
+
+                                    await mangaRepository.upsertManga(mangaDetail);
+                                    
+                                    logger.info(`[SUCCESS] Updated manga '${slug}'. Added ${addedCount} new chapter(s). Total: ${newChapterCount}.`);
+                                    logStatus = 'success';
+                                    action = 'updated';
+                                    logResponse = {
+                                        message: `Manga ${slug} updated. Added: ${addedCount} new chapters.`,
+                                        oldChapterCount: oldChapterCount,
+                                        newChapterCount: newChapterCount,
+                                        addedChapters: addedCount,
+                                        action: action
+                                    };
+                                } else {
+                                    logger.error(`[FAILED] Could not retrieve details for manga update: ${slug}`);
+                                    logStatus = 'failed';
+                                    logError = `Could not retrieve details for manga update: ${slug}`;
+                                }
+                            }
+                        }
                     }
 
                     const waitTime = Math.floor(Math.random() * (2500 - 1000 + 1)) + 1000;

@@ -21,6 +21,9 @@ class MangaRepository {
                 title: true,
                 slug: true,
                 status: true,
+                posterUrl: true,
+                author: true,
+                illustrator: true,
             },
         });
 
@@ -55,6 +58,16 @@ class MangaRepository {
                         },
                     },
                 },
+                chapters:{
+                    select:{
+                        title: true,
+                        chapterIndex: true,
+                        url: true
+                    },
+                    orderBy: {
+                        chapterIndex: 'asc'
+                    }
+                }
             },
         });
 
@@ -162,6 +175,18 @@ class MangaRepository {
         };
     }
 
+    async checkChapterExists(slug, chapterUrl) {
+        const chapter = await prisma.chapter.findFirst({
+            where: {
+                url: chapterUrl,
+                manga: {
+                    slug: slug,
+                },
+            },
+        });
+        return chapter !== null;
+    }
+
     async upsertManga(data) {
         const genres = data.genres || [];
         const chapters = data.chapters || [];
@@ -249,8 +274,6 @@ class MangaRepository {
                         continue;
                     }
 
-                    const publishedAt = null;
-
                     // Setiap upsert ini adalah operasi atomik sendiri
                     await prisma.chapter.upsert({
                         where: {
@@ -262,14 +285,16 @@ class MangaRepository {
                         update: {
                             title: chapter.title,
                             url: chapter.url,
-                            publishedAt: publishedAt,
                         },
                         create: {
-                            mangaId: manga.id,
                             chapterIndex: chapterIndex,
                             title: chapter.title,
                             url: chapter.url,
-                            publishedAt: publishedAt,
+                            manga: {
+                                connect: {
+                                    id: manga.id
+                                }
+                            }
                         },
                     });
                 }
