@@ -71,7 +71,6 @@ async function runRecentScrape() {
                             logError = `Could not retrieve details for new manga: ${slug}`;
                         }
                     } else {
-                        // Existing manga - check for new chapters efficiently
                         const latestChapterUrl = latest_chapter ? latest_chapter.url : null;
 
                         if (!latestChapterUrl) {
@@ -86,7 +85,6 @@ async function runRecentScrape() {
                             const chapterExists = await mangaRepository.checkChapterExists(slug, latestChapterUrl);
 
                             if (chapterExists) {
-                                // Latest chapter already exists in DB
                                 logger.info(`[SKIP] Manga '${slug}' is up-to-date. Latest chapter '${latestChapterUrl}' already exists.`);
                                 logStatus = 'skipped';
                                 action = 'skipped';
@@ -96,7 +94,7 @@ async function runRecentScrape() {
                                     action: action
                                 };
                             } else {
-                                // New chapters detected, so we scrape details and update
+
                                 logger.info(`[UPDATE] Manga '${slug}' has new chapters. Last known chapter not found. Scraping details...`);
                                 const mangaDetail = await komikIndoScrap.getKomikIndoDetail(slug);
 

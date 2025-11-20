@@ -8,22 +8,20 @@ class MangaRepository {
         return await prisma.manga.count();
     }
 
-    async findAll({ page = 1, limit = 10 }) {
+    async findAll({ page = 1, limit = 10, order = { updatedAt: 'desc' } }) {
         const skip = (page - 1) * limit;
         const total = await prisma.manga.count();
         const mangas = await prisma.manga.findMany({
             skip,
             take: limit,
-            orderBy: {
-                updatedAt: 'asc',
-            },
+            orderBy: order,
             select: {
                 title: true,
                 slug: true,
                 status: true,
                 posterUrl: true,
                 author: true,
-                illustrator: true,
+                illustrator: true
             },
         });
 
@@ -36,7 +34,7 @@ class MangaRepository {
         };
     }
 
-    async findMangaBySlug(slug) {
+    async findMangaBySlug(slug, { chapterOrder = 'asc' } = {}) {
         const manga = await prisma.manga.findUnique({
             where: { slug },
             select: {
@@ -58,16 +56,13 @@ class MangaRepository {
                         },
                     },
                 },
-                chapters:{
-                    select:{
+                chapters: {
+                    select: {
                         title: true,
                         chapterIndex: true,
-                        url: true
+                        url: true,
                     },
-                    orderBy: {
-                        chapterIndex: 'asc'
-                    }
-                }
+                },
             },
         });
 
@@ -76,10 +71,48 @@ class MangaRepository {
         }
 
         const flatGenres = manga.genres.map((item) => item.genre);
+        const chapters = Array.isArray(manga.chapters) ? [...manga.chapters] : [];
+
+        const parseChapterNumber = (ci) => {
+            if (ci === null || ci === undefined) return NaN;
+            const s = String(ci).trim().replace(',', '.');
+
+            const n = parseFloat(s);
+            if (!Number.isNaN(n)) return n;
+
+            const m = s.match(/^(\d+(\.\d+)?)/);
+            return m ? parseFloat(m[1]) : NaN;
+        };
+
+        chapters.sort((a, b) => {
+            const na = parseChapterNumber(a.chapterIndex);
+            const nb = parseChapterNumber(b.chapterIndex);
+
+            const aIsNum = !Number.isNaN(na);
+            const bIsNum = !Number.isNaN(nb);
+
+            if (aIsNum && bIsNum) {
+                return chapterOrder === 'asc' ? na - nb : nb - na;
+            }
+
+            if (aIsNum && !bIsNum) return -1;
+            if (!aIsNum && bIsNum) return 1;
+
+            return chapterOrder === 'asc'
+                ? String(a.chapterIndex).localeCompare(String(b.chapterIndex), undefined, {
+                      numeric: true,
+                      sensitivity: 'base',
+                  })
+                : String(b.chapterIndex).localeCompare(String(a.chapterIndex), undefined, {
+                      numeric: true,
+                      sensitivity: 'base',
+                  });
+        });
 
         return {
             ...manga,
             genres: flatGenres,
+            chapters,
         };
     }
 
@@ -117,7 +150,7 @@ class MangaRepository {
         };
     }
 
-    async filter({ filters, page = 1, limit = 20 }) {
+    async filter({ filters, page = 1, limit = 20, order = { createdAt: 'desc' } }) {
         const skip = (page - 1) * limit;
         const where = {};
 
@@ -133,14 +166,19 @@ class MangaRepository {
             };
         }
 
+        if (filters.status) {
+            where.status = { equals: filters.status };
+        }
+        if (filters.author) {
+            where.author = { contains: filters.author, mode: 'insensitive' };
+        }
+
         const total = await prisma.manga.count({ where });
         const mangas = await prisma.manga.findMany({
             where,
             skip,
             take: limit,
-            orderBy: {
-                createdAt: 'desc',
-            },
+            orderBy: order,
             select: {
                 title: true,
                 slug: true,
@@ -159,11 +197,10 @@ class MangaRepository {
             },
         });
 
-        if (!mangas) {
-            return null;
-        }
-
-        const flatGenres = mangas.genres.map((item) => item.genre);
+        const mangasWithGenres = mangas.map((m) => ({
+            ...m,
+            genres: m.genres ? m.genres.map((g) => g.genre) : [],
+        }));
 
         return {
             ...mangas,
@@ -292,9 +329,9 @@ class MangaRepository {
                             url: chapter.url,
                             manga: {
                                 connect: {
-                                    id: manga.id
-                                }
-                            }
+                                    id: manga.id,
+                                },
+                            },
                         },
                     });
                 }

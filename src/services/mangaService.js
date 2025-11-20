@@ -1,22 +1,31 @@
 const mangaRepository = require('../repositories/mangaRepository');
 const logger = require('../utils/logger');
+const { buildOrder } = require('../utils/ParamFilters');
 
 class MangaService {
-    async getAllMangas({ page, limit }) {
+    // async getAllMangas({ page, limit }) {
+    //     try {
+    //         return await mangaRepository.findAll({ page, limit });
+    //     } catch (error) {
+    //         logger.error(`Error in getAllMangas service: ${error.message}`);
+    //         throw error;
+    //     }
+    // }
+
+    async getAllMangas({ page, limit, sort, order }) {
         try {
-            return await mangaRepository.findAll({ page, limit });
+            const prismaOrder = buildOrder(sort, order);
+            return await mangaRepository.findAll({ page, limit, order: prismaOrder });
         } catch (error) {
             logger.error(`Error in getAllMangas service: ${error.message}`);
             throw error;
         }
     }
 
-    async getMangaDetailBySlug(slug) {
+    async getMangaDetailBySlug(slug, { chapterOrder = 'asc' } = {}) {
         try {
-            const manga = await mangaRepository.findMangaBySlug(slug);
-            if (!manga) {
-                logger.warn(`Manga with slug '${slug}' not found in database.`);
-            }
+            const manga = await mangaRepository.findMangaBySlug(slug, { chapterOrder });
+            if (!manga) logger.warn(`Manga with slug '${slug}' not found in database.`);
             return manga;
         } catch (error) {
             logger.error(`Error in getMangaDetailBySlug for slug '${slug}': ${error.message}`);
