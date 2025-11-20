@@ -15,7 +15,7 @@ class MangaRepository {
             skip,
             take: limit,
             orderBy: {
-                createdAt: 'desc',
+                updatedAt: 'asc',
             },
             select: {
                 title: true,
