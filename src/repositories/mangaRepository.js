@@ -8,6 +8,14 @@ class MangaRepository {
         return await prisma.manga.count();
     }
 
+    async countAllMangasInDB(){
+        return await prisma.manga.count();
+    }
+
+    async countAllChapterMangaInDB(){
+        return await prisma.chapter.count();
+    }
+
     async findAll({ page = 1, limit = 10, order = { updatedAt: 'desc' } }) {
         const skip = (page - 1) * limit;
         const total = await prisma.manga.count();
@@ -21,12 +29,21 @@ class MangaRepository {
                 status: true,
                 posterUrl: true,
                 author: true,
-                illustrator: true
+                illustrator: true,
+                _count: {
+                    select: { chapters: true }
+                }
             },
         });
 
+        const mappedMangas = mangas.map(m => ({
+            ...m,
+            totalChapters: m._count.chapters,
+            _count: undefined
+        }));
+
         return {
-            mangas,
+            mangas: mappedMangas,
             total,
             page,
             limit,
@@ -116,33 +133,38 @@ class MangaRepository {
         };
     }
 
-    async search({ query, page = 1, limit = 20 }) {
+    async search({ where, orderBy, page = 1, limit = 20 }) {
         const skip = (page - 1) * limit;
-        const where = {
-            title: {
-                contains: query,
-                mode: 'insensitive',
-            },
-        };
 
-        const total = await prisma.manga.count({ where });
-        const mangas = await prisma.manga.findMany({
-            where,
-            skip,
-            take: limit,
-            orderBy: {
-                createdAt: 'desc',
-            },
-            select: {
-                title: true,
-                slug: true,
-                posterUrl: true,
-                status: true,
-            },
-        });
+        const [total, mangas] = await prisma.$transaction([
+            prisma.manga.count({ where }),
+            prisma.manga.findMany({
+                where,
+                skip,
+                take: limit,
+                orderBy,
+                select: {
+                    title: true,
+                    slug: true,
+                    posterUrl: true,
+                    status: true,
+                    author: true,
+                    illustrator: true,
+                    _count: {
+                        select: { chapters: true }
+                    }
+                }
+            })
+        ]);
+
+        const mappedMangas = mangas.map(m => ({
+            ...m,
+            totalChapters: m._count.chapters,
+            _count: undefined
+        }));
 
         return {
-            mangas,
+            mangas: mappedMangas,
             total,
             page,
             limit,

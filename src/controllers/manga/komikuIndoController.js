@@ -74,27 +74,20 @@ exports.getMangaDetail = async (req, res) => {
 
 exports.getMangaSearch = async (req, res) => {
     try {
-        const query = req.query.s;
-        if (!query) {
-            return res
-                .status(400)
-                .json(resHandler.error('Validation Error', { s: 'Query parameter is required' }, 400).toJSON());
-        }
-        const page = parseInt(req.query.page) || 1;
-        const limit = parseInt(req.query.limit) || 20;
-
-        const data = await mangaService.searchMangas({ query, page, limit });
+        const data = await mangaService.searchMangas(req.query);
 
         if (!data || data.mangas.length === 0) {
             return res
                 .status(404)
-                .json(resHandler.error('Not Found', { query: `No manga found for query '${query}'` }, 404).toJSON());
+                .json(
+                    resHandler.error('Not Found', { message: 'No manga found matching your criteria. try to change the filters' }, 404).toJSON(),
+                );
         }
 
         return res.json(resHandler.success('Success Search Manga', data).toJSON());
     } catch (error) {
         logger.error(`Error fetching search manga: ${error.message}`);
-        res.status(500).json(resHandler.error('Internal Server Error').toJSON());
+        return res.status(500).json(resHandler.error('Internal Server Error').toJSON());
     }
 };
 
@@ -128,6 +121,26 @@ exports.getFilteredManga = async (req, res) => {
         return res.json(resHandler.success('Success Get Filtered Manga', data).toJSON());
     } catch (error) {
         logger.error(`Error fetching filtered mangas: ${error.message}`);
+        return res.status(500).json(resHandler.error('Internal Server Error').toJSON());
+    }
+};
+
+exports.getCountAllMangas = async (req, res) => {
+    try {
+        const data = await mangaService.getCountAllMangas();
+        return res.json(resHandler.success('Success Get Count All Mangas', {countAllMangas: data}).toJSON());
+    } catch (error) {
+        logger.error(`Error fetching count all mangas: ${error.message}`);
+        return res.status(500).json(resHandler.error('Internal Server Error').toJSON());
+    }
+};
+
+exports.getCountAllChapterMangas = async (req, res) => {
+    try {
+        const data = await mangaService.getCountAllChapterMangas();
+        return res.json(resHandler.success('Success Get Count All Chapter Mangas', {countAllChapterMangas: data}).toJSON());
+    } catch (error) {
+        logger.error(`Error fetching count all chapter mangas: ${error.message}`);
         return res.status(500).json(resHandler.error('Internal Server Error').toJSON());
     }
 };

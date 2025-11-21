@@ -1,32 +1,60 @@
-const ALLOWED_SORTS = {
-  newest: { createdAt: 'desc' },
-  terbaru: { createdAt: 'desc' },        
-  oldest: { createdAt: 'asc' },
-  terlama: { createdAt: 'asc' },        
-  updated_newest: { updatedAt: 'desc' },
-  updated_oldest: { updatedAt: 'asc' },
+const SORT_MAPPING = {
+    newest: { updatedAt: 'desc' },
+    oldest: { createdAt: 'asc' },
+    asc: { createdAt: 'asc' },
+    desc: { createdAt: 'desc' },
+    updated: { updatedAt: 'desc' },
+    updated_oldest: { updatedAt: 'asc' },
 
-  title_asc: { title: 'asc' },
-  title_desc: { title: 'desc' },
-  abcd: { title: 'asc' },               
-  zyxw: { title: 'desc' },             
+    'a-z': { title: 'asc' },
+    'z-a': { title: 'desc' },
+    title_asc: { title: 'asc' },
+    title_desc: { title: 'desc' },
 };
 
-const ALLOWED_FIELDS = ['title', 'createdAt', 'updatedAt', 'author', 'status'];
+const buildOrderBy = (sortQuery) => {
+    const key = (sortQuery || 'updated').toLowerCase();
+    return SORT_MAPPING[key] || { updatedAt: 'desc' };
+};
 
-function buildOrder(sort, order) {
-  if (!sort) return { updatedAt: 'desc' }; 
+const buildWhereClause = (params) => {
+    const { q, status, author, illustrator } = params;
+    const where = { AND: [] };
 
-  const s = String(sort).toLowerCase();
+    if (q) {
+        where.AND.push({
+            OR: [{ title: { contains: q, mode: 'insensitive' } }, { altTitle: { contains: q, mode: 'insensitive' } }],
+        });
+    }
 
-  if (ALLOWED_SORTS[s]) return ALLOWED_SORTS[s];
+    if (status) {
+        where.AND.push({
+            status: { equals: status, mode: 'insensitive' },
+        });
+    }
 
-  if (ALLOWED_FIELDS.includes(s)) {
-    const ord = (String(order || 'asc').toLowerCase() === 'desc') ? 'desc' : 'asc';
-    return { [s]: ord };
-  }
+    if (author) {
+        where.AND.push({
+            author: { contains: author, mode: 'insensitive' },
+        });
+    }
 
-  return { updatedAt: 'desc' };
-}
+    if (illustrator) {
+        where.AND.push({
+            illustrator: { contains: illustrator, mode: 'insensitive' },
+        });
+    }
 
-module.exports = { buildOrder };
+    return where.AND.length > 0 ? where : {};
+};
+
+const buildOrder = (sort, order) => {
+    if (!sort) return { updatedAt: 'desc' };
+    
+    const direction = (order || 'asc').toLowerCase() === 'desc' ? 'desc' : 'asc';
+    
+    // Handle specific sort fields if needed, or generic
+    return { [sort]: direction };
+};
+
+module.exports = { buildOrderBy, buildWhereClause, buildOrder };
