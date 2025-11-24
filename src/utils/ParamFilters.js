@@ -45,6 +45,21 @@ const buildWhereClause = (params) => {
         });
     }
 
+    if (params.genre) {
+        const genres = Array.isArray(params.genre) ? params.genre : [params.genre];
+        if (genres.length > 0) {
+            where.AND.push({
+                genres: {
+                    some: {
+                        genre: {
+                            slug: { in: genres },
+                        },
+                    },
+                },
+            });
+        }
+    }
+
     return where.AND.length > 0 ? where : {};
 };
 
@@ -52,8 +67,7 @@ const buildOrder = (sort, order) => {
     if (!sort) return { updatedAt: 'desc' };
     
     const direction = (order || 'asc').toLowerCase() === 'desc' ? 'desc' : 'asc';
-    
-    // Handle specific sort fields if needed, or generic
+
     return { [sort]: direction };
 };
 

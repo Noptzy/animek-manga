@@ -8,11 +8,11 @@ class MangaRepository {
         return await prisma.manga.count();
     }
 
-    async countAllMangasInDB(){
+    async countAllMangasInDB() {
         return await prisma.manga.count();
     }
 
-    async countAllChapterMangaInDB(){
+    async countAllChapterMangaInDB() {
         return await prisma.chapter.count();
     }
 
@@ -31,15 +31,15 @@ class MangaRepository {
                 author: true,
                 illustrator: true,
                 _count: {
-                    select: { chapters: true }
-                }
+                    select: { chapters: true },
+                },
             },
         });
 
-        const mappedMangas = mangas.map(m => ({
+        const mappedMangas = mangas.map((m) => ({
             ...m,
             totalChapters: m._count.chapters,
-            _count: undefined
+            _count: undefined,
         }));
 
         return {
@@ -151,16 +151,16 @@ class MangaRepository {
                     author: true,
                     illustrator: true,
                     _count: {
-                        select: { chapters: true }
-                    }
-                }
-            })
+                        select: { chapters: true },
+                    },
+                },
+            }),
         ]);
 
-        const mappedMangas = mangas.map(m => ({
+        const mappedMangas = mangas.map((m) => ({
             ...m,
             totalChapters: m._count.chapters,
-            _count: undefined
+            _count: undefined,
         }));
 
         return {
@@ -260,10 +260,30 @@ class MangaRepository {
         });
 
         try {
-            // --- Bagian 1: Transaksi untuk Manga dan Genre ---
+            const existingManga = await prisma.manga.findUnique({
+                where: { slug: data.slug },
+                select: {
+                    id: true,
+                    status: true,
+                    _count: {
+                        select: { chapters: true },
+                    },
+                },
+            });
+
+            if (existingManga) {
+                const incomingChapterCount = chapters.length;
+                const isStatusSame = existingManga.status === data.status;
+                const isChapterCountSame = existingManga._count.chapters === incomingChapterCount;
+
+                if (isStatusSame && isChapterCountSame) {
+                    logger.info(`Skipping upsert for ${data.slug} - no changes detected (Status: ${data.status}, Chapters: ${incomingChapterCount}).`);
+                    return existingManga;
+                }
+            }
+
             const manga = await prisma.$transaction(
                 async (tx) => {
-                    // 1. Upsert Manga
                     const mangaRecord = await tx.manga.upsert({
                         where: { slug: data.slug },
                         update: {
@@ -291,7 +311,6 @@ class MangaRepository {
                         },
                     });
 
-                    // 2. Proses Genre (Many-to-Many)
                     if (scrubGenres.length > 0) {
                         await Promise.all(
                             scrubGenres.map((g) =>
@@ -323,7 +342,6 @@ class MangaRepository {
                 },
             );
 
-            // --- Bagian 2: Proses Chapter secara terpisah (di luar transaksi utama) ---
             if (chapters.length > 0) {
                 logger.info(`Processing ${chapters.length} chapters for ${data.slug} outside of main transaction...`);
                 for (const chapter of chapters) {
@@ -333,29 +351,36 @@ class MangaRepository {
                         continue;
                     }
 
-                    // Setiap upsert ini adalah operasi atomik sendiri
-                    await prisma.chapter.upsert({
-                        where: {
-                            mangaId_chapterIndex: {
-                                mangaId: manga.id,
-                                chapterIndex: chapterIndex,
-                            },
-                        },
-                        update: {
-                            title: chapter.title,
-                            url: chapter.url,
-                        },
-                        create: {
-                            chapterIndex: chapterIndex,
-                            title: chapter.title,
-                            url: chapter.url,
-                            manga: {
-                                connect: {
-                                    id: manga.id,
+                    try {
+                        await prisma.chapter.upsert({
+                            where: {
+                                mangaId_chapterIndex: {
+                                    mangaId: manga.id,
+                                    chapterIndex: chapterIndex,
                                 },
                             },
-                        },
-                    });
+                            update: {
+                                title: chapter.title,
+                                url: chapter.url,
+                            },
+                            create: {
+                                chapterIndex: chapterIndex,
+                                title: chapter.title,
+                                url: chapter.url,
+                                manga: {
+                                    connect: {
+                                        id: manga.id,
+                                    },
+                                },
+                            },
+                        });
+                    } catch (err) {
+                        if (err.code === 'P2002') {
+                            logger.warn(`Duplicate chapter detected for ${data.slug} chapter ${chapterIndex}, skipping.`);
+                        } else {
+                            throw err;
+                        }
+                    }
                 }
                 logger.info(`Finished processing chapters for ${data.slug}.`);
             }
@@ -365,6 +390,111 @@ class MangaRepository {
             logger.error(`Upsert process failed for ${data.slug}: ${error.message}`);
             throw error;
         }
+    }
+
+    async upsertGenres(genres) {
+        if (!genres || genres.length === 0) return;
+
+        const uniqueInputGenres = [];
+        const seenInputNames = new Set();
+
+        for (const g of genres) {
+            const trimmedName = g.name.trim();
+            if (!seenInputNames.has(trimmedName)) {
+                seenInputNames.add(trimmedName);
+                uniqueInputGenres.push({
+                    name: trimmedName,
+                    slug: g.slug,
+                });
+            }
+        }
+
+        try {
+            const existingGenres = await prisma.genre.findMany({
+                select: { name: true, slug: true },
+            });
+
+            const existingNameMap = new Map(); 
+            existingGenres.forEach((g) => existingNameMap.set(g.name, g.slug));
+
+            const finalGenresToUpsert = [];
+            for (const g of uniqueInputGenres) {
+                const existingSlug = existingNameMap.get(g.name);
+                if (existingSlug) {
+                    if (existingSlug === g.slug) {
+                        finalGenresToUpsert.push(g);
+                    } else {
+                        logger.warning(
+                            `Genre name collision: '${g.name}' exists with slug '${existingSlug}', but input has slug '${g.slug}'. Skipping input.`,
+                        );
+                    }
+                } else {
+                    finalGenresToUpsert.push(g);
+                }
+            }
+
+            if (finalGenresToUpsert.length > 0) {
+                await prisma.$transaction(
+                    finalGenresToUpsert.map((g) =>
+                        prisma.genre.upsert({
+                            where: { slug: g.slug },
+                            update: { name: g.name },
+                            create: { name: g.name, slug: g.slug },
+                        }),
+                    ),
+                );
+                logger.info(`Successfully upserted ${finalGenresToUpsert.length} genres.`);
+            } else {
+                logger.info('No new or matching genres to upsert.');
+            }
+        } catch (error) {
+            logger.error(`Error upserting genres: ${error.message}`);
+            throw error;
+        }
+    }
+
+    async getGenres() {
+        const genres = await prisma.genre.findMany({
+            orderBy: {
+                name: 'asc',
+            },
+            include: {
+                _count: {
+                    select: { mangas: true }, 
+                },
+            },
+        });
+
+        return genres.map((g) => ({
+            name: g.name,
+            slug: g.slug,
+            count: g._count.mangas, 
+        }));
+    }
+
+    async createScrapeLog(data) {
+        return await prisma.scrapeLog.create({
+            data: {
+                id: data.id, 
+                source: data.source,
+                endpoint: data.endpoint,
+                slug: data.slug,
+                status: data.status,
+                response: data.response ? JSON.stringify(data.response) : null,
+                scrapedAt: new Date(),
+            },
+        });
+    }
+
+    async updateScrapeLog(id, data) {
+        return await prisma.scrapeLog.update({
+            where: { id },
+            data: {
+                status: data.status,
+                response: data.response ? JSON.stringify(data.response) : undefined,
+                error: data.error,
+            },
+        });
     }
 }
 

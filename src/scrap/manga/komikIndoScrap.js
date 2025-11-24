@@ -367,6 +367,33 @@ class komikIndoScrap {
             return { page: pageNum, totalPage: 1, data: [], hasNext: false, error: error.message};
         }
     }
+
+    async getGenreList(page = 1){
+        const url = `${komikIndoUrl}daftar-manga/page/${page}/`;
+        try {
+            const res = await axios.get(url, {headers: { 'User-Agent': UA }});
+            const $ = cheerio.load(res.data);
+            const genres = [];
+
+            $('input[name="genre[]"]').each((i, el) => {
+                const $el = $(el);
+                const value = $el.val();
+                const label = $el.next('label').text().trim();
+
+                if (value && label) {
+                    genres.push({
+                        name: label,
+                        slug: value, 
+                    });
+                }
+            });
+
+            return genres;
+        } catch (error) {
+            logger.error(`Error scraping genre list: ${error.message}`);
+            return [];
+        }
+    }
 }
 
 module.exports = new komikIndoScrap();

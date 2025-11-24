@@ -17,7 +17,7 @@ function runWorker() {
     logger.info('Starting recent manga scrape worker...');
     isRunning = true;
 
-    const scriptPath = path.resolve(__dirname, '../scripts/runRecentKomikIndoScrape.js');
+    const scriptPath = path.resolve(__dirname, '../scripts/runUnifiedScrape.js');
     const child = fork(scriptPath, [], { stdio: 'inherit' });
 
     child.on('exit', (code) => {

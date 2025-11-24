@@ -6,6 +6,7 @@ const rateLimiter = require('./src/utils/rateLimter.js');
 const logger = require('./src/config/logger.js');
 const apiV1 = require('./src/routes/index.js');
 const path = require('path');
+const recentMangaWorker = require('./src/workers/recentMangaWorker.js');
 
 const app = express();
 const port = process.env.PORT ?? 3000;
@@ -41,5 +42,4 @@ app.listen(port, () => {
     logger.info(`Server is running on port ${port}`);
 });
 
-const recentMangaWorker = require('./src/workers/recentMangaWorker.js');
 recentMangaWorker.start();

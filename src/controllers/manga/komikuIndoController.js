@@ -144,3 +144,14 @@ exports.getCountAllChapterMangas = async (req, res) => {
         return res.status(500).json(resHandler.error('Internal Server Error').toJSON());
     }
 };
+
+exports.getGenres = async (req, res) => {
+    try {
+        const data = await mangaService.getGenres();
+        return res.json(resHandler.success('Success Get Genres', data).toJSON());
+    } catch (error) {
+        logger.error(`Error fetching genres: ${error.message}`);
+        return res.status(500).json(resHandler.error('Internal Server Error').toJSON());
+    }
+};
+
