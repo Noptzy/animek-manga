@@ -29,7 +29,7 @@ function start() {
         return;
     }
 
-    logger.info(`Scheduling recent manga scrape worker with schedule: ${CRON_SCHEDULE}`);
+    logger.info(`Scheduling recent manga scrape worker with sdchedule: ${CRON_SCHEDULE}`);
     task = cron.schedule(CRON_SCHEDULE, runWorker, {
         scheduled: true,
         timezone: "Asia/Jakarta"

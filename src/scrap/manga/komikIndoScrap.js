@@ -163,7 +163,11 @@ class komikIndoScrap {
 
                 if (mangaUrl && title) {
                     const slugMatch = mangaUrl.match(/\/komik\/(.+?)\/?$/);
-                    const slug = slugMatch ? slugMatch[1] : null;
+                    let slug = slugMatch ? slugMatch[1] : null;
+
+                    if (slug) {
+                        slug = decodeURIComponent(slug);
+                    }
 
                     const poster_url = posterRaw || $element.find('img').attr('data-src');
 
@@ -239,7 +243,11 @@ class komikIndoScrap {
 
                 if (mangaUrl && title) {
                     const slugMatch = mangaUrl.match(/\/komik\/(.+?)\/?$/);
-                    const slug = slugMatch ? slugMatch[1] : null;
+                    let slug = slugMatch ? slugMatch[1] : null;
+
+                    if (slug) {
+                        slug = decodeURIComponent(slug);
+                    }
 
                     const poster_url = posterRaw || $element.find('img').attr('data-src');
 
@@ -354,7 +362,11 @@ class komikIndoScrap {
 
                 if (mangaUrl && title) {
                     const slugMatch = mangaUrl.match(/\/komik\/(.+?)\/?$/);
-                    const slug = slugMatch ? slugMatch[1] : null;
+                    let slug = slugMatch ? slugMatch[1] : null;
+
+                    if (slug) {
+                        slug = decodeURIComponent(slug);
+                    }
                     const poster_url = posterRaw || $element.find('img').attr('data-src');
 
                     let cleanMangaPath = mangaUrl ? mangaUrl.replace(komikIndoUrl, '').replace(/^\/+/, '') : null;

@@ -18,8 +18,13 @@ class MangaRepository {
 
     async findAll({ page = 1, limit = 10, order = { updatedAt: 'desc' } }) {
         const skip = (page - 1) * limit;
-        const total = await prisma.manga.count();
+
+        // Use a raw query to get the accurate count of distinct slugs for pagination
+        const totalResult = await prisma.$queryRaw`SELECT COUNT(DISTINCT "slug") FROM "mangas"`;
+        const total = Number(totalResult[0].count);
+
         const mangas = await prisma.manga.findMany({
+            distinct: ['slug'], // Ensure uniqueness in the results
             skip,
             take: limit,
             orderBy: order,
@@ -52,8 +57,9 @@ class MangaRepository {
     }
 
     async findMangaBySlug(slug, { chapterOrder = 'asc' } = {}) {
+        const decodedSlug = decodeURIComponent(slug);
         const manga = await prisma.manga.findUnique({
-            where: { slug },
+            where: { slug: decodedSlug },
             select: {
                 title: true,
                 slug: true,
@@ -247,6 +253,7 @@ class MangaRepository {
     }
 
     async upsertManga(data) {
+        const decodedSlug = decodeURIComponent(data.slug);
         const genres = data.genres || [];
         const chapters = data.chapters || [];
         const komikIndoUrl = process.env.KOMIK_INDO_URL || 'https://komikindo.ch/';
@@ -261,7 +268,7 @@ class MangaRepository {
 
         try {
             const existingManga = await prisma.manga.findUnique({
-                where: { slug: data.slug },
+                where: { slug: decodedSlug },
                 select: {
                     id: true,
                     status: true,
@@ -277,7 +284,7 @@ class MangaRepository {
                 const isChapterCountSame = existingManga._count.chapters === incomingChapterCount;
 
                 if (isStatusSame && isChapterCountSame) {
-                    logger.info(`Skipping upsert for ${data.slug} - no changes detected (Status: ${data.status}, Chapters: ${incomingChapterCount}).`);
+                    logger.info(`Skipping upsert for ${decodedSlug} - no changes detected (Status: ${data.status}, Chapters: ${incomingChapterCount}).`);
                     return existingManga;
                 }
             }
@@ -285,7 +292,7 @@ class MangaRepository {
             const manga = await prisma.$transaction(
                 async (tx) => {
                     const mangaRecord = await tx.manga.upsert({
-                        where: { slug: data.slug },
+                        where: { slug: decodedSlug },
                         update: {
                             title: data.title,
                             posterUrl: data.poster_url,
@@ -294,19 +301,19 @@ class MangaRepository {
                             illustrator: data.illustrator,
                             altTitle: data.alt_title,
                             synopsis: data.synopsis,
-                            sourceUrl: data.sourceUrl || data.source_url || `${komikIndoUrl}komik/${data.slug}/`,
+                            sourceUrl: data.sourceUrl || data.source_url || `${komikIndoUrl}komik/${decodedSlug}/`,
                             scrapedAt: new Date(),
                         },
                         create: {
                             title: data.title,
-                            slug: data.slug,
+                            slug: decodedSlug,
                             posterUrl: data.poster_url,
                             status: data.status,
                             author: data.author,
                             illustrator: data.illustrator,
                             altTitle: data.alt_title,
                             synopsis: data.synopsis,
-                            sourceUrl: data.sourceUrl || data.source_url || `${komikIndoUrl}komik/${data.slug}/`,
+                            sourceUrl: data.sourceUrl || data.source_url || `${komikIndoUrl}komik/${decodedSlug}/`,
                             scrapedAt: new Date(),
                         },
                     });
@@ -343,11 +350,11 @@ class MangaRepository {
             );
 
             if (chapters.length > 0) {
-                logger.info(`Processing ${chapters.length} chapters for ${data.slug} outside of main transaction...`);
+                logger.info(`Processing ${chapters.length} chapters for ${decodedSlug} outside of main transaction...`);
                 for (const chapter of chapters) {
                     const chapterIndex = String(chapter.chapter_number).trim();
                     if (!chapterIndex) {
-                        logger.warn(`Skipping chapter with no chapter_number for manga ${data.slug}`, chapter);
+                        logger.warn(`Skipping chapter with no chapter_number for manga ${decodedSlug}`, chapter);
                         continue;
                     }
 
@@ -376,18 +383,18 @@ class MangaRepository {
                         });
                     } catch (err) {
                         if (err.code === 'P2002') {
-                            logger.warn(`Duplicate chapter detected for ${data.slug} chapter ${chapterIndex}, skipping.`);
+                            logger.warn(`Duplicate chapter detected for ${decodedSlug} chapter ${chapterIndex}, skipping.`);
                         } else {
                             throw err;
                         }
                     }
                 }
-                logger.info(`Finished processing chapters for ${data.slug}.`);
+                logger.info(`Finished processing chapters for ${decodedSlug}.`);
             }
 
             return manga;
         } catch (error) {
-            logger.error(`Upsert process failed for ${data.slug}: ${error.message}`);
+            logger.error(`Upsert process failed for ${decodedSlug}: ${error.message}`);
             throw error;
         }
     }

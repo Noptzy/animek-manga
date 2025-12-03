@@ -10,7 +10,8 @@
     "prisma:migrate": "dotenv -- prisma migrate dev",
     "prisma:studio": "dotenv -- prisma studio",
     "vercel-build": "prisma generate",
-    "db:seed": "dotenv -- prisma db seed"
+    "db:seed": "dotenv -- prisma db seed",
+    "db:cleanup": "node src/scripts/cleanupDuplicateMangas.js"
   },
   "prisma": {
     "seed": "node prisma/seed.js"

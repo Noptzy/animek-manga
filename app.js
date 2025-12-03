@@ -7,6 +7,7 @@ const logger = require('./src/config/logger.js');
 const apiV1 = require('./src/routes/index.js');
 const path = require('path');
 const recentMangaWorker = require('./src/workers/recentMangaWorker.js');
+const cleanupWorker = require('./src/workers/cleanupWorker.js');
 
 const app = express();
 const port = process.env.PORT ?? 3000;
@@ -43,3 +44,4 @@ app.listen(port, () => {
 });
 
 recentMangaWorker.start();
+cleanupWorker.start();
