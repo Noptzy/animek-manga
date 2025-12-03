@@ -8,11 +8,28 @@ const komikIndoUrl = process.env.KOMIK_INDO_URL || 'https://komikindo.ch/';
 const maxPage = process.env.MANGA_MAX_PAGE;
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36';
 
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+const axiosWithRetry = async (url, config, retries = 3, delayMs = 2000) => {
+    for (let i = 0; i < retries; i++) {
+        try {
+            return await axios.get(url, config);
+        } catch (error) {
+            if (i < retries - 1) {
+                logger.warn(`Request to ${url} failed. Retrying in ${delayMs}ms... (${i + 1}/${retries})`);
+                await delay(delayMs);
+            } else {
+                throw error;
+            }
+        }
+    }
+};
+
 class komikIndoScrap {
     async getKomikIndoDetail(slug) {
         const url = `${komikIndoUrl}komik/${slug}/`;
         try {
-            const res = await axios.get(url, { headers: { 'User-Agent': UA } });
+            const res = await axiosWithRetry(url, { headers: { 'User-Agent': UA } });
             const $ = cheerio.load(res.data);
 
             const infoX = $('.infox');
@@ -66,7 +83,7 @@ class komikIndoScrap {
 
             return mangaDetail;
         } catch (error) {
-            logger.error(`Error Scraping KomikIndo detail for slug ${slug}`, error.message);
+            logger.error(`Error Scraping KomikIndo detail for slug ${slug}`, { error });
             return null;
         }
     }
@@ -76,7 +93,7 @@ class komikIndoScrap {
         const url = `${komikIndoUrl}${path}`;
 
         try {
-            const res = await axios.get(url, { headers: { 'User-Agent': UA } });
+            const res = await axiosWithRetry(url, { headers: { 'User-Agent': UA } });
             const $ = cheerio.load(res.data);
 
             const title = $('.dtlx h1.entry-title').text().trim().replace('Komik', '').trim();
@@ -87,28 +104,31 @@ class komikIndoScrap {
                 if (src) imageUrls.push(src.trim());
             });
 
+            const processChapterLink = (rawLink) => {
+                if (!rawLink) return null;
+                try {
+                    const parsed = new URL(rawLink);
+                    return parsed.pathname.replace(/^\/+/, '').replace(/\/$/, '') + '/';
+                } catch {
+                    return rawLink.replace(komikIndoUrl, '').replace(/^\/+/, '').replace(/\/$/, '') + '/';
+                }
+            };
+
+            const prevChapterRaw = $('.navig .nextprev a[rel="prev"]').attr('href') || null;
             const nextChapterRaw = $('.navig .nextprev a[rel="next"]').attr('href') || null;
 
-            let nextChapterSlug = null;
-            if (nextChapterRaw) {
-                try {
-                    const parsed = new URL(nextChapterRaw);
-                    nextChapterSlug = parsed.pathname.replace(/^\/+/, '');
-                } catch {
-                    nextChapterSlug = nextChapterRaw.replace(komikIndoUrl, '').replace(/^\/+/, '');
-                }
-
-                nextChapterSlug = nextChapterSlug.replace(/\/$/, '');
-            }
+            const prevChapterSlug = processChapterLink(prevChapterRaw);
+            const nextChapterSlug = processChapterLink(nextChapterRaw);
 
             return {
                 title,
                 images: imageUrls,
-                next_chapter_url: nextChapterSlug ? `/${nextChapterSlug}/` : null,
+                previous_chapter_url: prevChapterSlug,
+                next_chapter_url: nextChapterSlug,
             };
         } catch (error) {
             logger.error(`Error Scraping chapter images for ${url}`, error.message);
-            return { title: null, images: [], next_chapter_url: null };
+            return { title: null, images: [], previous_chapter_url: null, next_chapter_url: null };
         }
     }
 
@@ -116,7 +136,7 @@ class komikIndoScrap {
         const encodedQuery = encodeURIComponent(query);
         const url = `${komikIndoUrl}?s=${encodedQuery}`;
         try {
-            const res = await axios.get(url, { headers: { 'User-Agent': UA } });
+            const res = await axiosWithRetry(url, { headers: { 'User-Agent': UA } });
             const $ = cheerio.load(res.data);
             const searchResults = [];
 
@@ -172,7 +192,7 @@ class komikIndoScrap {
         const url = pageNum > 1 ? `${komikIndoUrl}manga/page/${pageNum}/` : `${komikIndoUrl}manga/`;
 
         try {
-            const response = await axios.get(url, { headers: { 'User-Agent': UA } });
+            const response = await axiosWithRetry(url, { headers: { 'User-Agent': UA } });
             const $ = cheerio.load(response.data);
             const mangaList = [];
 
@@ -290,7 +310,7 @@ class komikIndoScrap {
         const url = `${komikIndoUrl}${path}?${queryString}`;
 
         try {
-            const response = await axios.get(url, { headers: { 'User-Agent': UA } });
+            const response = await axiosWithRetry(url, { headers: { 'User-Agent': UA } });
             const $ = cheerio.load(response.data);
             const mangaList = [];
 
@@ -371,7 +391,7 @@ class komikIndoScrap {
     async getGenreList(page = 1){
         const url = `${komikIndoUrl}daftar-manga/page/${page}/`;
         try {
-            const res = await axios.get(url, {headers: { 'User-Agent': UA }});
+            const res = await axiosWithRetry(url, {headers: { 'User-Agent': UA }});
             const $ = cheerio.load(res.data);
             const genres = [];
 

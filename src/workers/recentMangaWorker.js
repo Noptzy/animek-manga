@@ -1,7 +1,6 @@
 const cron = require('node-cron');
 const logger = require('../utils/logger.js');
-const { fork } = require('child_process');
-const path = require('path');
+const scrapingService = require('../services/scrapingService');
 
 const CRON_SCHEDULE = process.env.RECENT_WORKER_CRON_SCHEDULE || '0 */5 * * *';
 
@@ -10,29 +9,18 @@ let isRunning = false;
 
 function runWorker() {
     if (isRunning) {
-        logger.warn('Recent manga scrape is already running. Skipping this scheduled run.');
+        logger.warn('Scraping process is already running. Skipping this scheduled run.');
         return;
     }
 
-    logger.info('Starting recent manga scrape worker...');
     isRunning = true;
-
-    const scriptPath = path.resolve(__dirname, '../scripts/runUnifiedScrape.js');
-    const child = fork(scriptPath, [], { stdio: 'inherit' });
-
-    child.on('exit', (code) => {
+    try {
+        scrapingService.runScraping();
+    } catch (error) {
+        logger.error('An error occurred during the scraping run:', error);
+    } finally {
         isRunning = false;
-        if (code === 0) {
-            logger.info('Recent manga scrape worker finished successfully.');
-        } else {
-            logger.error(`Recent manga scrape worker exited with code ${code}.`);
-        }
-    });
-
-    child.on('error', (err) => {
-        isRunning = false;
-        logger.error('Failed to start recent manga scrape worker:', err);
-    });
+    }
 }
 
 function start() {
@@ -46,8 +34,8 @@ function start() {
         scheduled: true,
         timezone: "Asia/Jakarta"
     });
-
-    runWorker();
+``
+    scrapingService.checkAndSeedDatabase();
 }
 
 function stop() {

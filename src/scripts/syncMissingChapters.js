@@ -5,7 +5,7 @@ const logger = require('../utils/logger');
 require('dotenv').config();
 
 const BATCH_SIZE = 10;
-const DELAY_MS = 2000; // 2 seconds delay between requests
+const DELAY_MS = 2000; // 2 detik delay di setiap request
 
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 

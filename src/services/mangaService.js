@@ -3,16 +3,55 @@ const logger = require('../utils/logger');
 const { buildOrder, buildOrderBy, buildWhereClause } = require('../utils/ParamFilters');
 const komikIndoScrap = require('../scrap/manga/komikIndoScrap');
 
-class MangaService {
-    // async getAllMangas({ page, limit }) {
-    //     try {
-    //         return await mangaRepository.findAll({ page, limit });
-    //     } catch (error) {
-    //         logger.error(`Error in getAllMangas service: ${error.message}`);
-    //         throw error;
-    //     }
-    // }
+const dataCache = new Map();
+const DATA_CACHE_TTL = 5 * 60 * 1000; // 5 menit
 
+const checkStatusCache = new Map();
+const CHECK_THROTTLE_TTL = 30 * 60 * 1000; // 30 menit
+
+async function _updateMangaInBackground(slug, chapterOrder) {
+    try {
+        logger.info(`[BG] Checking for updates for manga '${slug}'.`);
+        const scrapedData = await komikIndoScrap.getKomikIndoDetail(slug);
+
+        if (!scrapedData) {
+            logger.warn(`[BG] Scraping failed for slug '${slug}'.`);
+            return;
+        }
+
+        const existingManga = await mangaRepository.findMangaBySlug(slug, { chapterOrder });
+        
+        if (!existingManga) {
+            logger.info(`[BG] Manga '${slug}' not found in DB. Performing initial upsert.`);
+            const newManga = await mangaRepository.upsertManga(scrapedData);
+            dataCache.set(slug, { data: newManga, timestamp: Date.now() });
+            return;
+        }
+
+        const isStatusChanged = existingManga.status !== scrapedData.status;
+        const existingChapterUrls = new Set(existingManga.chapters.map(c => c.url));
+        const newChapters = scrapedData.chapters.filter(c => !existingChapterUrls.has(c.url));
+        const hasNewChapters = newChapters.length > 0;
+
+        if (isStatusChanged || hasNewChapters) {
+            let logReason = [];
+            if (isStatusChanged) logReason.push(`status changed to '${scrapedData.status}'`);
+            if (hasNewChapters) logReason.push(`${newChapters.length} new chapter(s) found`);
+            
+            logger.info(`[BG] Changes detected for '${slug}' (${logReason.join(', ')}). Updating database.`);
+
+            const updatedManga = await mangaRepository.upsertManga(scrapedData);
+            dataCache.set(slug, { data: updatedManga, timestamp: Date.now() });
+        } else {
+            logger.info(`[BG] No new data for '${slug}'. Database is up to date.`);
+        }
+    } catch (error) {
+        logger.error(`[BG] Error during update for slug '${slug}': ${error.message}`);
+    }
+}
+
+
+class MangaService {
     async getAllMangas({ page, limit, sort, order }) {
         try {
             const prismaOrder = buildOrder(sort, order);
@@ -25,26 +64,47 @@ class MangaService {
 
     async getMangaDetailBySlug(slug, { chapterOrder = 'asc' } = {}) {
         try {
-            let manga = await mangaRepository.findMangaBySlug(slug, { chapterOrder });
+            const cachedData = dataCache.get(slug);
+            if (cachedData && Date.now() - cachedData.timestamp < DATA_CACHE_TTL) {
+                logger.info(`Serving manga '${slug}' from HOT CACHE.`);
+                return cachedData.data;
+            }
 
-            if (!manga || !manga.chapters || manga.chapters.length === 0) {
-                logger.info(`Manga '${slug}' missing or has no chapters. Initiating lazy scrape...`);
+            const mangaFromDb = await mangaRepository.findMangaBySlug(slug, { chapterOrder });
+
+            if (mangaFromDb) {
+                logger.info(`Serving manga '${slug}' from DB.`);
+
+                dataCache.set(slug, { data: mangaFromDb, timestamp: Date.now() });
+
+                const lastCheck = checkStatusCache.get(slug);
+                if (!lastCheck || Date.now() - lastCheck > CHECK_THROTTLE_TTL) {
+                    logger.info(`Throttle cache expired for '${slug}'. Triggering background check.`);
+                    checkStatusCache.set(slug, Date.now());
+                    _updateMangaInBackground(slug, chapterOrder); 
+                }
+                
+                return mangaFromDb;
+            } else {
+                logger.info(`Manga '${slug}' not in cache or DB. Performing initial blocking scrape.`);
                 const scrapedData = await komikIndoScrap.getKomikIndoDetail(slug);
 
                 if (scrapedData) {
-                    await mangaRepository.upsertManga(scrapedData);
-                    manga = await mangaRepository.findMangaBySlug(slug, { chapterOrder });
+                    const newManga = await mangaRepository.upsertManga(scrapedData);
+                    dataCache.set(slug, { data: newManga, timestamp: Date.now() });
+                    checkStatusCache.set(slug, Date.now());
+                    return newManga;
+                } else {
+                    logger.error(`Initial scrape for slug '${slug}' failed. Manga not found.`);
+                    return null;
                 }
             }
-
-            if (!manga) logger.warn(`Manga with slug '${slug}' not found in database and scrape failed.`);
-            return manga;
         } catch (error) {
             logger.error(`Error in getMangaDetailBySlug for slug '${slug}': ${error.message}`);
             throw error;
         }
     }
-
+    
     async searchMangas(queryParams) {
         try {
             const page = parseInt(queryParams.page) || 1;
