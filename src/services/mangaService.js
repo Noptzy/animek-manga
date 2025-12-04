@@ -1,6 +1,8 @@
 const mangaRepository = require('../repositories/mangaRepository');
 const { cacheable } = require('../utils/cache');
 const qs = require('qs');
+const komikIndoScrap = require('../scrap/manga/komikIndoScrap');
+const logger = require('../utils/logger'); 
 
 const DEFAULT_TTL = 300; // 5 minutes
 
@@ -16,81 +18,89 @@ const getAllMangas = async ({ page, limit, sort, order }) => {
     return cacheable(cacheKey, DEFAULT_TTL, () => mangaRepository.findAll({ page, limit, order: orderBy }));
 };
 
+const scrapeAndCheckForUpdate = async (slug) => {
+    try {
+        logger.info(`Starting background scrape for ${slug}...`);
+        const scrapedData = await komikIndoScrap.getKomikIndoDetail(slug);
+
+        if (!scrapedData) {
+            logger.warn(`No scraped data returned for ${slug}.`);
+            return;
+        }
+
+        const existingManga = await mangaRepository.findMangaBySlug(slug, { chapterOrder: 'asc' });
+
+        let needsUpdate = false;
+        if (!existingManga) {
+            logger.info(`Manga ${slug} not found in DB, performing initial upsert.`);
+            await mangaRepository.upsertManga(scrapedData);
+            needsUpdate = true;
+        } else {
+
+            const currentStatus = existingManga.status;
+            const currentChapterCount = existingManga.chapters ? existingManga.chapters.length : 0;
+
+            const scrapedStatus = scrapedData.status;
+            const scrapedChapterCount = scrapedData.chapters ? scrapedData.chapters.length : 0;
+
+            if (currentStatus !== scrapedStatus || currentChapterCount !== scrapedChapterCount) {
+                logger.info(`Changes detected for ${slug}. Updating DB. Current Status: ${currentStatus}, Scraped Status: ${scrapedStatus}. Current Chapters: ${currentChapterCount}, Scraped Chapters: ${scrapedChapterCount}.`);
+                await mangaRepository.upsertManga(scrapedData);
+                needsUpdate = true;
+            } else {
+                logger.info(`No significant changes for ${slug}. Status: ${currentStatus}, Chapters: ${currentChapterCount}.`);
+            }
+        }
+
+        if (needsUpdate) {
+            logger.info(`Manga ${slug} updated in DB.`);
+        }
+    } catch (error) {
+        logger.error(`Error during background scrape and update check for ${slug}: ${error.message}`, { error });
+    }
+};
+
 const getMangaDetailBySlug = async (slug, options) => {
     const cacheKey = `manga:detail:${slug}:${qs.stringify(options)}`;
-    return cacheable(cacheKey, DEFAULT_TTL, () => mangaRepository.findMangaBySlug(slug, options));
+    
+    const manga = await cacheable(cacheKey, DEFAULT_TTL, () => mangaRepository.findMangaBySlug(slug, options));
+
+    (async () => {
+        await scrapeAndCheckForUpdate(slug);
+    })();
+
+    return manga; 
 };
 
-const searchMangas = async ({ q, page = 1, limit = 20 }) => {
-    const pageInt = parseInt(page) || 1;
-    const limitInt = parseInt(limit) || 20;
+const searchMangas = async ({ q, genre, status, author, page = 1, limit = 20 }) => {
+    const searchParams = { q, genre, status, author, page, limit };
 
-    if (!q || q.trim() === '') {
-        return { mangas: [], total: 0, page: pageInt, totalPages: 0 };
+    if (!q && !genre && !status && !author) {
+        return { mangas: [], total: 0, page, limit, totalPages: 0 };
     }
 
-    const searchKeyword = q.trim();
+    const cacheKey = `mangas:search:${qs.stringify(searchParams)}`;
 
-    const cacheKey = `mangas:search:${qs.stringify({ q: searchKeyword, page: pageInt, limit: limitInt })}`;
-
-    return cacheable(cacheKey, DEFAULT_TTL, async () => {
-        try {
-            const skip = (pageInt - 1) * limitInt;
-
-            const where = {
-                OR: [
-                    { title: { contains: searchKeyword, mode: 'insensitive' } },
-                    { altTitle: { contains: searchKeyword, mode: 'insensitive' } },
-                ],
-            };
-
-            const { mangas, total } = await mangaRepository.search({
-                where,
-                skip,
-                take: limitInt,
-                orderBy: { title: 'asc' }
-            });
-
-            const mappedMangas = mangas.map((m) => ({
-                ...m,
-                totalChapters: m._count ? m._count.chapters : 0,
-                _count: undefined,
-            }));
-
-            return {
-                mangas: mappedMangas,
-                total,
-                page: pageInt,
-                limit: limitInt,
-                totalPages: Math.ceil(total / limitInt),
-            };
-        } catch (error) {
-            
-            throw error;
-        }
+    return cacheable(cacheKey, DEFAULT_TTL, () => {
+        return mangaRepository.findAndFilter({
+            ...searchParams,
+            q: q ? q.trim() : undefined,
+        });
     });
-};
-
-const getFilteredMangas = async ({ filters, page, limit }) => {
-    const cacheKey = `mangas:filter:${qs.stringify({ filters, page, limit })}`;
-    return cacheable(cacheKey, DEFAULT_TTL, () => mangaRepository.filter({ filters, page, limit }));
 };
 
 const getCountAllMangas = async () => {
     const cacheKey = 'mangas:count:all';
-    // Use a longer TTL for counts as they change less frequently
     return cacheable(cacheKey, DEFAULT_TTL * 2, () => mangaRepository.countAllMangasInDB());
 };
 
 const getCountAllChapterMangas = async () => {
     const cacheKey = 'mangas:count:chapters';
-    // Use a longer TTL for counts
     return cacheable(cacheKey, DEFAULT_TTL * 2, () => mangaRepository.countAllChapterMangaInDB());
 };
 
 const getGenres = async () => {
     const cacheKey = 'genres:all';
-    // Genres change very rarely, use a much longer TTL
     return cacheable(cacheKey, DEFAULT_TTL * 12, () => mangaRepository.getGenres());
 };
 
@@ -98,8 +108,8 @@ module.exports = {
     getAllMangas,
     getMangaDetailBySlug,
     searchMangas,
-    getFilteredMangas,
     getCountAllMangas,
     getCountAllChapterMangas,
     getGenres,
+    scrapeAndCheckForUpdate,
 };

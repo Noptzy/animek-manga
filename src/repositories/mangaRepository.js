@@ -18,13 +18,11 @@ class MangaRepository {
 
     async findAll({ page = 1, limit = 10, order = { updatedAt: 'desc' } }) {
         const skip = (page - 1) * limit;
-
-        // Use a raw query to get the accurate count of distinct slugs for pagination
         const totalResult = await prisma.$queryRaw`SELECT COUNT(DISTINCT "slug") FROM "mangas"`;
         const total = Number(totalResult[0].count);
 
         const mangas = await prisma.manga.findMany({
-            distinct: ['slug'], // Ensure uniqueness in the results
+            distinct: ['slug'],
             skip,
             take: limit,
             orderBy: order,
@@ -57,95 +55,136 @@ class MangaRepository {
     }
 
     async findMangaBySlug(slug, { chapterOrder = 'asc' } = {}) {
-        const decodedSlug = decodeURIComponent(slug);
-        const manga = await prisma.manga.findUnique({
-            where: { slug: decodedSlug },
-            select: {
-                title: true,
-                slug: true,
-                posterUrl: true,
-                status: true,
-                author: true,
-                illustrator: true,
-                altTitle: true,
-                synopsis: true,
+        try {
+            const decodedSlug = decodeURIComponent(slug);
+            const manga = await prisma.manga.findUnique({
+                where: { slug: decodedSlug },
+                select: {
+                    title: true,
+                    slug: true,
+                    posterUrl: true,
+                    status: true,
+                    author: true,
+                    illustrator: true,
+                    altTitle: true,
+                    synopsis: true,
+                    genres: {
+                        select: {
+                            genre: {
+                                select: {
+                                    name: true,
+                                    slug: true,
+                                },
+                            },
+                        },
+                    },
+                    chapters: {
+                        select: {
+                            title: true,
+                            chapterIndex: true,
+                            url: true,
+                        },
+                    },
+                },
+            });
+
+            if (!manga) {
+                return null;
+            }
+
+            const flatGenres = manga.genres.map((item) => item.genre);
+            const chapters = Array.isArray(manga.chapters) ? [...manga.chapters] : [];
+
+            const parseChapterNumber = (ci) => {
+                if (ci === null || ci === undefined) return NaN;
+                const s = String(ci).trim().replace(',', '.');
+
+                const n = parseFloat(s);
+                if (!Number.isNaN(n)) return n;
+
+                const m = s.match(/^(\d+(\.\d+)?)/);
+                return m ? parseFloat(m[1]) : NaN;
+            };
+
+            chapters.sort((a, b) => {
+                const na = parseChapterNumber(a.chapterIndex);
+                const nb = parseChapterNumber(b.chapterIndex);
+
+                const aIsNum = !Number.isNaN(na);
+                const bIsNum = !Number.isNaN(nb);
+
+                if (aIsNum && bIsNum) {
+                    return chapterOrder === 'asc' ? na - nb : nb - na;
+                }
+
+                if (aIsNum && !bIsNum) return -1;
+                if (!aIsNum && bIsNum) return 1;
+
+                return chapterOrder === 'asc'
+                    ? String(a.chapterIndex).localeCompare(String(b.chapterIndex), undefined, {
+                          numeric: true,
+                          sensitivity: 'base',
+                      })
+                    : String(b.chapterIndex).localeCompare(String(a.chapterIndex), undefined, {
+                          numeric: true,
+                          sensitivity: 'base',
+                      });
+            });
+
+            return {
+                ...manga,
+                genres: flatGenres,
+                chapters,
+            };
+        } catch (error) {
+            logger.error(`Error finding manga by slug ${slug}: ${error.message}`);
+            throw error;
+        }
+    }
+
+    async findAndFilter({ q, genre, status, author, page = 1, limit = 20, orderBy = { title: 'asc' } }) {
+        const skip = (page - 1) * limit;
+        const where = { AND: [] };
+
+        if (q) {
+            where.AND.push({
+                OR: [
+                    { title: { contains: q, mode: 'insensitive' } },
+                    { altTitle: { contains: q, mode: 'insensitive' } },
+                ],
+            });
+        }
+
+        if (genre && genre.length > 0) {
+            where.AND.push({
                 genres: {
-                    select: {
+                    some: {
                         genre: {
-                            select: {
-                                name: true,
-                                slug: true,
+                            slug: {
+                                in: Array.isArray(genre) ? genre : [genre],
                             },
                         },
                     },
                 },
-                chapters: {
-                    select: {
-                        title: true,
-                        chapterIndex: true,
-                        url: true,
-                    },
-                },
-            },
-        });
-
-        if (!manga) {
-            return null;
+            });
         }
 
-        const flatGenres = manga.genres.map((item) => item.genre);
-        const chapters = Array.isArray(manga.chapters) ? [...manga.chapters] : [];
+        if (status) {
+            where.AND.push({ status: { equals: status } });
+        }
 
-        const parseChapterNumber = (ci) => {
-            if (ci === null || ci === undefined) return NaN;
-            const s = String(ci).trim().replace(',', '.');
+        if (author) {
+            where.AND.push({ author: { contains: author, mode: 'insensitive' } });
+        }
 
-            const n = parseFloat(s);
-            if (!Number.isNaN(n)) return n;
+        const finalWhere = where.AND.length > 0 ? where : {};
 
-            const m = s.match(/^(\d+(\.\d+)?)/);
-            return m ? parseFloat(m[1]) : NaN;
-        };
-
-        chapters.sort((a, b) => {
-            const na = parseChapterNumber(a.chapterIndex);
-            const nb = parseChapterNumber(b.chapterIndex);
-
-            const aIsNum = !Number.isNaN(na);
-            const bIsNum = !Number.isNaN(nb);
-
-            if (aIsNum && bIsNum) {
-                return chapterOrder === 'asc' ? na - nb : nb - na;
-            }
-
-            if (aIsNum && !bIsNum) return -1;
-            if (!aIsNum && bIsNum) return 1;
-
-            return chapterOrder === 'asc'
-                ? String(a.chapterIndex).localeCompare(String(b.chapterIndex), undefined, {
-                    numeric: true,
-                    sensitivity: 'base',
-                  })
-                : String(b.chapterIndex).localeCompare(String(a.chapterIndex), undefined, {
-                    numeric: true,
-                    sensitivity: 'base',
-                  });
-        });
-
-        return {
-            ...manga,
-            genres: flatGenres,
-            chapters,
-        };
-    }
-
-   async search({ where, skip, take, orderBy }) {
         const [total, mangas] = await prisma.$transaction([
-            prisma.manga.count({ where }),
+            prisma.manga.count({ where: finalWhere }),
             prisma.manga.findMany({
-                where,
+                where: finalWhere,
                 skip,
-                take,
+                take: limit,
                 orderBy,
                 select: {
                     title: true,
@@ -161,64 +200,14 @@ class MangaRepository {
             }),
         ]);
 
-        return { mangas, total };
-    }
-
-    async filter({ filters, page = 1, limit = 20, order = { createdAt: 'desc' } }) {
-        const skip = (page - 1) * limit;
-        const where = {};
-
-        if (filters.genre && filters.genre.length > 0) {
-            where.genres = {
-                some: {
-                    genre: {
-                        slug: {
-                            in: filters.genre,
-                        },
-                    },
-                },
-            };
-        }
-
-        if (filters.status) {
-            where.status = { equals: filters.status };
-        }
-        if (filters.author) {
-            where.author = { contains: filters.author, mode: 'insensitive' };
-        }
-
-        const total = await prisma.manga.count({ where });
-        const mangas = await prisma.manga.findMany({
-            where,
-            skip,
-            take: limit,
-            orderBy: order,
-            select: {
-                title: true,
-                slug: true,
-                posterUrl: true,
-                status: true,
-                genres: {
-                    select: {
-                        genre: {
-                            select: {
-                                name: true,
-                                slug: true,
-                            },
-                        },
-                    },
-                },
-            },
-        });
-
-        const mangasWithGenres = mangas.map((m) => ({
+        const mappedMangas = mangas.map((m) => ({
             ...m,
-            genres: m.genres ? m.genres.map((g) => g.genre) : [],
+            totalChapters: m._count ? m._count.chapters : 0,
+            _count: undefined,
         }));
 
         return {
-            ...mangas,
-            genres: flatGenres,
+            mangas: mappedMangas,
             total,
             page,
             limit,
@@ -270,7 +259,9 @@ class MangaRepository {
                 const isChapterCountSame = existingManga._count.chapters === incomingChapterCount;
 
                 if (isStatusSame && isChapterCountSame) {
-                    logger.info(`Skipping upsert for ${decodedSlug} - no changes detected (Status: ${data.status}, Chapters: ${incomingChapterCount}).`);
+                    logger.info(
+                        `Skipping upsert for ${decodedSlug} - no changes detected (Status: ${data.status}, Chapters: ${incomingChapterCount}).`,
+                    );
                     return existingManga;
                 }
             }
@@ -369,7 +360,9 @@ class MangaRepository {
                         });
                     } catch (err) {
                         if (err.code === 'P2002') {
-                            logger.warn(`Duplicate chapter detected for ${decodedSlug} chapter ${chapterIndex}, skipping.`);
+                            logger.warn(
+                                `Duplicate chapter detected for ${decodedSlug} chapter ${chapterIndex}, skipping.`,
+                            );
                         } else {
                             throw err;
                         }
@@ -407,7 +400,7 @@ class MangaRepository {
                 select: { name: true, slug: true },
             });
 
-            const existingNameMap = new Map(); 
+            const existingNameMap = new Map();
             existingGenres.forEach((g) => existingNameMap.set(g.name, g.slug));
 
             const finalGenresToUpsert = [];
@@ -453,7 +446,7 @@ class MangaRepository {
             },
             include: {
                 _count: {
-                    select: { mangas: true }, 
+                    select: { mangas: true },
                 },
             },
         });
@@ -461,14 +454,14 @@ class MangaRepository {
         return genres.map((g) => ({
             name: g.name,
             slug: g.slug,
-            count: g._count.mangas, 
+            count: g._count.mangas,
         }));
     }
 
     async createScrapeLog(data) {
         return await prisma.scrapeLog.create({
             data: {
-                id: data.id, 
+                id: data.id,
                 source: data.source,
                 endpoint: data.endpoint,
                 slug: data.slug,

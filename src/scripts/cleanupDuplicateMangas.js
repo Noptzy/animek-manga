@@ -30,7 +30,6 @@ async function cleanupDuplicateMangas() {
 
             logger.info(`Found ${mangas.length} duplicates for title: "${title}"`);
 
-            // Sort to ensure the first one is the canonical version (e.g., most recently updated)
             const sortedMangas = mangas.sort((a, b) => {
                 const aIsDecoded = a.slug === decodeURIComponent(a.slug);
                 const bIsDecoded = b.slug === decodeURIComponent(b.slug);
@@ -48,7 +47,6 @@ async function cleanupDuplicateMangas() {
             for (const duplicate of duplicateMangas) {
                 logger.info(`Processing duplicate: ${duplicate.slug} (ID: ${duplicate.id})`);
 
-                // 1. Handle chapter merging to avoid unique constraint errors
                 const canonicalChapters = await prisma.chapter.findMany({
                     where: { mangaId: canonicalManga.id },
                     select: { chapterIndex: true },
@@ -86,8 +84,7 @@ async function cleanupDuplicateMangas() {
                     });
                     logger.info(`  - Moved ${nonConflictingChapters.length} non-conflicting chapters.`);
                 }
-                
-                // 2. Re-link genres (MangaGenre) - find genres on duplicate not on canonical
+
                 const duplicateGenres = await prisma.mangaGenre.findMany({ where: { mangaId: duplicate.id }});
                 const canonicalGenres = await prisma.mangaGenre.findMany({ where: { mangaId: canonicalManga.id }});
                 const canonicalGenreIds = new Set(canonicalGenres.map(g => g.genreId));
@@ -104,7 +101,6 @@ async function cleanupDuplicateMangas() {
                     logger.info(`  - Merged ${missingGenres.length} genres.`);
                 }
 
-                // 3. Delete the duplicate manga record
                 await prisma.manga.delete({
                     where: { id: duplicate.id },
                 });

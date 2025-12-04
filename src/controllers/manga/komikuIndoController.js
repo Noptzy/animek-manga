@@ -74,23 +74,23 @@ exports.getMangaDetail = async (req, res) => {
 
 exports.getMangaSearch = async (req, res) => {
     try {
-        const { q, page, limit } = req.query;
+        const { q, genre, status, author } = req.query;
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 20;
 
-        if (!q) {
+        const searchParams = { q, genre, status, author, page, limit };
+        
+        if (!q && !genre && !status && !author) {
             return res.status(400).json(
-                resHandler.error('Validation Error', { message: "Query param 'q' is required" }).toJSON()
+                resHandler.error('Validation Error', { message: "At least one query parameter (q, genre, status, author) is required." }).toJSON()
             );
         }
-
-        const data = await mangaService.searchMangas({ 
-            q, 
-            page, 
-            limit 
-        });
+        
+        const data = await mangaService.searchMangas(searchParams);
 
         if (!data || data.mangas.length === 0) {
             return res.status(404).json(
-                resHandler.error('Not Found', { message: `No manga found for keyword: ${q}` }, 404).toJSON()
+                resHandler.error('Not Found', { message: `No manga found for the given criteria.` }, 404).toJSON()
             );
         }
 
@@ -101,40 +101,6 @@ exports.getMangaSearch = async (req, res) => {
         return res.status(500).json(
             resHandler.error('Internal Server Error', { message: error.message }, 500).toJSON()
         );
-    }
-};
-
-exports.getFilteredManga = async (req, res) => {
-    try {
-        const page = parseInt(req.query.page) || 1;
-        const limit = parseInt(req.query.limit) || 20;
-        let filters = { ...req.query };
-        delete filters.page;
-        delete filters.limit;
-
-        const arrayFilters = ['genre', 'demografis', 'konten', 'tema'];
-        arrayFilters.forEach((key) => {
-            if (filters[key] && !Array.isArray(filters[key])) {
-                filters[key] = [filters[key]];
-            }
-        });
-
-        const data = await mangaService.getFilteredMangas({ filters, page, limit });
-
-        if (!data || data.mangas.length === 0) {
-            return res
-                .status(404)
-                .json(
-                    resHandler
-                        .error('Not Found', { filters: 'No manga found with the specified filters.' }, 404)
-                        .toJSON(),
-                );
-        }
-
-        return res.json(resHandler.success('Success Get Filtered Manga', data).toJSON());
-    } catch (error) {
-        logger.error(`Error fetching filtered mangas: ${error.message}`);
-        return res.status(500).json(resHandler.error('Internal Server Error').toJSON());
     }
 };
 
@@ -167,4 +133,3 @@ exports.getGenres = async (req, res) => {
         return res.status(500).json(resHandler.error('Internal Server Error').toJSON());
     }
 };
-
