@@ -142,10 +142,14 @@ class komikuScrap {
                 try {
                     const match = scriptContent.match(/chapterData\s*=\s*(\{[\s\S]*?\});/);
                     if (match && match[1]) {
-                        chapterMetadata = eval('(' + match[1] + ')');
+                        // Use JSON.parse instead of eval for security
+                        // Remove any trailing semicolons or whitespace
+                        const jsonString = match[1].trim().replace(/;$/, '');
+                        chapterMetadata = JSON.parse(jsonString);
                     }
                 } catch (e) {
-                    logger.error('Failed to parse chapter metadata script', e.message);
+                    logger.warn(`Failed to parse chapter metadata as JSON: ${e.message}. Metadata will be empty but images will still be scraped.`);
+                    // Keep chapterMetadata as empty object, don't fail the entire scraping
                 }
             }
 
