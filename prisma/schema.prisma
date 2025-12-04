@@ -1,61 +1,61 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL") 
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  directUrl  = env("DIRECT_URL")
+  extensions = [pg_trgm]
 }
 
 model User {
-  id        String    @id @default(uuid()) @db.Uuid
-  email     String    @unique @db.Text
-  name      String?   @db.Text
-  photoUrl  String?   @map("photo_url") @db.Text
-  roleId    Int       @default(1) @map("role") @db.Integer
-  password  String?   @db.Text
-  isActive  Boolean?  @default(true) @map("is_active")
-  metadata  Json?     @default("{}") @db.JsonB
-  createdAt DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
-  updatedAt DateTime? @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
-
-  role         Role           @relation(fields: [roleId], references: [id], onDelete: Restrict)
-  // TODO tambahkan relasi dengan favorite dan sorting berdasarkan jenis misal manga, anime dll
-  favorites    Favorite[]
+  id            String         @id @default(uuid()) @db.Uuid
+  email         String         @unique
+  name          String?
+  photoUrl      String?        @map("photo_url")
+  roleId        Int            @default(1) @map("role")
+  password      String?
+  isActive      Boolean?       @default(true) @map("is_active")
+  metadata      Json?          @default("{}")
+  createdAt     DateTime?      @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt     DateTime?      @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
+  favorites     Favorite[]
   notifications Notification[]
+  role          Role           @relation(fields: [roleId], references: [id])
 
   @@map("users")
 }
 
 model Manga {
-  id          String    @id @default(uuid()) @db.Uuid
-  title       String    @db.Text
-  slug        String    @unique @db.Text
-  posterUrl   String?   @map("poster_url") @db.Text
-  status      String?   @db.Text
-  author      String?   @db.Text
-  illustrator String?   @db.Text
-  altTitle    String?   @map("alt_title") @db.Text
-  synopsis    String?   @db.Text
-  sourceUrl   String?   @map("source_url") @db.Text
-  scrapedAt   DateTime? @map("scraped_at") @db.Timestamp(0)
-  createdAt   DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
-  updatedAt   DateTime? @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
-
-  genres    MangaGenre[]
-  chapters  Chapter[]
-  favorites Favorite[]
+  id          String       @id @default(uuid()) @db.Uuid
+  title       String
+  slug        String       @unique
+  posterUrl   String?      @map("poster_url")
+  status      String?
+  author      String?
+  illustrator String?
+  altTitle    String?      @map("alt_title")
+  synopsis    String?
+  sourceUrl   String?      @map("source_url")
+  scrapedAt   DateTime?    @map("scraped_at") @db.Timestamp(0)
+  createdAt   DateTime?    @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt   DateTime?    @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
+  chapters    Chapter[]
+  favorites   Favorite[]
+  genres      MangaGenre[]
 
   @@index([createdAt])
+  @@index([title(ops: raw("gin_trgm_ops"))], type: Gin, name: "manga_title_search_idx")
+  @@index([altTitle(ops: raw("gin_trgm_ops"))], type: Gin, name: "manga_alttitle_search_idx")
   @@map("mangas")
 }
 
 model Genre {
-  id   String @id @default(uuid()) @db.Uuid
-  name String @unique @db.Text
-  slug String @unique @db.Text
-
+  id     String       @id @default(uuid()) @db.Uuid
+  name   String       @unique
+  slug   String       @unique
   mangas MangaGenre[]
 
   @@map("genres")
@@ -64,24 +64,22 @@ model Genre {
 model MangaGenre {
   mangaId String @map("manga_id") @db.Uuid
   genreId String @map("genre_id") @db.Uuid
-
-  manga Manga @relation(fields: [mangaId], references: [id], onDelete: Cascade)
-  genre Genre @relation(fields: [genreId], references: [id], onDelete: Cascade)
+  genre   Genre  @relation(fields: [genreId], references: [id], onDelete: Cascade)
+  manga   Manga  @relation(fields: [mangaId], references: [id], onDelete: Cascade)
 
   @@id([mangaId, genreId])
   @@map("manga_genres")
 }
 
 model Chapter {
-  id            String    @id @default(uuid()) @db.Uuid
-  mangaId       String?   @map("manga_id") @db.Uuid
-  chapterIndex  String    @map("chapter_index") @db.Text
-  title         String?   @db.Text
-  url           String    @db.Text
-  createdAt     DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
-  updatedAt     DateTime? @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
-
-  manga         Manga?    @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  id           String    @id @default(uuid()) @db.Uuid
+  mangaId      String?   @map("manga_id") @db.Uuid
+  chapterIndex String    @map("chapter_index")
+  title        String?
+  url          String
+  createdAt    DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt    DateTime? @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
+  manga        Manga?    @relation(fields: [mangaId], references: [id], onDelete: Cascade)
 
   @@unique([mangaId, chapterIndex])
   @@map("chapters")
@@ -92,22 +90,23 @@ model Favorite {
   userId    String?   @map("user_id") @db.Uuid
   mangaId   String?   @map("manga_id") @db.Uuid
   createdAt DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
-
+  anime_id  String?   @db.Uuid
+  type      String?
   manga     Manga?    @relation(fields: [mangaId], references: [id], onDelete: Cascade)
   user      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, mangaId])
+  @@unique([userId, anime_id])
   @@map("favorites")
 }
 
 model Notification {
   id        String    @id @default(uuid()) @db.Uuid
   userId    String?   @map("user_id") @db.Uuid
-  type      String    @db.Text
-  payload   Json?     @db.JsonB
+  type      String
+  payload   Json?
   isRead    Boolean?  @default(false) @map("is_read")
   createdAt DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
-
   user      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("notifications")
@@ -115,12 +114,12 @@ model Notification {
 
 model ScrapeLog {
   id        String    @id @default(uuid()) @db.Uuid
-  source    String?   @db.Text
-  endpoint  String?   @db.Text
-  slug      String?   @db.Text
-  response  Json?     @db.JsonB
-  status    String?   @db.Text
-  error     String?   @db.Text
+  source    String?
+  endpoint  String?
+  slug      String?
+  response  Json?
+  status    String?
+  error     String?
   scrapedAt DateTime? @default(now()) @map("scraped_at") @db.Timestamp(0)
 
   @@map("scrape_logs")
@@ -129,22 +128,30 @@ model ScrapeLog {
 model AuditLog {
   id         String    @id @default(uuid()) @db.Uuid
   actorId    String?   @map("actor_id") @db.Uuid
-  action     String?   @db.Text
-  objectType String?   @map("object_type") @db.Text
+  action     String?
+  objectType String?   @map("object_type")
   objectId   String?   @map("object_id") @db.Uuid
-  changes    Json?     @db.JsonB
+  changes    Json?
   createdAt  DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
 
   @@map("audit_logs")
 }
 
 model Role {
-  id        Int      @id @db.Integer
-  title     String   @db.Text
+  id        Int      @id
+  title     String
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(0)
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
-
   users     User[]
 
   @@map("role")
+}
+
+model servers {
+  id         Int      @id @default(autoincrement())
+  name       String   @unique
+  url        String
+  type       String
+  created_at DateTime @default(now())
+  updated_at DateTime
 }

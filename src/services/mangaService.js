@@ -21,60 +21,54 @@ const getMangaDetailBySlug = async (slug, options) => {
     return cacheable(cacheKey, DEFAULT_TTL, () => mangaRepository.findMangaBySlug(slug, options));
 };
 
-const searchMangas = async (queryParams) => {
-    const cacheKey = `mangas:search:${qs.stringify(queryParams)}`;
-    const { s, page, limit, sort } = queryParams;
-    const where = {};
-    let orderBy = {};
+const searchMangas = async ({ q, page = 1, limit = 20 }) => {
+    const pageInt = parseInt(page) || 1;
+    const limitInt = parseInt(limit) || 20;
 
-    if (s) {
-        where.OR = [
-            {
-                title: {
-                    contains: s,
-                    mode: 'insensitive',
-                },
-            },
-            {
-                altTitle: {
-                    contains: s,
-                    mode: 'insensitive',
-                },
-            },
-        ];
+    if (!q || q.trim() === '') {
+        return { mangas: [], total: 0, page: pageInt, totalPages: 0 };
     }
 
-    switch (sort) {
-        case 'newest':
-            orderBy = { updatedAt: 'desc' };
-            break;
-        case 'oldest':
-            orderBy = { createdAt: 'asc' };
-            break;
-        case 'asc':
-            orderBy = { createdAt: 'asc' };
-            break;
-        case 'desc':
-            orderBy = { createdAt: 'desc' };
-            break;
-        case 'updated':
-            orderBy = { updatedAt: 'desc' };
-            break;
-        case 'updated_oldest':
-            orderBy = { updatedAt: 'asc' };
-            break;
-        case 'a-z':
-            orderBy = { title: 'asc' };
-            break;
-        case 'z-a':
-            orderBy = { title: 'desc' };
-            break;
-        default:
-            orderBy = { updatedAt: 'desc' };
-            break;
-    }
+    const searchKeyword = q.trim();
 
-    return cacheable(cacheKey, DEFAULT_TTL, () => mangaRepository.search({ where, orderBy, page, limit }));
+    const cacheKey = `mangas:search:${qs.stringify({ q: searchKeyword, page: pageInt, limit: limitInt })}`;
+
+    return cacheable(cacheKey, DEFAULT_TTL, async () => {
+        try {
+            const skip = (pageInt - 1) * limitInt;
+
+            const where = {
+                OR: [
+                    { title: { contains: searchKeyword, mode: 'insensitive' } },
+                    { altTitle: { contains: searchKeyword, mode: 'insensitive' } },
+                ],
+            };
+
+            const { mangas, total } = await mangaRepository.search({
+                where,
+                skip,
+                take: limitInt,
+                orderBy: { title: 'asc' }
+            });
+
+            const mappedMangas = mangas.map((m) => ({
+                ...m,
+                totalChapters: m._count ? m._count.chapters : 0,
+                _count: undefined,
+            }));
+
+            return {
+                mangas: mappedMangas,
+                total,
+                page: pageInt,
+                limit: limitInt,
+                totalPages: Math.ceil(total / limitInt),
+            };
+        } catch (error) {
+            
+            throw error;
+        }
+    });
 };
 
 const getFilteredMangas = async ({ filters, page, limit }) => {

@@ -74,20 +74,33 @@ exports.getMangaDetail = async (req, res) => {
 
 exports.getMangaSearch = async (req, res) => {
     try {
-        const data = await mangaService.searchMangas(req.query);
+        const { q, page, limit } = req.query;
+
+        if (!q) {
+            return res.status(400).json(
+                resHandler.error('Validation Error', { message: "Query param 'q' is required" }).toJSON()
+            );
+        }
+
+        const data = await mangaService.searchMangas({ 
+            q, 
+            page, 
+            limit 
+        });
 
         if (!data || data.mangas.length === 0) {
-            return res
-                .status(404)
-                .json(
-                    resHandler.error('Not Found', { message: 'No manga found matching your criteria. try to change the filters' }, 404).toJSON(),
-                );
+            return res.status(404).json(
+                resHandler.error('Not Found', { message: `No manga found for keyword: ${q}` }, 404).toJSON()
+            );
         }
 
         return res.json(resHandler.success('Success Search Manga', data).toJSON());
+
     } catch (error) {
         logger.error(`Error fetching search manga: ${error.message}`);
-        return res.status(500).json(resHandler.error('Internal Server Error').toJSON());
+        return res.status(500).json(
+            resHandler.error('Internal Server Error', { message: error.message }, 500).toJSON()
+        );
     }
 };
 

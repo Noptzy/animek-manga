@@ -139,47 +139,29 @@ class MangaRepository {
         };
     }
 
-    async search({ where, orderBy, page = 1, limit = 20 }) {
-        const skip = (page - 1) * limit;
-
-        const countArgs = { where };
-
-        const findArgs = {
-            where,
-            skip,
-            take: limit,
-            orderBy,
-            select: {
-                title: true,
-                slug: true,
-                posterUrl: true,
-                status: true,
-                author: true,
-                illustrator: true,
-                _count: {
-                    select: { chapters: true },
-                },
-            },
-        };
-
+   async search({ where, skip, take, orderBy }) {
         const [total, mangas] = await prisma.$transaction([
-            prisma.manga.count(countArgs),
-            prisma.manga.findMany(findArgs),
+            prisma.manga.count({ where }),
+            prisma.manga.findMany({
+                where,
+                skip,
+                take,
+                orderBy,
+                select: {
+                    title: true,
+                    slug: true,
+                    posterUrl: true,
+                    status: true,
+                    author: true,
+                    illustrator: true,
+                    _count: {
+                        select: { chapters: true },
+                    },
+                },
+            }),
         ]);
 
-        const mappedMangas = mangas.map((m) => ({
-            ...m,
-            totalChapters: m._count.chapters,
-            _count: undefined,
-        }));
-
-        return {
-            mangas: mappedMangas,
-            total,
-            page,
-            limit,
-            totalPages: Math.ceil(total / limit),
-        };
+        return { mangas, total };
     }
 
     async filter({ filters, page = 1, limit = 20, order = { createdAt: 'desc' } }) {
