@@ -123,12 +123,12 @@ class MangaRepository {
 
             return chapterOrder === 'asc'
                 ? String(a.chapterIndex).localeCompare(String(b.chapterIndex), undefined, {
-                      numeric: true,
-                      sensitivity: 'base',
+                    numeric: true,
+                    sensitivity: 'base',
                   })
                 : String(b.chapterIndex).localeCompare(String(a.chapterIndex), undefined, {
-                      numeric: true,
-                      sensitivity: 'base',
+                    numeric: true,
+                    sensitivity: 'base',
                   });
         });
 
@@ -142,25 +142,29 @@ class MangaRepository {
     async search({ where, orderBy, page = 1, limit = 20 }) {
         const skip = (page - 1) * limit;
 
-        const [total, mangas] = await prisma.$transaction([
-            prisma.manga.count({ where }),
-            prisma.manga.findMany({
-                where,
-                skip,
-                take: limit,
-                orderBy,
-                select: {
-                    title: true,
-                    slug: true,
-                    posterUrl: true,
-                    status: true,
-                    author: true,
-                    illustrator: true,
-                    _count: {
-                        select: { chapters: true },
-                    },
+        const countArgs = { where };
+
+        const findArgs = {
+            where,
+            skip,
+            take: limit,
+            orderBy,
+            select: {
+                title: true,
+                slug: true,
+                posterUrl: true,
+                status: true,
+                author: true,
+                illustrator: true,
+                _count: {
+                    select: { chapters: true },
                 },
-            }),
+            },
+        };
+
+        const [total, mangas] = await prisma.$transaction([
+            prisma.manga.count(countArgs),
+            prisma.manga.findMany(findArgs),
         ]);
 
         const mappedMangas = mangas.map((m) => ({

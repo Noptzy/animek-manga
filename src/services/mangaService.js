@@ -23,21 +23,55 @@ const getMangaDetailBySlug = async (slug, options) => {
 
 const searchMangas = async (queryParams) => {
     const cacheKey = `mangas:search:${qs.stringify(queryParams)}`;
-    const { q, page, limit, sort, order } = queryParams;
+    const { s, page, limit, sort } = queryParams;
     const where = {};
-    const orderBy = {};
+    let orderBy = {};
 
-    if (q) {
-        where.title = {
-            contains: q,
-            mode: 'insensitive',
-        };
+    if (s) {
+        where.OR = [
+            {
+                title: {
+                    contains: s,
+                    mode: 'insensitive',
+                },
+            },
+            {
+                altTitle: {
+                    contains: s,
+                    mode: 'insensitive',
+                },
+            },
+        ];
     }
 
-    if (sort) {
-        orderBy[sort] = order || 'asc';
-    } else {
-        orderBy.updatedAt = 'desc';
+    switch (sort) {
+        case 'newest':
+            orderBy = { updatedAt: 'desc' };
+            break;
+        case 'oldest':
+            orderBy = { createdAt: 'asc' };
+            break;
+        case 'asc':
+            orderBy = { createdAt: 'asc' };
+            break;
+        case 'desc':
+            orderBy = { createdAt: 'desc' };
+            break;
+        case 'updated':
+            orderBy = { updatedAt: 'desc' };
+            break;
+        case 'updated_oldest':
+            orderBy = { updatedAt: 'asc' };
+            break;
+        case 'a-z':
+            orderBy = { title: 'asc' };
+            break;
+        case 'z-a':
+            orderBy = { title: 'desc' };
+            break;
+        default:
+            orderBy = { updatedAt: 'desc' };
+            break;
     }
 
     return cacheable(cacheKey, DEFAULT_TTL, () => mangaRepository.search({ where, orderBy, page, limit }));

@@ -39,9 +39,4 @@ app.use((req, res) => {
     return res.status(404).json({ error: '404 not found', message: 'you can see docs at /docs' });
 });
 
-app.listen(port, () => {
-    logger.info(`Server is running on port ${port}`);
-});
-
-recentMangaWorker.start();
-cleanupWorker.start();
+module.exports = app;

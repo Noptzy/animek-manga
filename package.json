@@ -1,15 +1,16 @@
 {
   "name": "animek1",
-  "module": "app.js",
+  "module": "server.js",
   "type": "commonjs",
   "private": true,
   "scripts": {
-    "start": "bun app.js",
-    "dev": "nodemon app.js",
+    "start": "bun server.js",
+    "dev": "nodemon server.js",
     "prisma:generate": "dotenv -- prisma generate",
     "prisma:migrate": "dotenv -- prisma migrate dev",
     "prisma:studio": "dotenv -- prisma studio",
     "vercel-build": "prisma generate",
+    "test": "jest",
     "db:seed": "dotenv -- prisma db seed",
     "db:cleanup": "node src/scripts/cleanupDuplicateMangas.js"
   },
