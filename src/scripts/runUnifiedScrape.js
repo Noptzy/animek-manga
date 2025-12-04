@@ -14,9 +14,46 @@ async function runUnifiedScrape() {
 
     await scrapeAllGenres();
 
+    await checkOngoingMangaChapters();
+
     logger.info('Unified Scrape Process Completed.');
     process.exit(0);
 }
+
+async function checkOngoingMangaChapters() {
+    logger.info('Starting check for new chapters of ongoing manga...');
+    try {
+        const ongoingMangas = await mangaRepository.findOngoingManga();
+        logger.info(`Found ${ongoingMangas.length} ongoing mangas to check.`);
+
+        for (const manga of ongoingMangas) {
+            try {
+                logger.info(`Checking for new chapters: ${manga.slug}`);
+                const scrapedData = await komikIndoScrap.getKomikIndoDetail(manga.slug);
+
+                if (scrapedData && scrapedData.chapters) {
+                    const scrapedChapterCount = scrapedData.chapters.length;
+                    const dbChapterCount = manga.chapterCount;
+
+                    if (scrapedChapterCount > dbChapterCount) {
+                        logger.info(`New chapters found for ${manga.slug}. DB: ${dbChapterCount}, Scraped: ${scrapedChapterCount}. Updating...`);
+                        await mangaRepository.upsertManga(scrapedData);
+                    } else {
+                        logger.info(`No new chapters for ${manga.slug}. DB: ${dbChapterCount}, Scraped: ${scrapedChapterCount}.`);
+                    }
+                } else {
+                    logger.warn(`Could not retrieve scraped data or chapters for ${manga.slug}.`);
+                }
+            } catch (err) {
+                logger.error(`Error processing ongoing manga ${manga.slug}: ${err.message}`);
+            }
+        }
+        logger.info('Finished checking for new chapters of ongoing manga.');
+    } catch (error) {
+        logger.error(`Failed to check ongoing manga chapters: ${error.message}`);
+    }
+}
+
 
 async function scrapeRecentManga() {
     const logId = uuidv4();

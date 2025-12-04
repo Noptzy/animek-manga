@@ -1,7 +1,38 @@
+const { waitUntil } = require('@vercel/functions');
+const mangaRepository = require('../../repositories/mangaRepository');
 const mangaService = require('../../services/mangaService');
 const komikIndoScrap = require('../../scrap/manga/komikIndoScrap');
 const logger = require('../../utils/logger');
 const resHandler = require('../../utils/resHandler');
+
+exports.getMangaDetailBySlugSWR = async (req, res) => {
+    const { slug } = req.params;
+    const ONE_HOUR_IN_MS = 3600 * 1000;
+
+    try {
+        const manga = await mangaRepository.findMangaBySlug(slug, { chapterOrder: 'asc' });
+
+        if (manga) {
+            const isStale = new Date() - new Date(manga.updatedAt) > ONE_HOUR_IN_MS;
+            if (isStale) {
+                waitUntil(mangaService.scrapeAndCheckForUpdate(slug));
+            }
+            return res.json(resHandler.success('Success get Manga', manga).toJSON());
+        } else {
+            // If manga doesn't exist, scrape, wait, and then return
+            await mangaService.scrapeAndCheckForUpdate(slug);
+            const freshManga = await mangaRepository.findMangaBySlug(slug, { chapterOrder: 'asc' });
+            if (freshManga) {
+                return res.status(201).json(resHandler.success('Successfully scraped and created manga', freshManga).toJSON());
+            } else {
+                return res.status(404).json(resHandler.error('Not Found', { message: `Manga with slug '${slug}' not found after scraping.` }).toJSON());
+            }
+        }
+    } catch (error) {
+        logger.error(`Error in getMangaDetailBySlugSWR for slug ${slug}: ${error.message}`);
+        res.status(500).json(resHandler.error('Internal Server Error').toJSON());
+    }
+};
 
 exports.getChapterImage = async (req, res) => {
     const chapterPath = req.params.chapterPath;

@@ -6,6 +6,6 @@ router.get('/chapter/:chapterPath', komikuIndoController.getChapterImage);
 router.get('/genres', komikuIndoController.getGenres);
 router.get('/mangas/search', komikuIndoController.getMangaSearch);
 router.get('/mangas', komikuIndoController.getAllMangas);
-router.get('/mangas/:slug', komikuIndoController.getMangaDetail);
+router.get('/mangas/:slug', komikuIndoController.getMangaDetailBySlugSWR);
 
 module.exports = router;

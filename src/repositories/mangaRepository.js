@@ -458,6 +458,30 @@ class MangaRepository {
         }));
     }
 
+    async findOngoingManga() {
+        try {
+            const mangas = await prisma.manga.findMany({
+                where: {
+                    status: 'Ongoing'
+                },
+                select: {
+                    slug: true,
+                    _count: {
+                        select: { chapters: true },
+                    },
+                },
+            });
+
+            return mangas.map((m) => ({
+                slug: m.slug,
+                chapterCount: m._count.chapters,
+            }));
+        } catch (error) {
+            logger.error(`Error finding ongoing manga: ${error.message}`);
+            throw error;
+        }
+    }
+
     async createScrapeLog(data) {
         return await prisma.scrapeLog.create({
             data: {
