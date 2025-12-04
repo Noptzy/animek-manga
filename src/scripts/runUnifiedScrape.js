@@ -70,7 +70,7 @@ async function scrapeRecentManga() {
         await mangaRepository.createScrapeLog(logData);
         logger.info('Scraping recent manga...');
 
-        const recentResponse = await komikIndoScrap.getKomikIndoManga(1); // Page 1
+        const recentResponse = await komikIndoScrap.getKomikIndoManga(1); // Page 1 aja
         const recentMangas = recentResponse.data || [];
         let processedCount = 0;
 
