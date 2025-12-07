@@ -16,13 +16,10 @@ class MangaRepository {
         return await prisma.chapter.count();
     }
 
-    async findAll({ page = 1, limit = 10, order = { updatedAt: 'desc' } }) {
+    async getMangaList({ page = 1, limit = 10, order = { updatedAt: 'desc' } }) {
         const skip = (page - 1) * limit;
-        const totalResult = await prisma.$queryRaw`SELECT COUNT(DISTINCT "slug") FROM "mangas"`;
-        const total = Number(totalResult[0].count);
 
         const mangas = await prisma.manga.findMany({
-            distinct: ['slug'],
             skip,
             take: limit,
             orderBy: order,
@@ -31,27 +28,13 @@ class MangaRepository {
                 slug: true,
                 status: true,
                 posterUrl: true,
-                author: true,
-                illustrator: true,
-                _count: {
-                    select: { chapters: true },
-                },
             },
         });
 
-        const mappedMangas = mangas.map((m) => ({
+        return mangas.map((m) => ({
             ...m,
-            totalChapters: m._count.chapters,
             _count: undefined,
         }));
-
-        return {
-            mangas: mappedMangas,
-            total,
-            page,
-            limit,
-            totalPages: Math.ceil(total / limit),
-        };
     }
 
     async findMangaBySlug(slug, { chapterOrder = 'asc' } = {}) {

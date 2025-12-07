@@ -4,18 +4,38 @@ const qs = require('qs');
 const komikIndoScrap = require('../scrap/manga/komikIndoScrap');
 const logger = require('../utils/logger'); 
 
-const DEFAULT_TTL = 300; // 5 minutes
+const DEFAULT_TTL = 300; // 30 minutes
+
+const getCountAllMangas = async () => {
+    // Direct DB count for now to verify speed. 8000 rows should be fast.
+    return mangaRepository.countAllMangasInDB();
+};
+
+const getCountAllChapterMangas = async () => {
+    return mangaRepository.countAllChapterMangaInDB();
+};
 
 const getAllMangas = async ({ page, limit, sort, order }) => {
     const cacheKey = `mangas:all:${qs.stringify({ page, limit, sort, order })}`;
-    const orderBy = {};
-    if (sort) {
-        orderBy[sort] = order || 'asc';
-    } else {
-        orderBy.updatedAt = 'desc';
-    }
 
-    return cacheable(cacheKey, DEFAULT_TTL, () => mangaRepository.findAll({ page, limit, order: orderBy }));
+    return cacheable(cacheKey, DEFAULT_TTL, async () => {
+        const orderBy = {};
+        if (sort) {
+            orderBy[sort] = order || 'asc';
+        } else {
+            orderBy.updatedAt = 'desc';
+        }
+
+        const total = await getCountAllMangas();
+        const mangas = await mangaRepository.getMangaList({ page, limit, order: orderBy });
+
+        return {
+            mangas,
+            total,
+            page,
+            limit
+        };
+    });
 };
 
 const scrapeAndCheckForUpdate = async (slug) => {
@@ -89,19 +109,15 @@ const searchMangas = async ({ q, genre, status, author, page = 1, limit = 20 }) 
     });
 };
 
-const getCountAllMangas = async () => {
-    const cacheKey = 'mangas:count:all';
-    return cacheable(cacheKey, DEFAULT_TTL * 2, () => mangaRepository.countAllMangasInDB());
-};
-
-const getCountAllChapterMangas = async () => {
-    const cacheKey = 'mangas:count:chapters';
-    return cacheable(cacheKey, DEFAULT_TTL * 2, () => mangaRepository.countAllChapterMangaInDB());
-};
-
 const getGenres = async () => {
     const cacheKey = 'genres:all';
     return cacheable(cacheKey, DEFAULT_TTL * 12, () => mangaRepository.getGenres());
+};
+
+const getChapterImages = async (chapterPath) => {
+    const cacheKey = `chapter:images:${chapterPath}`;
+    const ONE_DAY = 3600 * 24;
+    return cacheable(cacheKey, ONE_DAY, () => komikIndoScrap.getKomikIndoChapterImages(chapterPath));
 };
 
 module.exports = {
@@ -112,4 +128,6 @@ module.exports = {
     getCountAllChapterMangas,
     getGenres,
     scrapeAndCheckForUpdate,
+    getChapterImages,
 };
+

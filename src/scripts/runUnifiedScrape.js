@@ -70,7 +70,7 @@ async function scrapeRecentManga() {
         await mangaRepository.createScrapeLog(logData);
         logger.info('Scraping recent manga...');
 
-        const recentResponse = await komikIndoScrap.getKomikIndoManga(1); // Page 1 aja
+        const recentResponse = await komikIndoScrap.getKomikIndoManga(1 ); // Page 1 aja
         const recentMangas = recentResponse.data || [];
         let processedCount = 0;
 
@@ -83,7 +83,7 @@ async function scrapeRecentManga() {
                 const detailManga = await komikIndoScrap.getKomikIndoDetail(manga.slug);
                 if (detailManga) {
                     await mangaRepository.upsertManga(detailManga);
-                 }
+                }
             } catch (err) {
                 logger.error(`Failed to process recent manga ${manga.slug}: ${err.message}`);
             }

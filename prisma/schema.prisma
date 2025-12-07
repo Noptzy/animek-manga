@@ -47,6 +47,7 @@ model Manga {
   genres      MangaGenre[]
 
   @@index([createdAt])
+  @@index([updatedAt])
   @@index([title(ops: raw("gin_trgm_ops"))], type: Gin, name: "manga_title_search_idx")
   @@index([altTitle(ops: raw("gin_trgm_ops"))], type: Gin, name: "manga_alttitle_search_idx")
   @@map("mangas")

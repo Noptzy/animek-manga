@@ -1,7 +1,6 @@
 const { waitUntil } = require('@vercel/functions');
 const mangaRepository = require('../../repositories/mangaRepository');
 const mangaService = require('../../services/mangaService');
-const komikIndoScrap = require('../../scrap/manga/komikIndoScrap');
 const logger = require('../../utils/logger');
 const resHandler = require('../../utils/resHandler');
 
@@ -41,7 +40,7 @@ exports.getChapterImage = async (req, res) => {
     }
     const fullPath = `${chapterPath}`.endsWith('/') ? chapterPath : `${chapterPath}/`;
     try {
-        const data = await komikIndoScrap.getKomikIndoChapterImages(fullPath);
+        const data = await mangaService.getChapterImages(fullPath);
         if (!data || !Array.isArray(data.images) || data.images.length === 0) {
             return res
                 .status(404)
