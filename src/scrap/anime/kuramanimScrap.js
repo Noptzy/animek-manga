@@ -7,7 +7,7 @@ const { detectResolution, cleanEmbedUrl } = require('../../utils/videoHelper.js'
 const { waitForVideoSources } = require('../../utils/puppeteerHelper.js');
 
 const kuramaUrl = process.env.KURAMANIME_URL || 'https://v8.kuramanime.tel/';
-const MAX_PAGE = process.env.MAX_PAGE_SEED ? parseInt(process.env.MAX_PAGE_SEED) : 100;
+const maxPage = process.env.MAX_PAGE_SEED || 100;
 
 const USER_AGENT =
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36';
@@ -331,16 +331,17 @@ class KuramanimeScrap {
         try {
             const animeInfo = await this.getInfoAnimeKuramanime(url);
             const episodes = await this.getEpisodeListAnimeKuramanime(url);
-            const episodeList = episodes.map((e) => ({
-                title: e.title,
-                url: e.href,
-                episodeNumber: e.episodeNumber,
+
+            // Map episode list to include 'url' property for compatibility
+            const episodeList = episodes.map(ep => ({
+                ...ep,
+                url: ep.href 
             }));
 
             return {
                 ...animeInfo,
                 totalEpisodes: episodeList.length,
-                episodeList,
+                episodeList: episodeList,
             };
         } catch (err) {
             logger.error(`Error in getDetailAnimeKuramanime: ${err.message}`);
@@ -348,7 +349,6 @@ class KuramanimeScrap {
         }
     }
 
-    // === BAGIAN YANG DIPERBAIKI ===
     async scrapeMassSeed(type, onItemScraped = null) {
         const validTypes = ['ongoing', 'finished', 'movie'];
         if (!validTypes.includes(type)) {
@@ -357,7 +357,7 @@ class KuramanimeScrap {
             throw error;
         }
 
-        logger.info(`[SEED] Memulai scraping: ${type} (Max Page: ${MAX_PAGE})`);
+        logger.info(`[SEED] Memulai scraping: ${type} (Max Page: ${maxPage})`);
 
         let browser;
         try {
@@ -368,7 +368,13 @@ class KuramanimeScrap {
             const pageObj = await browser.newPage();
             await pageObj.setUserAgent(USER_AGENT);
 
-            for (let page = 1; page <= MAX_PAGE; page++) {
+            let consecutiveFailures = 0; 
+
+            for (let page = 1; page <= maxPage; page++) {
+                            if (consecutiveFailures >= 3) {
+                                logger.warning(`[SEED] Menghentikan kategori '${type}' setelah 3 kegagalan halaman berturut-turut.`);
+                                break;
+                            }
                 const url = `${kuramaUrl}quick/${type}?order_by=text&page=${page}`;
                 logger.info(`[SEED] Mengambil daftar Halaman ${page}...`);
 
@@ -377,7 +383,7 @@ class KuramanimeScrap {
                     await sleep(1000);
 
                     const animeLinks = await pageObj.evaluate((baseUrl) => {
-                        const links = new Set(); // Use Set to handle duplicates automatically
+                        const links = new Set();
                         const anchors = document.querySelectorAll(
                             '#animeList a, .product__page__content a, .anime__list__text a',
                         );
@@ -401,10 +407,12 @@ class KuramanimeScrap {
                             logger.info(`[SEED] Halaman kosong / Habis di page ${page}. Menghentikan proses.`);
                             break;
                         }
-                        logger.info(`[SEED] Tidak ada link ditemukan di halaman ${page}. Lanjut...`);
+                        logger.warning(`[SEED] Tidak ada link ditemukan di halaman ${page}. Menambah hitungan kegagalan.`);
+                        consecutiveFailures++;
                         continue;
                     }
-
+                    
+                    consecutiveFailures = 0; // Reset counter on success 
                     logger.info(`[SEED] Ditemukan ${animeLinks.length} anime. Memproses detail...`);
 
                     for (const link of animeLinks) {
@@ -422,35 +430,35 @@ class KuramanimeScrap {
                                 continue;
                             }
 
+                            const has18PlusInTitle = details.title.toLowerCase().includes('[18+]');
+                            if (has18PlusInTitle) {
+                                logger.info(`[SEED] Skip: ${details.title} (Judul 18+)`);
+                                continue;
+                            }
+
                             details.category = 'anime';
 
-                            // Jika ada callback, jalankan. Jika tidak, return array (legacy support).
                             if (onItemScraped) {
                                 await onItemScraped(details);
-                            } else {
-                                // This else block is for backward compatibility if ever needed,
-                                // but the new implementation won't use it.
                             }
-                            
+
                             await sleep(200);
                         } catch (detailErr) {
                             logger.error(`[SEED] Gagal detail ${link}: ${detailErr.message}`);
                         }
                     }
                 } catch (err) {
-                    logger.error(`[SEED] Error halaman ${page}: ${err.message}`);
-                    break;
+                    logger.error(`[SEED] Error halaman ${page}: ${err.message}. Menambah hitungan kegagalan.`);
+                    consecutiveFailures++;
+                    continue;
                 }
             }
         } catch (mainErr) {
             logger.error(`[SEED] Fatal Error Browser: ${mainErr.message}`);
-            throw mainErr; // re-throw critical errors
+            throw mainErr;
         } finally {
             if (browser) await browser.close();
         }
-
-        // The function no longer returns a large array.
-        // It processes items as they are found via the callback.
     }
 }
 
