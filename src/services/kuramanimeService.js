@@ -1,43 +1,115 @@
 const KuramanimeRepository = require('../repositories/kuramanimeRepository');
+const KuramanimScrap = require('../scrap/anime/kuramanimScrap');
 const logger = require('../utils/logger');
+const cacheHandler = require('../cache/cacheHandler');
+const { TTL } = require('../utils/cacheConstants');
+const qs = require('qs');
 
-// In the future, you can add other repositories here
-// const OtherServerRepository = require('../repositories/otherServerRepository');
+const KEYS = {
+    STATS: 'anime:server1:stats',
+    ONGOING: (page, limit) => `anime:server1:ongoing:${page}:${limit}`,
+    ONGOING_ALL: 'anime:server1:ongoing:all',
+    FINISHED: (page, limit) => `anime:server1:finished:${page}:${limit}`,
+    FINISHED_ALL: 'anime:server1:finished:all',
+    MOVIES: (page, limit) => `anime:server1:movies:${page}:${limit}`,
+    MOVIES_ALL: 'anime:server1:movies:all',
+    DETAIL: (slug) => `anime:server1:detail:${slug}`,
+    SEARCH: (query) => `anime:server1:search:${query}`,
+    RANDOM_ANIME: (page, limit) => `anime:server1:random:${page}:${limit}`,
+    STREAM_SOURCE: (url) => `anime:server1:stream_source:${Buffer.from(url).toString('base64')}`,
+};
 
 class KuramanimeService {
-    getRepo(serverId) {
-        // The serverId from the URL will be a string, so parse it
-        const id = parseInt(serverId);
-
-        // Simple mapping for now. Can be extended with a more dynamic system.
-        if (id === 1) {
-            return KuramanimeRepository;
-        }
-        
-        // Add other repositories here as you support more servers
-        // if (id === 2) {
-        //     return OtherServerRepository;
-        // }
-
-        logger.error(`[ANIME-SERVICE] No repository found for serverId: ${serverId}`);
-        throw new Error(`Unsupported server ID: ${serverId}`);
+    async getAnimeStats() {
+        return cacheHandler.remember(KEYS.STATS, TTL.SHORT, async () => {
+            return KuramanimeRepository.countAll();
+        });
     }
 
-    async getAnimes(serverId, filters) {
-        const repo = this.getRepo(serverId);
-        // The repository is already hardcoded to its specific server_id,
-        // so we don't need to pass it down.
-        return repo.getAnimes(filters);
+    async getOngoingAnime(page, limit) {
+        const cacheKey = KEYS.ONGOING(page, limit);
+        return cacheHandler.remember(cacheKey, TTL.MEDIUM, async () => {
+            return KuramanimeRepository.getOngoingAnime(Number(page), Number(limit));
+        });
     }
 
-    async getAnimeBySlug(serverId, slug) {
-        const repo = this.getRepo(serverId);
-        return repo.getAnimeBySlug(slug);
+    async getAllOngoingAnime() {
+        return cacheHandler.remember(KEYS.ONGOING_ALL, TTL.MEDIUM, async () => {
+            return KuramanimeRepository.getAllOngoingAnime();
+        });
     }
 
-    async getAnimeEpisodeStream(serverId, slug, episodeNumber) {
-        const repo = this.getRepo(serverId);
-        return repo.getAnimeEpisodeStream(slug, episodeNumber);
+    async getFinishedAnime(page, limit) {
+        const cacheKey = KEYS.FINISHED(page, limit);
+        return cacheHandler.remember(cacheKey, TTL.MEDIUM, async () => {
+            return KuramanimeRepository.getFinishedAnime(Number(page), Number(limit));
+        });
+    }
+
+    async getAllFinishedAnime() {
+        return cacheHandler.remember(KEYS.FINISHED_ALL, TTL.MEDIUM, async () => {
+            return KuramanimeRepository.getAllFinishedAnime();
+        });
+    }
+
+    async getMovieAnime(page, limit) {
+        const cacheKey = KEYS.MOVIES(page, limit);
+        return cacheHandler.remember(cacheKey, TTL.MEDIUM, async () => {
+            return KuramanimeRepository.getMovieAnime(Number(page), Number(limit));
+        });
+    }
+
+    async getAllMovieAnime() {
+        return cacheHandler.remember(KEYS.MOVIES_ALL, TTL.MEDIUM, async () => {
+            return KuramanimeRepository.getAllMovieAnime();
+        });
+    }
+
+    async getAnimeBySlug(slug) {
+        const cacheKey = KEYS.DETAIL(slug);
+        return cacheHandler.remember(cacheKey, TTL.MEDIUM, async () => {
+            const anime = await KuramanimeRepository.getAnimeBySlug(slug);
+            if (anime && anime.genres) {
+                anime.genres = anime.genres.map((g) => g.serverGenre);
+            }
+            return anime;
+        });
+    }
+
+    async scrapeEpisodeStreams(episodeUrl) {
+        return cacheHandler.remember(KEYS.STREAM_SOURCE(episodeUrl), TTL.MEDIUM, async () => {
+            return KuramanimScrap.getStreamEpsKuramanime(episodeUrl);
+        });
+    }
+
+    async searchAnime(filters) {
+        const queryString = qs.stringify(filters);
+        const cacheKey = KEYS.SEARCH(queryString);
+        return cacheHandler.remember(cacheKey, TTL.MEDIUM, async () => {
+            return KuramanimeRepository.searchAnime(filters);
+        });
+    }
+
+    async getRandomAnime(page = 1, limit = 15) {
+        const cacheKey = KEYS.RANDOM_ANIME(page, limit);
+        return cacheHandler.remember(cacheKey, TTL.SHORT, async () => {
+            const [ongoing, finished, movies] = await Promise.all([
+                KuramanimeRepository.getOngoingAnime(1, 20),
+                KuramanimeRepository.getFinishedAnime(1, 20),
+                KuramanimeRepository.getMovieAnime(1, 20),
+            ]);
+
+            const combined = [...ongoing.anime, ...finished.anime, ...movies.anime];
+            for (let i = combined.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [combined[i], combined[j]] = [combined[j], combined[i]];
+            }
+
+            const total = combined.length;
+            const paginatedAnime = combined.slice((page - 1) * limit, page * limit);
+
+            return { anime: paginatedAnime, total };
+        });
     }
 }
 
