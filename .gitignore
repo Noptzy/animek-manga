@@ -15,3 +15,13 @@ prisma/seed.js
 docs
 
 test
+
+.idea
+
+aiDocs
+
+.gitignore
+
+.prettierc.json
+
+.prettierc
