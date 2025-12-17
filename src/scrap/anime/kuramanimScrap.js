@@ -126,6 +126,16 @@ class KuramanimeScrap {
         const altTitle = $('.anime__details__title span').text().trim();
         const slug = this._generateSlug(title);
 
+        let score = 0;
+        $('.anime__details__widget li').each((_, li) => {
+            const label = $(li).find('.col-3 span').text().replace(':', '').trim();
+            const value = $(li).find('.col-9').text().trim();
+            if (label === 'Skor') {
+                const parsed = parseFloat(value);
+                if (!isNaN(parsed)) score = parsed;
+            }
+        });
+
         const info = {};
         $('.anime__details__widget ul li').each((_, li) => {
             const label = $(li).find('.col-3 span').text().replace(':', '').trim();
@@ -153,8 +163,9 @@ class KuramanimeScrap {
             status: info.Status || '',
             type: info.Tipe || '',
             country,
-            category, // Add the new category field
+            category,
             genres,
+            score,
         };
     }
 

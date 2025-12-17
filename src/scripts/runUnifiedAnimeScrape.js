@@ -82,7 +82,7 @@ async function runUnifiedAnimeScrape() {
                             // This status means the anime exists and has no new episodes or status changes.
                             // We can consider this a form of "no new updates" for the early exit logic.
                             logger.info(`[SKIP] ${animeData.title} (no updates)`);
-                            continue; // Continue to the next anime link
+                            // continue; 
                         }
 
                         if (!episodesToProcess || episodesToProcess.length === 0) {

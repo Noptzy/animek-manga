@@ -86,7 +86,6 @@ class KuramanimeRepository {
             };
         });
 
-        // Use a transaction to delete old streams and create new ones
         await prisma.$transaction([
             prisma.episodeStream.deleteMany({ where: { episodeId } }),
             prisma.episodeStream.createMany({
@@ -174,10 +173,17 @@ class KuramanimeRepository {
                                 server: { connect: { id: serverId } },
                             },
                             update: {
+                                title: animeData.title,
+                                posterUrl: animeData.poster_url,
+                                synopsis: animeData.synopsis,
                                 status: animeData.status,
                                 type: animeData.type,
                                 season: animeData.musim,
+                                duration: animeData.durasi,
+                                quality: animeData.kualitas,
                                 score: String(animeData.score || '0'),
+                                rating: animeData.rating,
+                                country: animeData.country,
                                 sourceUrl: animeData.link,
                                 scrapedAt: new Date(),
                             },
