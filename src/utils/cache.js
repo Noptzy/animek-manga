@@ -1,18 +1,7 @@
-const cache = require('../config/memoryCache');
+const cacheHandler = require('../cache/cacheHandler');
 
 const cacheable = async (key, ttl, dataFetcher) => {
-    const cachedData = cache.get(key);
-    if (cachedData) {
-        return cachedData;
-    }
-
-    const freshData = await dataFetcher();
-
-    if (freshData) {
-        cache.set(key, freshData, ttl);
-    }
-
-    return freshData;
+    return cacheHandler.remember(key, ttl, dataFetcher);
 };
 
 module.exports = {

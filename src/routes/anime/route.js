@@ -1,17 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const AnimeController = require('../../controllers/anime/animeController');
+const kuramanimeController = require('../../controllers/anime/kuramanimeController');
 
-// Route to get a list of animes with filters
-// Example: GET /api/v1/1/anime?page=1&limit=20&status=ongoing
-router.get('/', AnimeController.getAnimes);
-
-// Route to get a single anime's details by its slug
-// Example: GET /api/v1/1/anime/boku-no-hero-academia-final-season
-router.get('/:slug', AnimeController.getAnimeBySlug);
-
-// Route to get stream links for a specific episode
-// Example: GET /api/v1/1/anime/boku-no-hero-academia-final-season/1
-router.get('/:slug/:episode', AnimeController.getAnimeEpisodeStream);
+// Routes for Server 1 (Kuramanime)
+router.get('/1/stats', kuramanimeController.getAnimeStats);
+router.get('/1/search', kuramanimeController.searchAnime);
+router.get('/1/ongoing', kuramanimeController.getOngoingAnime);
+router.get('/1/finished', kuramanimeController.getFinishedAnime);
+router.get('/1/movies', kuramanimeController.getMovieAnime);
+router.get('/1/animes', kuramanimeController.getRandomAnime);
+router.get('/1/:slug', kuramanimeController.getAnimeBySlug);
+router.post('/1/scrape-episode', kuramanimeController.scrapeEpisodeStreams);
+router.get('/1/animes', kuramanimeController.getRandomAnime);
+router.post('/1/drive/resolve', kuramanimeController.resolveDriveUrl);
 
 module.exports = router;

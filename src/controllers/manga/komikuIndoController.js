@@ -18,7 +18,6 @@ exports.getMangaDetailBySlugSWR = async (req, res) => {
             }
             return res.json(resHandler.success('Success get Manga', manga).toJSON());
         } else {
-            // If manga doesn't exist, scrape, wait, and then return
             await mangaService.scrapeAndCheckForUpdate(slug);
             const freshManga = await mangaRepository.findMangaBySlug(slug, { chapterOrder: 'asc' });
             if (freshManga) {

@@ -42,7 +42,7 @@ class userService {
         return await userRepository.deleteUser(id);
     }
 
-    async updateProfile(data, id){
+    async updateProfile(data, id) {
         return await userRepository.updateProfile(data, id);
     }
 }

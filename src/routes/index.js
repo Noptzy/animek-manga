@@ -12,6 +12,6 @@ router.use('/users', userRoute);
 router.use('/auth', authRoute);
 router.use('/stats',statsRoute);
 router.use('/cron', cronRoute);
-router.use('/:serverId/anime', animeRoute);
+router.use('/anime', animeRoute);
 
 module.exports = router;

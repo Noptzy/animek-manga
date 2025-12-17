@@ -1,6 +1,13 @@
 function detectResolution(url) {
-    const m = url.match(/-(\d{3,4})p-/);
-    return m ? m[1] + 'p' : 'unknown';
+    const match = url.match(/(\d{3,4})p(?:\.mp4|\/|-|$)/i); // Matches XXXp followed by .mp4, /, -, or end of string
+    if (match) {
+        return match[1] + 'p';
+    }
+
+    // Fallback for embed or other cases if needed
+    if (url.includes('embed')) return 'embed';
+
+    return 'unknown';
 }
 
 function cleanEmbedUrl(url) {
