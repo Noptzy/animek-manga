@@ -110,7 +110,7 @@ class KuramanimeScrap {
     //         if (browser) await browser.close();
     //     }
     // }
-
+ 
     async getStreamEpsKuramanime(link) {
         let page;
         try {
