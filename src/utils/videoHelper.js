@@ -3,8 +3,7 @@ function detectResolution(url) {
     if (match) {
         return match[1] + 'p';
     }
-
-    // Fallback for embed or other cases if needed
+    
     if (url.includes('embed')) return 'embed';
 
     return 'unknown';

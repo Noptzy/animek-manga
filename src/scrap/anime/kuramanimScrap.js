@@ -7,6 +7,7 @@ const { withRetry } = require('../../utils/retryHelper');
 const { waitForVideoSources } = require('../../utils/puppeteerHelper.js');
 const { cleanEmbedUrl } = require('../../utils/videoHelper.js');
 const { detectQualityFromUrl } = require('../../utils/qualityHelper.js');
+const { getBrowser } = require('../../utils/browser.js');
 
 const kuramaUrl = process.env.KURAMANIME_URL || 'https://v8.kuramanime.tel/';
 const USER_AGENT =
@@ -24,89 +25,140 @@ class KuramanimeScrap {
             .replace(/^-+|-+$/g, '');
     }
 
+    // async getStreamEpsKuramanimePuppter(link) {
+    //     let browser;
+    //     try {
+    //         browser = await puppeteer.launch({
+    //             headless: true,
+    //             args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    //         });
+    //         const page = await browser.newPage();
+
+    //         await page.setUserAgent(USER_AGENT);
+
+    //         await page.setRequestInterception(true);
+    //         page.on('request', (req) => {
+    //             if (['image', 'stylesheet', 'font'].includes(req.resourceType())) {
+    //                 req.abort();
+    //             } else {
+    //                 req.continue();
+    //             }
+    //         });
+
+    //         await page.goto(link, { waitUntil: 'domcontentloaded', timeout: 60000 });
+
+    //         const servers = await page.$$eval('#changeServer option', (opts) =>
+    //             opts.map((o) => ({ value: o.value, label: o.innerText.trim() })),
+    //         );
+
+    //         let result = null;
+
+    //         const kura = servers.find((s) => s.value === 'kuramadrive');
+    //         if (kura) {
+    //             await page.select('#changeServer', kura.value);
+    //             await page.evaluate(() => {
+    //                 const sel = document.querySelector('#changeServer');
+    //                 sel && sel.dispatchEvent(new Event('change', { bubbles: true }));
+    //             });
+
+    //             let videoSources = [];
+    //             for (const frame of page.frames()) {
+    //                 videoSources = await waitForVideoSources(frame, 12000, 1000);
+    //                 if (videoSources.length) break;
+    //             }
+
+    //             const resolutions = videoSources.map((src) => ({
+    //                 resolution: detectQualityFromUrl(src),
+    //                 url: src,
+    //             }));
+
+    //             if (resolutions.length) {
+    //                 result = { server: kura.value, resolutions };
+    //             }
+    //         }
+
+    //         if (!result) {
+    //             for (const s of servers) {
+    //                 if (s.value === 'kuramadrive') continue;
+
+    //                 await page.select('#changeServer', s.value);
+    //                 await page.evaluate(() => {
+    //                     const sel = document.querySelector('#changeServer');
+    //                     sel && sel.dispatchEvent(new Event('change', { bubbles: true }));
+    //                 });
+
+    //                 let embedUrl = null;
+    //                 try {
+    //                     await page.waitForSelector('iframe', { timeout: 6000 });
+    //                     embedUrl = await page.$eval('iframe', (el) => el.src);
+    //                     embedUrl = cleanEmbedUrl(embedUrl);
+    //                 } catch {}
+
+    //                 if (embedUrl) {
+    //                     result = { server: s.value, embedUrl };
+    //                     break;
+    //                 }
+    //             }
+    //         }
+
+    //         return result;
+    //     } catch (err) {
+    //         console.error('FULL ERROR:', err);
+    //         logger.error('Error in getStreamEpsKuramanime:', err);
+    //         return null;
+    //     } finally {
+    //         if (browser) await browser.close();
+    //     }
+    // }
+
     async getStreamEpsKuramanime(link) {
-        let browser;
+        let page;
         try {
-            browser = await puppeteer.launch({
-                headless: true,
-                args: ['--no-sandbox', '--disable-setuid-sandbox'],
-            });
-            const page = await browser.newPage();
-            
+            const browser = await getBrowser();
+            page = await browser.newPage();
+
             await page.setUserAgent(USER_AGENT);
 
             await page.setRequestInterception(true);
             page.on('request', (req) => {
-                if (['image', 'stylesheet', 'font'].includes(req.resourceType())) {
-                    req.abort();
-                } else {
+                const type = req.resourceType();
+                if (['document', 'script', 'xhr', 'fetch'].includes(type)) {
                     req.continue();
+                } else {
+                    req.abort();
                 }
             });
 
-            await page.goto(link, { waitUntil: 'domcontentloaded', timeout: 60000 });
+            await page.goto(link, {
+                waitUntil: 'domcontentloaded',
+                timeout: 30000,
+            });
 
-            const servers = await page.$$eval('#changeServer option', (opts) =>
-                opts.map((o) => ({ value: o.value, label: o.innerText.trim() })),
+            await page.waitForFunction(
+                () => {
+                    const video = document.querySelector('#player');
+                    return video && video.querySelectorAll('source').length > 0;
+                },
+                { timeout: 8000 },
             );
 
-            let result = null;
+            const sources = await page.$$eval('#player source', (els) =>
+                els.map((el) => {
+                    const url = el.src;
+                    const match = url.match(/(\d{3,4})p/i);
+                    return {
+                        url,
+                        resolution: match ? `${match[1]}p` : null,
+                    };
+                }),
+            );
 
-            const kura = servers.find((s) => s.value === 'kuramadrive');
-            if (kura) {
-                await page.select('#changeServer', kura.value);
-                await page.evaluate(() => {
-                    const sel = document.querySelector('#changeServer');
-                    sel && sel.dispatchEvent(new Event('change', { bubbles: true }));
-                });
-
-                let videoSources = [];
-                for (const frame of page.frames()) {
-                    videoSources = await waitForVideoSources(frame, 12000, 1000);
-                    if (videoSources.length) break;
-                }
-
-                const resolutions = videoSources.map((src) => ({
-                    resolution: detectQualityFromUrl(src),
-                    url: src,
-                }));
-
-                if (resolutions.length) {
-                    result = { server: kura.value, resolutions };
-                }
-            }
-
-            if (!result) {
-                for (const s of servers) {
-                    if (s.value === 'kuramadrive') continue;
-
-                    await page.select('#changeServer', s.value);
-                    await page.evaluate(() => {
-                        const sel = document.querySelector('#changeServer');
-                        sel && sel.dispatchEvent(new Event('change', { bubbles: true }));
-                    });
-
-                    let embedUrl = null;
-                    try {
-                        await page.waitForSelector('iframe', { timeout: 6000 });
-                        embedUrl = await page.$eval('iframe', (el) => el.src);
-                        embedUrl = cleanEmbedUrl(embedUrl);
-                    } catch {}
-
-                    if (embedUrl) {
-                        result = { server: s.value, embedUrl };
-                        break;
-                    }
-                }
-            }
-
-            return result;
+            return sources.filter((s) => s.url);
         } catch (err) {
-            console.error('FULL ERROR:', err);
-            logger.error('Error in getStreamEpsKuramanime:', err);
-            return null;
+            logger.error('[Kuramanime] getStreamEpsKuramanime:', err);
+            return [];
         } finally {
-            if (browser) await browser.close();
+            if (page) await page.close();
         }
     }
 
