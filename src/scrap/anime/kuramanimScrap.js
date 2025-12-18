@@ -10,7 +10,7 @@ const { detectQualityFromUrl } = require('../../utils/qualityHelper.js');
 
 const kuramaUrl = process.env.KURAMANIME_URL || 'https://v8.kuramanime.tel/';
 const USER_AGENT =
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36';
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36';
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -31,14 +31,17 @@ class KuramanimeScrap {
                 headless: true,
                 args: ['--no-sandbox', '--disable-setuid-sandbox'],
             });
-
             const page = await browser.newPage();
+            
             await page.setUserAgent(USER_AGENT);
 
             await page.setRequestInterception(true);
             page.on('request', (req) => {
-                if (['image', 'stylesheet', 'font'].includes(req.resourceType())) req.abort();
-                else req.continue();
+                if (['image', 'stylesheet', 'font'].includes(req.resourceType())) {
+                    req.abort();
+                } else {
+                    req.continue();
+                }
             });
 
             await page.goto(link, { waitUntil: 'domcontentloaded', timeout: 60000 });
@@ -47,7 +50,7 @@ class KuramanimeScrap {
                 opts.map((o) => ({ value: o.value, label: o.innerText.trim() })),
             );
 
-            let resolutions = [];
+            let result = null;
 
             const kura = servers.find((s) => s.value === 'kuramadrive');
             if (kura) {
@@ -57,19 +60,23 @@ class KuramanimeScrap {
                     sel && sel.dispatchEvent(new Event('change', { bubbles: true }));
                 });
 
+                let videoSources = [];
                 for (const frame of page.frames()) {
-                    const videoSources = await waitForVideoSources(frame, 12000, 1000);
-                    if (videoSources.length) {
-                        resolutions = videoSources.map((src) => ({
-                            resolution: detectQualityFromUrl(src),
-                            url: src,
-                        }));
-                        break;
-                    }
+                    videoSources = await waitForVideoSources(frame, 12000, 1000);
+                    if (videoSources.length) break;
+                }
+
+                const resolutions = videoSources.map((src) => ({
+                    resolution: detectQualityFromUrl(src),
+                    url: src,
+                }));
+
+                if (resolutions.length) {
+                    result = { server: kura.value, resolutions };
                 }
             }
 
-            if (!resolutions.length) {
+            if (!result) {
                 for (const s of servers) {
                     if (s.value === 'kuramadrive') continue;
 
@@ -79,23 +86,25 @@ class KuramanimeScrap {
                         sel && sel.dispatchEvent(new Event('change', { bubbles: true }));
                     });
 
+                    let embedUrl = null;
                     try {
                         await page.waitForSelector('iframe', { timeout: 6000 });
-                        let embedUrl = await page.$eval('iframe', (el) => el.src);
+                        embedUrl = await page.$eval('iframe', (el) => el.src);
                         embedUrl = cleanEmbedUrl(embedUrl);
-
-                        if (embedUrl) {
-                            resolutions = [{ resolution: 'embed', url: embedUrl }];
-                            break;
-                        }
                     } catch {}
+
+                    if (embedUrl) {
+                        result = { server: s.value, embedUrl };
+                        break;
+                    }
                 }
             }
 
-            return resolutions;
+            return result;
         } catch (err) {
-            logger.error(`Stream error: ${err.message}`);
-            return [];
+            console.error('FULL ERROR:', err);
+            logger.error('Error in getStreamEpsKuramanime:', err);
+            return null;
         } finally {
             if (browser) await browser.close();
         }
