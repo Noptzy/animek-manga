@@ -1,4 +1,7 @@
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-extra');
+const StealthPlugin = require('puppeteer-extra-plugin-stealth');
+
+puppeteer.use(StealthPlugin());
 
 const kuramaBaseUrl = process.env.KURAMANIME_URL || 'https://v8.kuramanime.tel';
 
@@ -24,7 +27,7 @@ class KuramaDriveTokenService {
         let browser;
         try {
             browser = await puppeteer.launch({
-                headless: true,
+                headless: true, 
                 args: [
                     '--no-sandbox',
                     '--disable-setuid-sandbox',
@@ -35,7 +38,7 @@ class KuramaDriveTokenService {
             const page = await browser.newPage();
 
             await page.setUserAgent(
-                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36'
+                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36'
             );
 
             await page.goto(kuramaBaseUrl, {
@@ -43,33 +46,46 @@ class KuramaDriveTokenService {
                 timeout: 60000,
             });
 
-            await sleep(1500);
+            await sleep(3000);
+
+            const cookies = await page.cookies();
+            const xsrfCookie = cookies.find(c => c.name === 'XSRF-TOKEN');
+            
+            if (!xsrfCookie) {
+                throw new Error('XSRF-TOKEN tidak ditemukan dalam cookie. Mungkin terblokir Cloudflare.');
+            }
+
+            const rawXsrfToken = decodeURIComponent(xsrfCookie.value);
 
             const result = await page.evaluate(
-                async (pid, sid) => {
+                async (pid, sid, xsrfToken) => {
                     const res = await fetch('/misc/token/drive-token', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                             'Accept': 'application/json',
+                            'X-XSRF-TOKEN': xsrfToken, // WAJIB untuk Laravel
+                            'X-Requested-With': 'XMLHttpRequest' // Menandakan ini request AJAX
                         },
                         credentials: 'same-origin',
                         body: JSON.stringify({ pid, sid }),
                     });
 
                     if (!res.ok) {
-                        throw new Error(`HTTP ${res.status}`);
+                        const errorMsg = await res.text();
+                        throw new Error(`HTTP ${res.status}: ${errorMsg}`);
                     }
 
                     return res.json();
                 },
                 pid,
-                sid
+                sid,
+                rawXsrfToken
             );
 
             const { access_token, gid } = result || {};
             if (!access_token || !gid) {
-                throw new Error('Token Kuramadrive tidak valid');
+                throw new Error('Respon API tidak lengkap (access_token/gid hilang)');
             }
 
             const data = { access_token, gid };
@@ -81,6 +97,7 @@ class KuramaDriveTokenService {
 
             return data;
         } catch (err) {
+            console.error(`[KURAMA-SERVICE-ERROR] ${err.message}`);
             throw new Error(`KuramaDrive resolve gagal: ${err.message}`);
         } finally {
             if (browser) {
