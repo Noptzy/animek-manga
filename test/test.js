@@ -1,45 +1,63 @@
+require('dotenv').config();
 const fs = require('fs');
-const logger = require('../src/utils/logger.js');
-const komikuScrap = require('../src/scrap/manga/komikuScrap.js');
+const path = require('path');
+const KuramanimeScrap = require('../src/scrap/anime/kuramanimScrap'); // Pastikan path require sesuai dengan struktur foldermu
 
-function saveJson(fileName, data) {
-    const filePath = `./test/${fileName}`;
-    fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
-    logger.info(`Saved : ${filePath}`);
-}
+(async () => {
+    try {
+        console.log('Scraping homepage...');
+        const homepageAnime = await KuramanimeScrap.getAnimeHomepageKuramanime();
 
-async function testKomikuCompleted() {
-    const data = await komikuScrap.getKomikuCompleted(1);
-    saveJson('komikuEnd.json', data);
-    logger.info(`Berhasil Scrap`, saveJson);
-}
+        // LOGIKA BARU: Cari link dari kategori apapun yang tersedia
+        let sampleAnimeUrl = null;
+        const categories = ['Sedang Tayang', 'Selesai Tayang', 'Film Layar Lebar'];
 
-async function testKomikDetail() {
-    const slug = '123213-chainsaw-man';
-    const data = await komikuScrap.getKomikuDetail(slug);
-    saveJson('detailKomik.json', data);
-    logger.info(`berhail scrap`, saveJson);
-}
+        for (const cat of categories) {
+            if (homepageAnime[cat] && homepageAnime[cat].length > 0) {
+                sampleAnimeUrl = homepageAnime[cat][0].link;
+                console.log(`🔍 Mengambil sampel anime dari kategori: '${cat}' -> ${homepageAnime[cat][0].title}`);
+                break; 
+            }
+        }
 
-async function testKomikChapterManga() {
-    // KOREKSI: Gunakan PATH RELATIF (tanpa domain)
-    const chapterUrlPath = 'chainsaw-man-chapter-216/'; // atau '/chainsaw-man-chapter-216/'
+        if (!sampleAnimeUrl) {
+            // Cek jika ada anime tapi tidak masuk kategori (fallback)
+            const allKeys = Object.keys(homepageAnime);
+            for (const key of allKeys) {
+                 if (homepageAnime[key] && homepageAnime[key].length > 0) {
+                    sampleAnimeUrl = homepageAnime[key][0].link;
+                    console.log(`🔍 Mengambil sampel anime dari kategori (fallback): '${key}'`);
+                    break;
+                 }
+            }
+        }
 
-    // Panggil fungsi scraper
-    const data = await komikuScrap.getKomikuChapterImages(chapterUrlPath);
+        if (!sampleAnimeUrl) throw new Error('Tidak ada anime untuk dicoba (Hasil scrape kosong)');
 
-    // Simpan data
-    saveJson('chapterUrl.json', data);
+        console.log('⏳ Scraping detail anime...');
+        const animeDetail = await KuramanimeScrap.getDetailAnimeKuramanime(sampleAnimeUrl);
 
-    // Log hasil (pastikan log dicetak dengan benar)
-    if (data && data.images && data.images.length > 0) {
-        logger.info(`Berhasil Scrap Gambar: chapterUrl.json (${data.images.length} gambar)`);
-        console.log(`\n✅ Berhasil mendapatkan ${data.images.length} gambar chapter.`);
-        console.log('Sample Gambar Pertama:', data.images[0]);
-    } else {
-        logger.error(`Gagal mendapatkan gambar chapter. Cek log axios di komikuScrap.js`);
+        const firstEpisodeUrl = animeDetail.episodeList?.[0]?.url;
+        let streamInfo = null;
+        if (firstEpisodeUrl) {
+            console.log('⏳ Scraping streaming episode pertama...');
+            streamInfo = await KuramanimeScrap.getStreamEpsKuramanime(firstEpisodeUrl);
+        } else {
+            console.log('⚠️ Tidak ada episode ditemukan untuk anime ini.');
+        }
+
+        // Gabungkan semua data
+        const finalResult = {
+            homepageAnime,
+            animeDetail,
+        };
+
+        // Simpan ke file JSON
+        const filePath = path.join(__dirname, 'kuramanime_result.json');
+        fs.writeFileSync(filePath, JSON.stringify(finalResult, null, 2), 'utf-8');
+
+        console.log('✅ Data berhasil disimpan ke:', filePath);
+    } catch (err) {
+        console.error('❌ Error saat scraping:', err.message);
     }
-}
-
-
-testKomikChapterManga();
+})();

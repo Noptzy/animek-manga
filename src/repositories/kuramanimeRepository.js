@@ -17,18 +17,13 @@ function slugify(text) {
 }
 
 function detectQuality(url, providedQuality) {
-    // Check if a valid quality is provided directly
     if (providedQuality && providedQuality.toLowerCase() !== 'unknown') {
         return providedQuality.toLowerCase();
     }
-
-    // If not, try to extract quality from the URL
     const qualityMatch = url.match(/(360|480|720|1080)p/i);
     if (qualityMatch) {
         return qualityMatch[0].toLowerCase();
     }
-
-    // If still no quality found, return a professional fallback
     return 'Default';
 }
 
@@ -556,6 +551,7 @@ class KuramanimeRepository {
 
         return { anime, total, page: Number(page), limit: Number(limit) };
     }
+    
     async getRandomAnime() {
         const count = await prisma.animeServer.count({
             where: { serverId: SERVER_ID },

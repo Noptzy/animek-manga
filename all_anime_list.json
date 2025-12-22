@@ -1,0 +1,6798 @@
+{
+  "total": 448,
+  "scraped_at": "2025-12-20T11:09:58.952Z",
+  "data": [
+    {
+      "title": "Record of Ragnarok S3",
+      "url": "https://anime.oploverz.ac/series/record-of-ragnarok-s3",
+      "slug": "record-of-ragnarok-s3",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.05,
+      "genres": [
+        "Action",
+        "Drama",
+        "Fantasy",
+        "Super Power",
+        "Martial Arts",
+        "Gore",
+        "Mythology"
+      ],
+      "total_episodes": 15
+    },
+    {
+      "title": "Yu-Gi-Oh! 2 : GX",
+      "url": "https://anime.oploverz.ac/series/yu-gi-oh-2-gx",
+      "slug": "yu-gi-oh-2-gx",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.22,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Adventure",
+        "Game"
+      ],
+      "total_episodes": 180
+    },
+    {
+      "title": "Yu-Gi-Oh! 1 : Duel Monsters",
+      "url": "https://anime.oploverz.ac/series/yu-gi-oh-1-duel-monsters",
+      "slug": "yu-gi-oh-1-duel-monsters",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.51,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Adventure",
+        "Game",
+        "Mythology"
+      ],
+      "total_episodes": 224
+    },
+    {
+      "title": "Record of Ragnarok S2",
+      "url": "https://anime.oploverz.ac/series/record-of-ragnarok-s2",
+      "slug": "record-of-ragnarok-s2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.49,
+      "genres": [
+        "Action",
+        "Drama",
+        "Fantasy",
+        "Super Power",
+        "Martial Arts",
+        "Gore",
+        "Mythology"
+      ],
+      "total_episodes": 15
+    },
+    {
+      "title": "Record of Ragnarok S1",
+      "url": "https://anime.oploverz.ac/series/record-of-ragnarok-s1",
+      "slug": "record-of-ragnarok-s1",
+      "status": "Completed",
+      "type": "TV",
+      "score": 6.82,
+      "genres": [
+        "Action",
+        "Drama",
+        "Fantasy",
+        "Super Power",
+        "Martial Arts",
+        "Gore",
+        "Mythology"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Slam Dunk",
+      "url": "https://anime.oploverz.ac/series/slam-dunk",
+      "slug": "slam-dunk",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.55,
+      "genres": [
+        "Comedy",
+        "School",
+        "Sports"
+      ],
+      "total_episodes": 101
+    },
+    {
+      "title": "Chainsaw Man The Movie: Reze Arc",
+      "url": "https://anime.oploverz.ac/series/chainsaw-man-the-movie-reze-arc",
+      "slug": "chainsaw-man-the-movie-reze-arc",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 9.18,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Super Power",
+        "Demons",
+        "Seinen",
+        "Gore"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Detective Conan Movie 28: One-Eyed Flashback",
+      "url": "https://anime.oploverz.ac/series/detective-conan-movie-28-one-eyed-flashback",
+      "slug": "detective-conan-movie-28-one-eyed-flashback",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 7.64,
+      "genres": [
+        "Mystery",
+        "Psychological",
+        "Police",
+        "Crime"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Detective Conan Movie 24: The Scarlet Bullet",
+      "url": "https://anime.oploverz.ac/series/detective-conan-movie-24-the-scarlet-bullet",
+      "slug": "detective-conan-movie-24-the-scarlet-bullet",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 7.77,
+      "genres": [
+        "Mystery",
+        "Psychological",
+        "Police",
+        "Crime"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Detective Conan Movie 23: The Fist of Blue Sapphire",
+      "url": "https://anime.oploverz.ac/series/detective-conan-movie-23-the-fist-of-blue-sapphire",
+      "slug": "detective-conan-movie-23-the-fist-of-blue-sapphire",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 7.86,
+      "genres": [
+        "Mystery",
+        "Psychological",
+        "Police",
+        "Crime"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Detective Conan Movie 22: Zero the Enforcer",
+      "url": "https://anime.oploverz.ac/series/detective-conan-movie-22-zero-the-enforcer",
+      "slug": "detective-conan-movie-22-zero-the-enforcer",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 7.85,
+      "genres": [
+        "Mystery",
+        "Psychological",
+        "Police",
+        "Crime"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Detective Conan Movie 21: Crimson Love Letter",
+      "url": "https://anime.oploverz.ac/series/detective-conan-movie-21-crimson-love-letter",
+      "slug": "detective-conan-movie-21-crimson-love-letter",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 7.68,
+      "genres": [
+        "Mystery",
+        "Psychological",
+        "Police",
+        "Crime"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Detective Conan Movie 20: The Darkest Nightmare",
+      "url": "https://anime.oploverz.ac/series/detective-conan-movie-20-the-darkest-nightmare",
+      "slug": "detective-conan-movie-20-the-darkest-nightmare",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 8.17,
+      "genres": [
+        "Mystery",
+        "Psychological",
+        "Police",
+        "Crime"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Detective Conan Movie 19: Sunflowers of Inferno",
+      "url": "https://anime.oploverz.ac/series/detective-conan-movie-19-sunflowers-of-inferno",
+      "slug": "detective-conan-movie-19-sunflowers-of-inferno",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 7.73,
+      "genres": [
+        "Mystery",
+        "Psychological",
+        "Police",
+        "Crime"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Detective Conan Movie 18: The Sniper from Another Dimension",
+      "url": "https://anime.oploverz.ac/series/detective-conan-movie-18-the-sniper-from-another-dimension",
+      "slug": "detective-conan-movie-18-the-sniper-from-another-dimension",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 8.05,
+      "genres": [
+        "Mystery",
+        "Psychological",
+        "Police",
+        "Crime"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Detective Conan Movie 17: Private Eye in the Distant Sea",
+      "url": "https://anime.oploverz.ac/series/detective-conan-movie-17-private-eye-in-the-distant-sea",
+      "slug": "detective-conan-movie-17-private-eye-in-the-distant-sea",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 7.66,
+      "genres": [
+        "Mystery",
+        "Psychological",
+        "Police",
+        "Crime"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Detective Conan Movie 16: The Eleventh Striker",
+      "url": "https://anime.oploverz.ac/series/detective-conan-movie-16-the-eleventh-striker",
+      "slug": "detective-conan-movie-16-the-eleventh-striker",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 7.69,
+      "genres": [
+        "Mystery",
+        "Psychological",
+        "Police",
+        "Crime"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Detective Conan Movie 15: Quarter of Silence",
+      "url": "https://anime.oploverz.ac/series/detective-conan-movie-15-quarter-of-silence",
+      "slug": "detective-conan-movie-15-quarter-of-silence",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 8,
+      "genres": [
+        "Mystery",
+        "Psychological",
+        "Police",
+        "Crime"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Detective Conan Movie 14: The Lost Ship in the Sky",
+      "url": "https://anime.oploverz.ac/series/detective-conan-movie-14-the-lost-ship-in-the-sky",
+      "slug": "detective-conan-movie-14-the-lost-ship-in-the-sky",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 8.1,
+      "genres": [
+        "Mystery",
+        "Psychological",
+        "Police",
+        "Crime"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Detective Conan Movie 13: The Raven Chaser",
+      "url": "https://anime.oploverz.ac/series/detective-conan-movie-13-the-raven-chaser",
+      "slug": "detective-conan-movie-13-the-raven-chaser",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 8.2,
+      "genres": [
+        "Mystery",
+        "Psychological",
+        "Police",
+        "Crime"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Detective Conan Movie 12: Full Score of Fear",
+      "url": "https://anime.oploverz.ac/series/detective-conan-movie-12-full-score-of-fear",
+      "slug": "detective-conan-movie-12-full-score-of-fear",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 7.77,
+      "genres": [
+        "Mystery",
+        "Psychological",
+        "Police",
+        "Crime"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Detective Conan Movie 11: Jolly Roger in the Deep Azure",
+      "url": "https://anime.oploverz.ac/series/detective-conan-movie-11-jolly-roger-in-the-deep-azure",
+      "slug": "detective-conan-movie-11-jolly-roger-in-the-deep-azure",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 7.42,
+      "genres": [
+        "Mystery",
+        "Psychological",
+        "Police",
+        "Crime"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Detective Conan Movie 10: The Private Eyes' Requiem",
+      "url": "https://anime.oploverz.ac/series/detective-conan-movie-10-the-private-eyes-requiem",
+      "slug": "detective-conan-movie-10-the-private-eyes-requiem",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 8.03,
+      "genres": [
+        "Mystery",
+        "Psychological",
+        "Police",
+        "Crime"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Detective Conan Movie 09: Strategy Above the Depths",
+      "url": "https://anime.oploverz.ac/series/detective-conan-movie-09-strategy-above-the-depths",
+      "slug": "detective-conan-movie-09-strategy-above-the-depths",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 7.78,
+      "genres": [
+        "Mystery",
+        "Psychological",
+        "Police",
+        "Crime"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Detective Conan Movie 08: Magician of the Silver Sky",
+      "url": "https://anime.oploverz.ac/series/detective-conan-movie-08-magician-of-the-silver-sky",
+      "slug": "detective-conan-movie-08-magician-of-the-silver-sky",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 8.05,
+      "genres": [
+        "Mystery",
+        "Psychological",
+        "Police",
+        "Crime"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Detective Conan Movie 07: Crossroad in the Ancient Capital",
+      "url": "https://anime.oploverz.ac/series/detective-conan-movie-07-crossroad-in-the-ancient-capital",
+      "slug": "detective-conan-movie-07-crossroad-in-the-ancient-capital",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 7.79,
+      "genres": [
+        "Mystery",
+        "Psychological",
+        "Police",
+        "Crime"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Detective Conan Movie 06: The Phantom of Baker Street",
+      "url": "https://anime.oploverz.ac/series/detective-conan-movie-06-the-phantom-of-baker-street",
+      "slug": "detective-conan-movie-06-the-phantom-of-baker-street",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 8.29,
+      "genres": [
+        "Mystery",
+        "Psychological",
+        "Police",
+        "Crime"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Detective Conan Movie 05: Countdown to Heaven",
+      "url": "https://anime.oploverz.ac/series/detective-conan-movie-05-countdown-to-heaven",
+      "slug": "detective-conan-movie-05-countdown-to-heaven",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 8.11,
+      "genres": [
+        "Mystery",
+        "Psychological",
+        "Police",
+        "Crime"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Detective Conan Movie 04: Captured in Her Eyes",
+      "url": "https://anime.oploverz.ac/series/detective-conan-movie-04-captured-in-her-eyes",
+      "slug": "detective-conan-movie-04-captured-in-her-eyes",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 8.03,
+      "genres": [
+        "Mystery",
+        "Psychological",
+        "Police",
+        "Crime"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Detective Conan Movie 03: The Last Wizard of the Century",
+      "url": "https://anime.oploverz.ac/series/detective-conan-movie-03-the-last-wizard-of-the-century",
+      "slug": "detective-conan-movie-03-the-last-wizard-of-the-century",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 8.04,
+      "genres": [
+        "Mystery",
+        "Psychological",
+        "Police",
+        "Crime"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Detective Conan Movie 02: The Fourteenth Target",
+      "url": "https://anime.oploverz.ac/series/detective-conan-movie-02-the-fourteenth-target",
+      "slug": "detective-conan-movie-02-the-fourteenth-target",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 7.88,
+      "genres": [
+        "Mystery",
+        "Psychological",
+        "Police",
+        "Crime"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Detective Conan Movie 01: The Time Bombed Skyscraper",
+      "url": "https://anime.oploverz.ac/series/detective-conan-movie-01-the-time-bombed-skyscraper",
+      "slug": "detective-conan-movie-01-the-time-bombed-skyscraper",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 7.86,
+      "genres": [
+        "Mystery",
+        "Psychological",
+        "Police",
+        "Crime"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Gintama Movie 2: Kanketsu-hen - Yorozuya yo Eien Nare",
+      "url": "https://anime.oploverz.ac/series/gintama-movie-2-kanketsu-hen-yorozuya-yo-eien-nare",
+      "slug": "gintama-movie-2-kanketsu-hen-yorozuya-yo-eien-nare",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 8.89,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Historical",
+        "Comedy",
+        "Sci-Fi",
+        "Samurai",
+        "Parody"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Gintama Movie 1: Shinyaku Benizakura-hen",
+      "url": "https://anime.oploverz.ac/series/gintama-movie-1-shinyaku-benizakura-hen",
+      "slug": "gintama-movie-1-shinyaku-benizakura-hen",
+      "status": "Completed",
+      "type": "BD",
+      "score": 8.52,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Historical",
+        "Comedy",
+        "Sci-Fi",
+        "Samurai",
+        "Parody"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Gintama S9 : The Final",
+      "url": "https://anime.oploverz.ac/series/gintama-s9-the-final",
+      "slug": "gintama-s9-the-final",
+      "status": "Completed",
+      "type": "BD",
+      "score": 9.05,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Historical",
+        "Comedy",
+        "Sci-Fi",
+        "Parody"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Gintama S8 : The Semi Final",
+      "url": "https://anime.oploverz.ac/series/gintama-s8-the-semi-final",
+      "slug": "gintama-s8-the-semi-final",
+      "status": "Completed",
+      "type": "Special",
+      "score": 8.46,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Historical",
+        "Comedy",
+        "Sci-Fi",
+        "Samurai",
+        "Parody"
+      ],
+      "total_episodes": 2
+    },
+    {
+      "title": "Avatar: The Legend of Korra",
+      "url": "https://anime.oploverz.ac/series/avatar-the-legend-of-korra",
+      "slug": "avatar-the-legend-of-korra",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.3,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Super Power",
+        "Comedy",
+        "Adventure",
+        "Martial Arts"
+      ],
+      "total_episodes": 46
+    },
+    {
+      "title": "Avatar: The Legend of Aang",
+      "url": "https://anime.oploverz.ac/series/avatar-the-legend-of-aang",
+      "slug": "avatar-the-legend-of-aang",
+      "status": "Completed",
+      "type": "TV",
+      "score": 9.3,
+      "genres": [
+        "Action",
+        "Military",
+        "Shounen",
+        "Super Power",
+        "Comedy",
+        "Adventure",
+        "Martial Arts"
+      ],
+      "total_episodes": 61
+    },
+    {
+      "title": "Inuyasha S2: The Final Act",
+      "url": "https://anime.oploverz.ac/series/inuyasha-s2-the-final-act",
+      "slug": "inuyasha-s2-the-final-act",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.2,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Shounen",
+        "Demons",
+        "Historical",
+        "Romance",
+        "Adventure"
+      ],
+      "total_episodes": 26
+    },
+    {
+      "title": "Inuyasha S1",
+      "url": "https://anime.oploverz.ac/series/inuyasha-s1",
+      "slug": "inuyasha-s1",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.87,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Shounen",
+        "Demons",
+        "Historical",
+        "Romance",
+        "Adventure"
+      ],
+      "total_episodes": 164
+    },
+    {
+      "title": "Gintama S3 : Enchousen",
+      "url": "https://anime.oploverz.ac/series/gintama-s3-enchousen",
+      "slug": "gintama-s3-enchousen",
+      "status": "Completed",
+      "type": "TV",
+      "score": 9.02,
+      "genres": [
+        "Action",
+        "Historical",
+        "Comedy",
+        "Sci-Fi",
+        "Samurai",
+        "Parody"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Gintama S2",
+      "url": "https://anime.oploverz.ac/series/gintama-s2",
+      "slug": "gintama-s2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 9.02,
+      "genres": [
+        "Action",
+        "Historical",
+        "Comedy",
+        "Sci-Fi",
+        "Samurai",
+        "Parody"
+      ],
+      "total_episodes": 50
+    },
+    {
+      "title": "Gintama S1",
+      "url": "https://anime.oploverz.ac/series/gintama-s1",
+      "slug": "gintama-s1",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.93,
+      "genres": [
+        "Action",
+        "Historical",
+        "Comedy",
+        "Sci-Fi",
+        "Samurai",
+        "Parody"
+      ],
+      "total_episodes": 202
+    },
+    {
+      "title": "High School DxD S4",
+      "url": "https://anime.oploverz.ac/series/high-school-dxd-s4",
+      "slug": "high-school-dxd-s4",
+      "status": "Completed",
+      "type": "BD",
+      "score": 7.23,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Demons",
+        "Supernatural",
+        "School",
+        "Romance",
+        "Ecchi",
+        "Harem"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "High School DxD S3",
+      "url": "https://anime.oploverz.ac/series/high-school-dxd-s3",
+      "slug": "high-school-dxd-s3",
+      "status": "Completed",
+      "type": "BD",
+      "score": 7.41,
+      "genres": [
+        "Action",
+        "Supernatural",
+        "Comedy",
+        "School",
+        "Romance",
+        "Ecchi",
+        "Harem"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "High School DxD S2",
+      "url": "https://anime.oploverz.ac/series/high-school-dxd-s2",
+      "slug": "high-school-dxd-s2",
+      "status": "Completed",
+      "type": "BD",
+      "score": 7.46,
+      "genres": [
+        "Action",
+        "Supernatural",
+        "Comedy",
+        "School",
+        "Romance",
+        "Ecchi",
+        "Harem"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "High School DxD S1",
+      "url": "https://anime.oploverz.ac/series/high-school-dxd-s1",
+      "slug": "high-school-dxd-s1",
+      "status": "Completed",
+      "type": "BD",
+      "score": 7.32,
+      "genres": [
+        "Action",
+        "Supernatural",
+        "Comedy",
+        "School",
+        "Romance",
+        "Ecchi",
+        "Harem"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Nageki no Bourei wa Intai shitai Part 2",
+      "url": "https://anime.oploverz.ac/series/nageki-no-bourei-wa-intai-shitai-part-2",
+      "slug": "nageki-no-bourei-wa-intai-shitai-part-2",
+      "status": "Ongoing",
+      "type": "TV",
+      "score": 7.35,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Comedy",
+        "Adventure"
+      ],
+      "total_episodes": 11
+    },
+    {
+      "title": "Nageki no Bourei wa Intai shitai",
+      "url": "https://anime.oploverz.ac/series/nageki-no-bourei-wa-intai-shitai",
+      "slug": "nageki-no-bourei-wa-intai-shitai",
+      "status": "Completed",
+      "type": "BD",
+      "score": null,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Comedy",
+        "Adventure"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Campfire Cooking in Another World with My Absurd Skill S2",
+      "url": "https://anime.oploverz.ac/series/campfire-cooking-in-another-world-with-my-absurd-skill-s2",
+      "slug": "campfire-cooking-in-another-world-with-my-absurd-skill-s2",
+      "status": "Ongoing",
+      "type": "TV",
+      "score": 7.76,
+      "genres": [
+        "Fantasy",
+        "Comedy",
+        "Adventure",
+        "Isekai",
+        "Gourmet"
+      ],
+      "total_episodes": 11
+    },
+    {
+      "title": "Isekai Nonbiri Nouka",
+      "url": "https://anime.oploverz.ac/series/isekai-nonbiri-nouka",
+      "slug": "isekai-nonbiri-nouka",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.53,
+      "genres": [
+        "Fantasy",
+        "Slice of Life",
+        "Isekai"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Campfire Cooking in Another World with My Absurd Skill",
+      "url": "https://anime.oploverz.ac/series/campfire-cooking-in-another-world-with-my-absurd-skill",
+      "slug": "campfire-cooking-in-another-world-with-my-absurd-skill",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.64,
+      "genres": [
+        "Fantasy",
+        "Comedy",
+        "Adventure",
+        "Isekai",
+        "Gourmet"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Vigilante: Boku no Hero Academia Illegals",
+      "url": "https://anime.oploverz.ac/series/vigilante-boku-no-hero-academia-illegals",
+      "slug": "vigilante-boku-no-hero-academia-illegals",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.6,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Super Power",
+        "Supernatural",
+        "Comedy"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Prison School",
+      "url": "https://anime.oploverz.ac/series/prison-school",
+      "slug": "prison-school",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.59,
+      "genres": [
+        "Comedy",
+        "School",
+        "Ecchi"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Back Street Girls: Gokudolls",
+      "url": "https://anime.oploverz.ac/series/back-street-girls-gokudolls",
+      "slug": "back-street-girls-gokudolls",
+      "status": "Completed",
+      "type": "TV",
+      "score": 6.98,
+      "genres": [
+        "Comedy",
+        "Ecchi",
+        "Crime"
+      ],
+      "total_episodes": 10
+    },
+    {
+      "title": "To Your Eternity S3",
+      "url": "https://anime.oploverz.ac/series/to-your-eternity-s3",
+      "slug": "to-your-eternity-s3",
+      "status": "Ongoing",
+      "type": "TV",
+      "score": 8.04,
+      "genres": [
+        "Drama",
+        "Shounen",
+        "Supernatural",
+        "Adventure"
+      ],
+      "total_episodes": 11
+    },
+    {
+      "title": "Fate/strange Fake: Whispers of Dawn",
+      "url": "https://anime.oploverz.ac/series/fatestrange-fake-whispers-of-dawn",
+      "slug": "fatestrange-fake-whispers-of-dawn",
+      "status": "Completed",
+      "type": "Special",
+      "score": 8.18,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Supernatural",
+        "Magic"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Kimetsu no Yaiba The Movie : Infinity Castle",
+      "url": "https://anime.oploverz.ac/series/kimetsu-no-yaiba-the-movie-infinity-castle",
+      "slug": "kimetsu-no-yaiba-the-movie-infinity-castle",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 8.73,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Shounen",
+        "Super Power",
+        "Historical",
+        "Supernatural"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "To Your Eternity S2",
+      "url": "https://anime.oploverz.ac/series/to-your-eternity-s2",
+      "slug": "to-your-eternity-s2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.1,
+      "genres": [
+        "Drama",
+        "Shounen",
+        "Supernatural",
+        "Adventure"
+      ],
+      "total_episodes": 20
+    },
+    {
+      "title": "To Your Eternity S1",
+      "url": "https://anime.oploverz.ac/series/to-your-eternity-s1",
+      "slug": "to-your-eternity-s1",
+      "status": "Completed",
+      "type": "BD",
+      "score": 8.34,
+      "genres": [
+        "Drama",
+        "Shounen",
+        "Supernatural",
+        "Adventure"
+      ],
+      "total_episodes": 20
+    },
+    {
+      "title": "My Status as an Assassin Obviously Exceeds the Hero's",
+      "url": "https://anime.oploverz.ac/series/my-status-as-an-assassin-obviously-exceeds-the-heros",
+      "slug": "my-status-as-an-assassin-obviously-exceeds-the-heros",
+      "status": "Ongoing",
+      "type": "TV",
+      "score": 8,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Adventure",
+        "Isekai"
+      ],
+      "total_episodes": 11
+    },
+    {
+      "title": "One Punch Man S3",
+      "url": "https://anime.oploverz.ac/series/one-punch-man-s3",
+      "slug": "one-punch-man-s3",
+      "status": "Ongoing",
+      "score": 8,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Super Power",
+        "Supernatural",
+        "Comedy",
+        "Seinen",
+        "Parody"
+      ],
+      "total_episodes": 10
+    },
+    {
+      "title": "SPY x FAMILY S3",
+      "url": "https://anime.oploverz.ac/series/spy-x-family-s3",
+      "slug": "spy-x-family-s3",
+      "status": "Ongoing",
+      "score": 8,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Supernatural",
+        "Comedy"
+      ],
+      "total_episodes": 11
+    },
+    {
+      "title": "Boku no Hero Academia Season 8 : Final",
+      "url": "https://anime.oploverz.ac/series/boku-no-hero-academia-season-8-final",
+      "slug": "boku-no-hero-academia-season-8-final",
+      "status": "Ongoing",
+      "type": "TV",
+      "score": 8.25,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Supernatural",
+        "School"
+      ],
+      "total_episodes": 11
+    },
+    {
+      "title": "My Gift Lvl 9999 Unlimited Gacha",
+      "url": "https://anime.oploverz.ac/series/my-gift-lvl-9999-unlimited-gacha",
+      "slug": "my-gift-lvl-9999-unlimited-gacha",
+      "status": "Ongoing",
+      "type": "TV",
+      "score": 7.5,
+      "genres": [
+        "Action",
+        "Fantasy"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "A Gatherer's Adventure in Isekai",
+      "url": "https://anime.oploverz.ac/series/a-gatherers-adventure-in-isekai",
+      "slug": "a-gatherers-adventure-in-isekai",
+      "status": "Ongoing",
+      "type": "TV",
+      "score": 7.61,
+      "genres": [
+        "Fantasy",
+        "Adventure",
+        "Isekai"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "The Water Magician",
+      "url": "https://anime.oploverz.ac/series/the-water-magician",
+      "slug": "the-water-magician",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.12,
+      "genres": [
+        "Fantasy",
+        "Adventure",
+        "Isekai"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Clevatess: Majuu no Ou to Akago to Shikabane no Yuusha",
+      "url": "https://anime.oploverz.ac/series/clevatess-majuu-no-ou-to-akago-to-shikabane-no-yuusha",
+      "slug": "clevatess-majuu-no-ou-to-akago-to-shikabane-no-yuusha",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.92,
+      "genres": [
+        "Action",
+        "Fantasy"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Takopii no Genzai",
+      "url": "https://anime.oploverz.ac/series/takopii-no-genzai",
+      "slug": "takopii-no-genzai",
+      "status": "Completed",
+      "type": "ONA",
+      "score": 8.84,
+      "genres": [
+        "Drama",
+        "Shounen",
+        "Psychological",
+        "Sci-Fi"
+      ],
+      "total_episodes": 6
+    },
+    {
+      "title": "Tougen Anki",
+      "url": "https://anime.oploverz.ac/series/tougen-anki",
+      "slug": "tougen-anki",
+      "status": "Ongoing",
+      "type": "TV",
+      "score": null,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Mythology"
+      ],
+      "total_episodes": 23
+    },
+    {
+      "title": "Grand Blue S2",
+      "url": "https://anime.oploverz.ac/series/grand-blue-s2",
+      "slug": "grand-blue-s2",
+      "status": "Completed",
+      "type": "TV",
+      "score": null,
+      "genres": [
+        "Comedy",
+        "Ecchi",
+        "Slice of Life"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Gachiakuta",
+      "url": "https://anime.oploverz.ac/series/gachiakuta",
+      "slug": "gachiakuta",
+      "status": "Ongoing",
+      "type": "TV",
+      "score": null,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Shounen"
+      ],
+      "total_episodes": 23
+    },
+    {
+      "title": "Jigoku Sensei Nube Remake (2025)",
+      "url": "https://anime.oploverz.ac/series/jigoku-sensei-nube-remake-2025",
+      "slug": "jigoku-sensei-nube-remake-2025",
+      "status": "Hiatus",
+      "type": "TV",
+      "score": null,
+      "genres": [
+        "Action",
+        "Supernatural",
+        "Comedy",
+        "School",
+        "Horror"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Kaiju No. 8 S2",
+      "url": "https://anime.oploverz.ac/series/kaiju-no-8-s2",
+      "slug": "kaiju-no-8-s2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 0,
+      "genres": [
+        "Action",
+        "Military",
+        "Sci-Fi"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Tate no Yuusha no Nariagari S4",
+      "url": "https://anime.oploverz.ac/series/tate-no-yuusha-no-nariagari-s4",
+      "slug": "tate-no-yuusha-no-nariagari-s4",
+      "status": "Completed",
+      "type": "TV",
+      "score": null,
+      "genres": [
+        "Action",
+        "Drama",
+        "Fantasy",
+        "Adventure"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "To Be Hero X",
+      "url": "https://anime.oploverz.ac/series/to-be-hero-x",
+      "slug": "to-be-hero-x",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.52,
+      "genres": [
+        "Action",
+        "Super Power",
+        "Donghua"
+      ],
+      "total_episodes": 24
+    },
+    {
+      "title": "Lazarus",
+      "url": "https://anime.oploverz.ac/series/lazarus",
+      "slug": "lazarus",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.74,
+      "genres": [
+        "Action",
+        "Sci-Fi"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Overlord Movie: The Sacred Kingdom",
+      "url": "https://anime.oploverz.ac/series/overlord-movie-the-sacred-kingdom",
+      "slug": "overlord-movie-the-sacred-kingdom",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 7.79,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Supernatural",
+        "Adventure",
+        "Magic",
+        "Gore",
+        "Isekai"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Kijin Gentoushou",
+      "url": "https://anime.oploverz.ac/series/kijin-gentoushou",
+      "slug": "kijin-gentoushou",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.7,
+      "genres": [
+        "Action",
+        "Historical",
+        "Supernatural",
+        "Adventure",
+        "Samurai"
+      ],
+      "total_episodes": 24
+    },
+    {
+      "title": "The Beginning After the End",
+      "url": "https://anime.oploverz.ac/series/the-beginning-after-the-end",
+      "slug": "the-beginning-after-the-end",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.7,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Shounen",
+        "Supernatural",
+        "Adventure",
+        "Magic",
+        "Isekai"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Fire Force Season 3",
+      "url": "https://anime.oploverz.ac/series/fire-force-season-3",
+      "slug": "fire-force-season-3",
+      "status": "Ongoing",
+      "type": "TV",
+      "score": 7.7,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Supernatural"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Wind Breaker S2",
+      "url": "https://anime.oploverz.ac/series/wind-breaker-s2",
+      "slug": "wind-breaker-s2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.74,
+      "genres": [
+        "Action",
+        "Shounen",
+        "School"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Boku no Hero Academia Movie 4: You're Next",
+      "url": "https://anime.oploverz.ac/series/boku-no-hero-academia-movie-4-youre-next",
+      "slug": "boku-no-hero-academia-movie-4-youre-next",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 7.53,
+      "genres": [
+        "Action",
+        "Super Power",
+        "Comedy",
+        "School"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Solo Leveling S2",
+      "url": "https://anime.oploverz.ac/series/solo-leveling-s2",
+      "slug": "solo-leveling-s2",
+      "status": "Completed",
+      "type": "TV",
+      "score": null,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Supernatural",
+        "Adventure"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Ao no Exorcist S5 : The Blue Night Saga",
+      "url": "https://anime.oploverz.ac/series/ao-no-exorcist-s5-the-blue-night-saga",
+      "slug": "ao-no-exorcist-s5-the-blue-night-saga",
+      "status": "Completed",
+      "type": "TV",
+      "score": null,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Shounen",
+        "Supernatural",
+        "School"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Sakamoto Days",
+      "url": "https://anime.oploverz.ac/series/sakamoto-days",
+      "slug": "sakamoto-days",
+      "status": "Completed",
+      "type": "TV",
+      "score": null,
+      "genres": [
+        "Action",
+        "Comedy",
+        "Crime"
+      ],
+      "total_episodes": 22
+    },
+    {
+      "title": "Kusuriya no Hitorigoto S2",
+      "url": "https://anime.oploverz.ac/series/kusuriya-no-hitorigoto-s2",
+      "slug": "kusuriya-no-hitorigoto-s2",
+      "status": "Completed",
+      "type": "TV",
+      "score": null,
+      "genres": [
+        "Drama",
+        "Mystery",
+        "Historical",
+        "Medical",
+        "OLM"
+      ],
+      "total_episodes": 24
+    },
+    {
+      "title": "Dr. STONE Season 4 : Science Future",
+      "url": "https://anime.oploverz.ac/series/dr-stone-season-4-science-future",
+      "slug": "dr-stone-season-4-science-future",
+      "status": "Hiatus",
+      "type": "TV",
+      "score": null,
+      "genres": [
+        "Comedy",
+        "Adventure",
+        "Sci-Fi"
+      ],
+      "total_episodes": 24
+    },
+    {
+      "title": "Shangri-La Frontier S2",
+      "url": "https://anime.oploverz.ac/series/shangri-la-frontier-s2",
+      "slug": "shangri-la-frontier-s2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.29,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Shounen",
+        "Adventure",
+        "Game"
+      ],
+      "total_episodes": 25
+    },
+    {
+      "title": "Kusuriya no Hitorigoto S1",
+      "url": "https://anime.oploverz.ac/series/kusuriya-no-hitorigoto-s1",
+      "slug": "kusuriya-no-hitorigoto-s1",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.88,
+      "genres": [
+        "Drama",
+        "Mystery",
+        "Historical",
+        "Medical",
+        "OLM"
+      ],
+      "total_episodes": 24
+    },
+    {
+      "title": "Fate/strange Fake",
+      "url": "https://anime.oploverz.ac/series/fatestrange-fake",
+      "slug": "fatestrange-fake",
+      "status": "Ongoing",
+      "type": "TV",
+      "score": null,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Supernatural",
+        "Magic"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Detective Conan Movie 27 : The Million Dollar Pentagram",
+      "url": "https://anime.oploverz.ac/series/detective-conan-movie-27-the-million-dollar-pentagram",
+      "slug": "detective-conan-movie-27-the-million-dollar-pentagram",
+      "status": "Completed",
+      "type": "BD",
+      "score": 7.9,
+      "genres": [
+        "Mystery",
+        "Shounen",
+        "Psychological"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Look Back",
+      "url": "https://anime.oploverz.ac/series/look-back",
+      "slug": "look-back",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 8.89,
+      "genres": [
+        "Drama"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "One Piece Special Edited Version",
+      "url": "https://anime.oploverz.ac/series/one-piece-special-edited-version",
+      "slug": "one-piece-special-edited-version",
+      "status": "Completed",
+      "type": "TV",
+      "score": null,
+      "genres": [
+        "Action",
+        "Drama",
+        "Fantasy",
+        "Shounen",
+        "Super Power",
+        "Comedy",
+        "Adventure"
+      ],
+      "total_episodes": 21
+    },
+    {
+      "title": "Haikyu!! Movie: The Dumpster Battle",
+      "url": "https://anime.oploverz.ac/series/haikyu-movie-the-dumpster-battle",
+      "slug": "haikyu-movie-the-dumpster-battle",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 8.65,
+      "genres": [
+        "Shounen",
+        "School",
+        "Sports"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Dungeon ni Deai wo Motomeru no wa Machigatteiru Darou ka Season 1",
+      "url": "https://anime.oploverz.ac/series/dungeon-ni-deai-wo-motomeru-no-wa-machigatteiru-darou-ka-season-1",
+      "slug": "dungeon-ni-deai-wo-motomeru-no-wa-machigatteiru-darou-ka-season-1",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.53,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Comedy",
+        "Romance",
+        "Adventure"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Ao no Exorcist S4 : Beyond the Snow Saga",
+      "url": "https://anime.oploverz.ac/series/ao-no-exorcist-s4-beyond-the-snow-saga",
+      "slug": "ao-no-exorcist-s4-beyond-the-snow-saga",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.36,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Shounen",
+        "Supernatural",
+        "School"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Dragon Ball Daima",
+      "url": "https://anime.oploverz.ac/series/dragon-ball-daima",
+      "slug": "dragon-ball-daima",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.5,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Shounen",
+        "Super Power",
+        "Supernatural",
+        "Adventure"
+      ],
+      "total_episodes": 20
+    },
+    {
+      "title": "Blue Lock S2 : Blue Lock Vs. U-20 Japan",
+      "url": "https://anime.oploverz.ac/series/blue-lock-s2-blue-lock-vs-u-20-japan",
+      "slug": "blue-lock-s2-blue-lock-vs-u-20-japan",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.5,
+      "genres": [
+        "Shounen",
+        "Sports"
+      ],
+      "total_episodes": 14
+    },
+    {
+      "title": "Rurouni Kenshin S2: Kyoto Disturbance (2024)",
+      "url": "https://anime.oploverz.ac/series/rurouni-kenshin-s2-kyoto-disturbance-2024",
+      "slug": "rurouni-kenshin-s2-kyoto-disturbance-2024",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.5,
+      "genres": [
+        "Action",
+        "Military",
+        "Historical",
+        "Samurai"
+      ],
+      "total_episodes": 23
+    },
+    {
+      "title": "Dungeon ni Deai wo Motomeru no wa Machigatteiru Darou ka Season 5",
+      "url": "https://anime.oploverz.ac/series/dungeon-ni-deai-wo-motomeru-no-wa-machigatteiru-darou-ka-season-5",
+      "slug": "dungeon-ni-deai-wo-motomeru-no-wa-machigatteiru-darou-ka-season-5",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.5,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Comedy",
+        "Romance",
+        "Adventure"
+      ],
+      "total_episodes": 15
+    },
+    {
+      "title": "Arifureta Shokugyou de Sekai Saikyou S3",
+      "url": "https://anime.oploverz.ac/series/arifureta-shokugyou-de-sekai-saikyou-s3",
+      "slug": "arifureta-shokugyou-de-sekai-saikyou-s3",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.5,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Adventure",
+        "Harem",
+        "Isekai"
+      ],
+      "total_episodes": 16
+    },
+    {
+      "title": "Dandadan",
+      "url": "https://anime.oploverz.ac/series/dandadan",
+      "slug": "dandadan",
+      "status": "Hiatus",
+      "type": "TV",
+      "score": 8.34,
+      "genres": [
+        "Action",
+        "Supernatural",
+        "Comedy"
+      ],
+      "total_episodes": 24
+    },
+    {
+      "title": "Blue Box",
+      "url": "https://anime.oploverz.ac/series/blue-box",
+      "slug": "blue-box",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.1,
+      "genres": [
+        "Shounen",
+        "School",
+        "Sports",
+        "Romance"
+      ],
+      "total_episodes": 25
+    },
+    {
+      "title": "Blue Lock Movie: Episode Nagi",
+      "url": "https://anime.oploverz.ac/series/blue-lock-movie-episode-nagi",
+      "slug": "blue-lock-movie-episode-nagi",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 7.31,
+      "genres": [
+        "Shounen",
+        "School",
+        "Sports"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Re: Zero Kara Hajimeru Isekai Seikatsu Season 3",
+      "url": "https://anime.oploverz.ac/series/re-zero-kara-hajimeru-isekai-seikatsu-season-3",
+      "slug": "re-zero-kara-hajimeru-isekai-seikatsu-season-3",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.5,
+      "genres": [
+        "Drama",
+        "Fantasy",
+        "Psychological",
+        "Thriller",
+        "Isekai"
+      ],
+      "total_episodes": 16
+    },
+    {
+      "title": "Spy x Family Movie: Code: White",
+      "url": "https://anime.oploverz.ac/series/spy-x-family-movie-code-white",
+      "slug": "spy-x-family-movie-code-white",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 8.18,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Comedy"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Alya Sometimes Hides Her Feelings in Russian",
+      "url": "https://anime.oploverz.ac/series/alya-sometimes-hides-her-feelings-in-russian",
+      "slug": "alya-sometimes-hides-her-feelings-in-russian",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.17,
+      "genres": [
+        "Comedy",
+        "School",
+        "Romance"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Tsue to Tsurugi no Wistoria",
+      "url": "https://anime.oploverz.ac/series/tsue-to-tsurugi-no-wistoria",
+      "slug": "tsue-to-tsurugi-no-wistoria",
+      "status": "Ongoing",
+      "type": "TV",
+      "score": 8.05,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Shounen",
+        "Adventure",
+        "Magic"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Tower of God S2",
+      "url": "https://anime.oploverz.ac/series/tower-of-god-s2",
+      "slug": "tower-of-god-s2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.5,
+      "genres": [
+        "Action",
+        "Drama",
+        "Fantasy",
+        "Mystery",
+        "Adventure"
+      ],
+      "total_episodes": 26
+    },
+    {
+      "title": "Fairy Tail: 100 Years Quest",
+      "url": "https://anime.oploverz.ac/series/fairy-tail-100-years-quest",
+      "slug": "fairy-tail-100-years-quest",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.5,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Shounen",
+        "Super Power",
+        "Adventure",
+        "Magic",
+        "Ecchi"
+      ],
+      "total_episodes": 25
+    },
+    {
+      "title": "Hazurewaku no \"Joutai Ijou Skill\" de Saikyou ni Natta Ore ga Subete wo Juurin suru made",
+      "url": "https://anime.oploverz.ac/series/hazurewaku-no-joutai-ijou-skill-de-saikyou-ni-natta-ore-ga-subete-wo-juurin-suru-made",
+      "slug": "hazurewaku-no-joutai-ijou-skill-de-saikyou-ni-natta-ore-ga-subete-wo-juurin-suru-made",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.5,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Adventure",
+        "Isekai"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Oshi no Ko S2",
+      "url": "https://anime.oploverz.ac/series/oshi-no-ko-s2",
+      "slug": "oshi-no-ko-s2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.1,
+      "genres": [
+        "Drama",
+        "Supernatural",
+        "Seinen"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Suicide Squad Isekai",
+      "url": "https://anime.oploverz.ac/series/suicide-squad-isekai",
+      "slug": "suicide-squad-isekai",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.5,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Adventure",
+        "Isekai"
+      ],
+      "total_episodes": 10
+    },
+    {
+      "title": "Digimon Adventure 02 Movie: The Beginning",
+      "url": "https://anime.oploverz.ac/series/digimon-adventure-02-movie-the-beginning",
+      "slug": "digimon-adventure-02-movie-the-beginning",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 6.75,
+      "genres": [
+        "Action",
+        "Drama",
+        "Fantasy",
+        "Comedy",
+        "Adventure"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Kimetsu no Yaiba S4: Hashira Training Arc",
+      "url": "https://anime.oploverz.ac/series/kimetsu-no-yaiba-s4-hashira-training-arc",
+      "slug": "kimetsu-no-yaiba-s4-hashira-training-arc",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.28,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Shounen",
+        "Historical",
+        "Supernatural"
+      ],
+      "total_episodes": 8
+    },
+    {
+      "title": "Boku no Hero Academia Season 7",
+      "url": "https://anime.oploverz.ac/series/boku-no-hero-academia-season-7",
+      "slug": "boku-no-hero-academia-season-7",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.02,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Super Power",
+        "School"
+      ],
+      "total_episodes": 21
+    },
+    {
+      "title": "Kaiju No. 8",
+      "url": "https://anime.oploverz.ac/series/kaiju-no-8",
+      "slug": "kaiju-no-8",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.27,
+      "genres": [
+        "Action",
+        "Military",
+        "Sci-Fi"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Date A Live Season 5",
+      "url": "https://anime.oploverz.ac/series/date-a-live-season-5",
+      "slug": "date-a-live-season-5",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.07,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "School",
+        "Romance",
+        "Sci-Fi",
+        "Harem"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Kono Subarashii Sekai ni Shukufuku wo Season 3",
+      "url": "https://anime.oploverz.ac/series/kono-subarashii-sekai-ni-shukufuku-wo-season-3",
+      "slug": "kono-subarashii-sekai-ni-shukufuku-wo-season-3",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.52,
+      "genres": [
+        "Fantasy",
+        "Comedy",
+        "Adventure",
+        "Isekai",
+        "Drive"
+      ],
+      "total_episodes": 11
+    },
+    {
+      "title": "Wind Breaker",
+      "url": "https://anime.oploverz.ac/series/wind-breaker",
+      "slug": "wind-breaker",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.9,
+      "genres": [
+        "Action",
+        "Shounen",
+        "School"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Mahouka Koukou no Rettousei Season 3",
+      "url": "https://anime.oploverz.ac/series/mahouka-koukou-no-rettousei-season-3",
+      "slug": "mahouka-koukou-no-rettousei-season-3",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.54,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "School",
+        "Romance",
+        "Sci-Fi",
+        "Magic"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Tensei shitara Slime Datta Ken S3",
+      "url": "https://anime.oploverz.ac/series/tensei-shitara-slime-datta-ken-s3",
+      "slug": "tensei-shitara-slime-datta-ken-s3",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.06,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Comedy",
+        "Adventure",
+        "Magic",
+        "Isekai"
+      ],
+      "total_episodes": 24
+    },
+    {
+      "title": "The First Slam Dunk",
+      "url": "https://anime.oploverz.ac/series/the-first-slam-dunk",
+      "slug": "the-first-slam-dunk",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 8.8,
+      "genres": [
+        "Shounen",
+        "School",
+        "Sports"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Ninja Kamui",
+      "url": "https://anime.oploverz.ac/series/ninja-kamui",
+      "slug": "ninja-kamui",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.1,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Sci-Fi"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Monsters: Ippyaku Sanjou Hiryuu Jigoku",
+      "url": "https://anime.oploverz.ac/series/monsters-ippyaku-sanjou-hiryuu-jigoku",
+      "slug": "monsters-ippyaku-sanjou-hiryuu-jigoku",
+      "status": "Completed",
+      "type": "ONA",
+      "score": 7.74,
+      "genres": [
+        "Fantasy",
+        "Shounen",
+        "Historical",
+        "Samurai"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Mato Seihei no Slave",
+      "url": "https://anime.oploverz.ac/series/mato-seihei-no-slave",
+      "slug": "mato-seihei-no-slave",
+      "status": "Completed",
+      "type": "TV",
+      "score": 6.85,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Ecchi",
+        "Harem"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Tsuki ga Michibiku Isekai Douchuu S2",
+      "url": "https://anime.oploverz.ac/series/tsuki-ga-michibiku-isekai-douchuu-s2",
+      "slug": "tsuki-ga-michibiku-isekai-douchuu-s2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.77,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Super Power",
+        "Comedy",
+        "Adventure",
+        "Isekai"
+      ],
+      "total_episodes": 25
+    },
+    {
+      "title": "Shangri-La Frontier S1",
+      "url": "https://anime.oploverz.ac/series/shangri-la-frontier-s1",
+      "slug": "shangri-la-frontier-s1",
+      "status": "Completed",
+      "type": "BD",
+      "score": 8.1,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Shounen",
+        "Adventure",
+        "Game"
+      ],
+      "total_episodes": 25
+    },
+    {
+      "title": "Frieren: Beyond Journey's End",
+      "url": "https://anime.oploverz.ac/series/frieren-beyond-journeys-end",
+      "slug": "frieren-beyond-journeys-end",
+      "status": "Completed",
+      "type": "BD",
+      "score": 9.32,
+      "genres": [
+        "Drama",
+        "Fantasy",
+        "Shounen",
+        "Adventure"
+      ],
+      "total_episodes": 28
+    },
+    {
+      "title": "Ao no Exorcist S3 : Shimane Illuminati-hen",
+      "url": "https://anime.oploverz.ac/series/ao-no-exorcist-s3-shimane-illuminati-hen",
+      "slug": "ao-no-exorcist-s3-shimane-illuminati-hen",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Shounen",
+        "Supernatural",
+        "School"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "MASHLE S2",
+      "url": "https://anime.oploverz.ac/series/mashle-s2",
+      "slug": "mashle-s2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.86,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Shounen",
+        "Comedy",
+        "School",
+        "Magic"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Solo Leveling",
+      "url": "https://anime.oploverz.ac/series/solo-leveling",
+      "slug": "solo-leveling",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.31,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Supernatural",
+        "Adventure"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Sasaki to Pii-chan",
+      "url": "https://anime.oploverz.ac/series/sasaki-to-pii-chan",
+      "slug": "sasaki-to-pii-chan",
+      "status": "Completed",
+      "type": "TV",
+      "score": 6.87,
+      "genres": [
+        "Fantasy",
+        "Comedy",
+        "Adventure",
+        "Isekai"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Youkoso Jitsuryoku Shijou Shugi no Kyoushitsu e S3",
+      "url": "https://anime.oploverz.ac/series/youkoso-jitsuryoku-shijou-shugi-no-kyoushitsu-e-s3",
+      "slug": "youkoso-jitsuryoku-shijou-shugi-no-kyoushitsu-e-s3",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8,
+      "genres": [
+        "Drama",
+        "School",
+        "Psychological"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Detective Conan Movie 26: Black Iron Submarine",
+      "url": "https://anime.oploverz.ac/series/detective-conan-movie-26-black-iron-submarine",
+      "slug": "detective-conan-movie-26-black-iron-submarine",
+      "status": null,
+      "score": null,
+      "genres": [],
+      "total_episodes": 1
+    },
+    {
+      "title": "Tokyo Revengers S1",
+      "url": "https://anime.oploverz.ac/series/tokyo-revengers-s1",
+      "slug": "tokyo-revengers-s1",
+      "status": null,
+      "score": null,
+      "genres": [],
+      "total_episodes": 24
+    },
+    {
+      "title": "Tensei shitara Slime Datta Ken: Coleus no Yume",
+      "url": "https://anime.oploverz.ac/series/tensei-shitara-slime-datta-ken-coleus-no-yume",
+      "slug": "tensei-shitara-slime-datta-ken-coleus-no-yume",
+      "status": "Completed",
+      "score": null,
+      "genres": [],
+      "total_episodes": 3
+    },
+    {
+      "title": "Captain Tsubasa 2018 S2: Junior Youth-hen 1",
+      "url": "https://anime.oploverz.ac/series/captain-tsubasa-2018-s2-junior-youth-hen-1",
+      "slug": "captain-tsubasa-2018-s2-junior-youth-hen-1",
+      "status": "Completed",
+      "type": "TV",
+      "score": null,
+      "genres": [],
+      "total_episodes": 39
+    },
+    {
+      "title": "SPY x FAMILY S2",
+      "url": "https://anime.oploverz.ac/series/spy-x-family-s2",
+      "slug": "spy-x-family-s2",
+      "status": "Completed",
+      "type": "TV",
+      "score": null,
+      "genres": [],
+      "total_episodes": 12
+    },
+    {
+      "title": "UNDEAD UNLUCK",
+      "url": "https://anime.oploverz.ac/series/undead-unluck",
+      "slug": "undead-unluck",
+      "status": "Completed",
+      "score": null,
+      "genres": [],
+      "total_episodes": 24
+    },
+    {
+      "title": "Tate no Yuusha no Nariagari S3",
+      "url": "https://anime.oploverz.ac/series/tate-no-yuusha-no-nariagari-s3",
+      "slug": "tate-no-yuusha-no-nariagari-s3",
+      "status": "Completed",
+      "score": null,
+      "genres": [],
+      "total_episodes": 12
+    },
+    {
+      "title": "The Eminence in Shadow S2",
+      "url": "https://anime.oploverz.ac/series/the-eminence-in-shadow-s2",
+      "slug": "the-eminence-in-shadow-s2",
+      "status": "Completed",
+      "score": null,
+      "genres": [],
+      "total_episodes": 12
+    },
+    {
+      "title": "Tokyo Revengers S3: Tenjiku-hen",
+      "url": "https://anime.oploverz.ac/series/tokyo-revengers-s3-tenjiku-hen",
+      "slug": "tokyo-revengers-s3-tenjiku-hen",
+      "status": "Completed",
+      "score": null,
+      "genres": [],
+      "total_episodes": 13
+    },
+    {
+      "title": "One Piece Live Action",
+      "url": "https://anime.oploverz.ac/series/one-piece-live-action",
+      "slug": "one-piece-live-action",
+      "status": "Completed",
+      "score": null,
+      "genres": [],
+      "total_episodes": 8
+    },
+    {
+      "title": "Mushoku Tensei: Isekai Ittara Honki Dasu S1",
+      "url": "https://anime.oploverz.ac/series/mushoku-tensei-isekai-ittara-honki-dasu-s1",
+      "slug": "mushoku-tensei-isekai-ittara-honki-dasu-s1",
+      "status": "Completed",
+      "score": null,
+      "genres": [],
+      "total_episodes": 23
+    },
+    {
+      "title": "Zom 100: Zombie ni Naru made ni Shitai 100 no Koto",
+      "url": "https://anime.oploverz.ac/series/zom-100-zombie-ni-naru-made-ni-shitai-100-no-koto",
+      "slug": "zom-100-zombie-ni-naru-made-ni-shitai-100-no-koto",
+      "status": "Completed",
+      "score": null,
+      "genres": [],
+      "total_episodes": 12
+    },
+    {
+      "title": "Bungou Stray Dogs Season 5",
+      "url": "https://anime.oploverz.ac/series/bungou-stray-dogs-season-5",
+      "slug": "bungou-stray-dogs-season-5",
+      "status": "Completed",
+      "score": null,
+      "genres": [],
+      "total_episodes": 11
+    },
+    {
+      "title": "Rurouni Kenshin -Meiji Kenkaku Romantan- (2023)",
+      "url": "https://anime.oploverz.ac/series/rurouni-kenshin-meiji-kenkaku-romantan-2023",
+      "slug": "rurouni-kenshin-meiji-kenkaku-romantan-2023",
+      "status": null,
+      "score": null,
+      "genres": [],
+      "total_episodes": 24
+    },
+    {
+      "title": "Suki na Ko ga Megane wo Wasureta",
+      "url": "https://anime.oploverz.ac/series/suki-na-ko-ga-megane-wo-wasureta",
+      "slug": "suki-na-ko-ga-megane-wo-wasureta",
+      "status": "Completed",
+      "score": null,
+      "genres": [],
+      "total_episodes": 13
+    },
+    {
+      "title": "Masamune-kun no Revenge R",
+      "url": "https://anime.oploverz.ac/series/masamune-kun-no-revenge-r",
+      "slug": "masamune-kun-no-revenge-r",
+      "status": "Completed",
+      "score": null,
+      "genres": [],
+      "total_episodes": 12
+    },
+    {
+      "title": "Mushoku Tensei: Isekai Ittara Honki Dasu S2",
+      "url": "https://anime.oploverz.ac/series/mushoku-tensei-isekai-ittara-honki-dasu-s2",
+      "slug": "mushoku-tensei-isekai-ittara-honki-dasu-s2",
+      "status": "Completed",
+      "type": "TV",
+      "score": null,
+      "genres": [],
+      "total_episodes": 25
+    },
+    {
+      "title": "Jujutsu Kaisen S2",
+      "url": "https://anime.oploverz.ac/series/jujutsu-kaisen-s2",
+      "slug": "jujutsu-kaisen-s2",
+      "status": "Completed",
+      "score": null,
+      "genres": [],
+      "total_episodes": 23
+    },
+    {
+      "title": "Tensei shitara Slime Datta Ken S2",
+      "url": "https://anime.oploverz.ac/series/tensei-shitara-slime-datta-ken-s2",
+      "slug": "tensei-shitara-slime-datta-ken-s2",
+      "status": "Completed",
+      "score": null,
+      "genres": [],
+      "total_episodes": 24
+    },
+    {
+      "title": "Sword Art Online the Movie 2: Progressive - Scherzo of Deep Night",
+      "url": "https://anime.oploverz.ac/series/sword-art-online-the-movie-2-progressive-scherzo-of-deep-night",
+      "slug": "sword-art-online-the-movie-2-progressive-scherzo-of-deep-night",
+      "status": "Completed",
+      "score": null,
+      "genres": [],
+      "total_episodes": 1
+    },
+    {
+      "title": "Black Clover Movie: Sword of the Wizard King",
+      "url": "https://anime.oploverz.ac/series/black-clover-movie-sword-of-the-wizard-king",
+      "slug": "black-clover-movie-sword-of-the-wizard-king",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 8.03,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Comedy",
+        "Adventure",
+        "Magic"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Isekai de Cheat Skill wo Te ni Shita Ore wa Genjitsu Sekai wo mo Musou Suru: Level Up wa Jinsei wo Kaeta",
+      "url": "https://anime.oploverz.ac/series/isekai-de-cheat-skill-wo-te-ni-shita-ore-wa-genjitsu-sekai-wo-mo-musou-suru-level-up-wa-jinsei-wo-kaeta",
+      "slug": "isekai-de-cheat-skill-wo-te-ni-shita-ore-wa-genjitsu-sekai-wo-mo-musou-suru-level-up-wa-jinsei-wo-kaeta",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.5,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Supernatural",
+        "School",
+        "Adventure",
+        "Magic"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Kaguya-sama wa Kokurasetai: First Kiss wa Owaranai",
+      "url": "https://anime.oploverz.ac/series/kaguya-sama-wa-kokurasetai-first-kiss-wa-owaranai",
+      "slug": "kaguya-sama-wa-kokurasetai-first-kiss-wa-owaranai",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.94,
+      "genres": [
+        "Drama",
+        "Comedy",
+        "School",
+        "Romance"
+      ],
+      "total_episodes": 4
+    },
+    {
+      "title": "Tensei shitara Slime Datta Ken Movie: Guren no Kizuna-hen",
+      "url": "https://anime.oploverz.ac/series/tensei-shitara-slime-datta-ken-movie-guren-no-kizuna-hen",
+      "slug": "tensei-shitara-slime-datta-ken-movie-guren-no-kizuna-hen",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 7.42,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Comedy",
+        "Adventure",
+        "Isekai",
+        "Mythology",
+        "Reincarnation"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Jigokuraku",
+      "url": "https://anime.oploverz.ac/series/jigokuraku",
+      "slug": "jigokuraku",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.4,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Historical",
+        "Supernatural",
+        "Adventure"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Oshi no Ko",
+      "url": "https://anime.oploverz.ac/series/oshi-no-ko",
+      "slug": "oshi-no-ko",
+      "status": "Completed",
+      "type": "TV",
+      "score": 9.37,
+      "genres": [
+        "Drama",
+        "Supernatural",
+        "Seinen",
+        "Reincarnation",
+        "Showbiz"
+      ],
+      "total_episodes": 11
+    },
+    {
+      "title": "MASHLE",
+      "url": "https://anime.oploverz.ac/series/mashle",
+      "slug": "mashle",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.73,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Supernatural",
+        "Comedy",
+        "Magic",
+        "Parody"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Dr. STONE Season 3",
+      "url": "https://anime.oploverz.ac/series/dr-stone-season-3",
+      "slug": "dr-stone-season-3",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.07,
+      "genres": [
+        "Shounen",
+        "Comedy",
+        "Adventure",
+        "Sci-Fi"
+      ],
+      "total_episodes": 22
+    },
+    {
+      "title": "Kimetsu no Yaiba S3: Swordsmith Village Arc",
+      "url": "https://anime.oploverz.ac/series/kimetsu-no-yaiba-s3-swordsmith-village-arc",
+      "slug": "kimetsu-no-yaiba-s3-swordsmith-village-arc",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.52,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Demons",
+        "Historical",
+        "Supernatural"
+      ],
+      "total_episodes": 11
+    },
+    {
+      "title": "Shingeki no Kyojin: The Final Season - Kanketsu-hen",
+      "url": "https://anime.oploverz.ac/series/shingeki-no-kyojin-the-final-season-kanketsu-hen",
+      "slug": "shingeki-no-kyojin-the-final-season-kanketsu-hen",
+      "status": "Completed",
+      "type": "Special",
+      "score": 7.51,
+      "genres": [
+        "Action",
+        "Drama",
+        "Military",
+        "Gore",
+        "Survival"
+      ],
+      "total_episodes": 2
+    },
+    {
+      "title": "Itai no wa Iya nano de Bougyoryoku ni Kyokufuri Shitai to Omoimasu S2",
+      "url": "https://anime.oploverz.ac/series/itai-no-wa-iya-nano-de-bougyoryoku-ni-kyokufuri-shitai-to-omoimasu-s2",
+      "slug": "itai-no-wa-iya-nano-de-bougyoryoku-ni-kyokufuri-shitai-to-omoimasu-s2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.56,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Comedy",
+        "Adventure",
+        "Game"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Tokyo Revengers S2: Seiya Kessen-hen",
+      "url": "https://anime.oploverz.ac/series/tokyo-revengers-s2-seiya-kessen-hen",
+      "slug": "tokyo-revengers-s2-seiya-kessen-hen",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.91,
+      "genres": [
+        "Action",
+        "Drama",
+        "Shounen",
+        "Supernatural"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Vinland Saga S2",
+      "url": "https://anime.oploverz.ac/series/vinland-saga-s2",
+      "slug": "vinland-saga-s2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.95,
+      "genres": [
+        "Action",
+        "Drama",
+        "Historical",
+        "Adventure",
+        "Seinen",
+        "Gore"
+      ],
+      "total_episodes": 24
+    },
+    {
+      "title": "Bungou Stray Dogs Season 4",
+      "url": "https://anime.oploverz.ac/series/bungou-stray-dogs-season-4",
+      "slug": "bungou-stray-dogs-season-4",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.54,
+      "genres": [],
+      "total_episodes": 13
+    },
+    {
+      "title": "Maou Gakuin no Futekigousha S2",
+      "url": "https://anime.oploverz.ac/series/maou-gakuin-no-futekigousha-s2",
+      "slug": "maou-gakuin-no-futekigousha-s2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.64,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "School",
+        "Mythology",
+        "Reincarnation"
+      ],
+      "total_episodes": 24
+    },
+    {
+      "title": "Dragon Ball Super Movie: Super Hero",
+      "url": "https://anime.oploverz.ac/series/dragon-ball-super-movie-super-hero",
+      "slug": "dragon-ball-super-movie-super-hero",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 7.54,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Super Power",
+        "Adventure",
+        "Martial Arts"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Detective Conan Movie 25: Halloween no Hanayome",
+      "url": "https://anime.oploverz.ac/series/detective-conan-movie-25-halloween-no-hanayome",
+      "slug": "detective-conan-movie-25-halloween-no-hanayome",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 7.94,
+      "genres": [
+        "Mystery",
+        "Shounen",
+        "Police"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "The Eminence in Shadow",
+      "url": "https://anime.oploverz.ac/series/the-eminence-in-shadow",
+      "slug": "the-eminence-in-shadow",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.3,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Comedy",
+        "Magic",
+        "Isekai"
+      ],
+      "total_episodes": 20
+    },
+    {
+      "title": "Chainsaw Man",
+      "url": "https://anime.oploverz.ac/series/chainsaw-man",
+      "slug": "chainsaw-man",
+      "status": "Completed",
+      "type": "TV",
+      "score": 9.14,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Supernatural",
+        "Adventure",
+        "Gore"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Blue Lock S1",
+      "url": "https://anime.oploverz.ac/series/blue-lock-s1",
+      "slug": "blue-lock-s1",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.42,
+      "genres": [
+        "Shounen",
+        "Sports"
+      ],
+      "total_episodes": 24
+    },
+    {
+      "title": "Yowamushi Pedal Season 5",
+      "url": "https://anime.oploverz.ac/series/yowamushi-pedal-season-5",
+      "slug": "yowamushi-pedal-season-5",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.14,
+      "genres": [
+        "Drama",
+        "Shounen",
+        "Comedy",
+        "Sports"
+      ],
+      "total_episodes": 25
+    },
+    {
+      "title": "Boku no Hero Academia Season 6",
+      "url": "https://anime.oploverz.ac/series/boku-no-hero-academia-season-6",
+      "slug": "boku-no-hero-academia-season-6",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.09,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Super Power",
+        "Comedy",
+        "School"
+      ],
+      "total_episodes": 25
+    },
+    {
+      "title": "Jujutsu Kaisen 0",
+      "url": "https://anime.oploverz.ac/series/jujutsu-kaisen-0",
+      "slug": "jujutsu-kaisen-0",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 8.51,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Supernatural"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Isekai Ojisan",
+      "url": "https://anime.oploverz.ac/series/isekai-ojisan",
+      "slug": "isekai-ojisan",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.89,
+      "genres": [
+        "Fantasy",
+        "Comedy"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Sword Art Online the Movie 1: Progressive - Aria of a Starless Night",
+      "url": "https://anime.oploverz.ac/series/sword-art-online-the-movie-1-progressive-aria-of-a-starless-night",
+      "slug": "sword-art-online-the-movie-1-progressive-aria-of-a-starless-night",
+      "status": "Completed",
+      "type": "BD",
+      "score": 7.95,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Adventure",
+        "Game"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Dr. STONE: Ryusui",
+      "url": "https://anime.oploverz.ac/series/dr-stone-ryusui",
+      "slug": "dr-stone-ryusui",
+      "status": "Completed",
+      "type": "Special",
+      "score": 8.36,
+      "genres": [
+        "Shounen",
+        "Comedy",
+        "Adventure",
+        "Sci-Fi"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Hataraku Maou-sama!! S2",
+      "url": "https://anime.oploverz.ac/series/hataraku-maou-sama-s2",
+      "slug": "hataraku-maou-sama-s2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.79,
+      "genres": [
+        "Fantasy",
+        "Supernatural",
+        "Comedy",
+        "Romance"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Overlord Season 4",
+      "url": "https://anime.oploverz.ac/series/overlord-season-4",
+      "slug": "overlord-season-4",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.3,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Supernatural",
+        "Adventure",
+        "Magic",
+        "Game"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Dungeon ni Deai wo Motomeru no wa Machigatteiru Darou ka Season 4",
+      "url": "https://anime.oploverz.ac/series/dungeon-ni-deai-wo-motomeru-no-wa-machigatteiru-darou-ka-season-4",
+      "slug": "dungeon-ni-deai-wo-motomeru-no-wa-machigatteiru-darou-ka-season-4",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.91,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Comedy",
+        "Romance",
+        "Adventure"
+      ],
+      "total_episodes": 22
+    },
+    {
+      "title": "Youkoso Jitsuryoku Shijou Shugi no Kyoushitsu e S2",
+      "url": "https://anime.oploverz.ac/series/youkoso-jitsuryoku-shijou-shugi-no-kyoushitsu-e-s2",
+      "slug": "youkoso-jitsuryoku-shijou-shugi-no-kyoushitsu-e-s2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.24,
+      "genres": [
+        "Drama",
+        "School",
+        "Psychological"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Youkoso Jitsuryoku Shijou Shugi no Kyoushitsu e",
+      "url": "https://anime.oploverz.ac/series/youkoso-jitsuryoku-shijou-shugi-no-kyoushitsu-e",
+      "slug": "youkoso-jitsuryoku-shijou-shugi-no-kyoushitsu-e",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.86,
+      "genres": [
+        "Drama",
+        "School",
+        "Psychological"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "AOASHI",
+      "url": "https://anime.oploverz.ac/series/aoashi",
+      "slug": "aoashi",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.01,
+      "genres": [
+        "Sports",
+        "Seinen"
+      ],
+      "total_episodes": 24
+    },
+    {
+      "title": "SPY x FAMILY",
+      "url": "https://anime.oploverz.ac/series/spy-x-family",
+      "slug": "spy-x-family",
+      "status": "Completed",
+      "type": "TV",
+      "score": 9.04,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Comedy"
+      ],
+      "total_episodes": 25
+    },
+    {
+      "title": "Hataraku Maou-sama!! S1",
+      "url": "https://anime.oploverz.ac/series/hataraku-maou-sama-s1",
+      "slug": "hataraku-maou-sama-s1",
+      "status": "Completed",
+      "type": "BD",
+      "score": 7.78,
+      "genres": [
+        "Fantasy",
+        "Supernatural",
+        "Comedy",
+        "Romance"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Kaguya-sama wa Kokurasetai -Ultra Romantic-",
+      "url": "https://anime.oploverz.ac/series/kaguya-sama-wa-kokurasetai-ultra-romantic",
+      "slug": "kaguya-sama-wa-kokurasetai-ultra-romantic",
+      "status": "Completed",
+      "type": "TV",
+      "score": 9,
+      "genres": [
+        "Shounen",
+        "School",
+        "Psychological",
+        "Romance"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Tomodachi Game",
+      "url": "https://anime.oploverz.ac/series/tomodachi-game",
+      "slug": "tomodachi-game",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.47,
+      "genres": [
+        "School",
+        "Psychological",
+        "Game"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Date A Live Season 4",
+      "url": "https://anime.oploverz.ac/series/date-a-live-season-4",
+      "slug": "date-a-live-season-4",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.2,
+      "genres": [
+        "Comedy",
+        "School",
+        "Romance",
+        "Sci-Fi",
+        "Mecha",
+        "Harem"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Tate no Yuusha no Nariagari S2",
+      "url": "https://anime.oploverz.ac/series/tate-no-yuusha-no-nariagari-s2",
+      "slug": "tate-no-yuusha-no-nariagari-s2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.8,
+      "genres": [
+        "Action",
+        "Drama",
+        "Fantasy",
+        "Adventure"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Boku no Hero Academia Movie 3: World Heroes Mission",
+      "url": "https://anime.oploverz.ac/series/boku-no-hero-academia-movie-3-world-heroes-mission",
+      "slug": "boku-no-hero-academia-movie-3-world-heroes-mission",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 7.62,
+      "genres": [
+        "Action",
+        "Super Power",
+        "Comedy",
+        "School"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Vanitas no Carte Part 1",
+      "url": "https://anime.oploverz.ac/series/vanitas-no-carte-part-1",
+      "slug": "vanitas-no-carte-part-1",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.91,
+      "genres": [
+        "Historical",
+        "Supernatural",
+        "Vampire"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Vanitas no Carte Part 2",
+      "url": "https://anime.oploverz.ac/series/vanitas-no-carte-part-2",
+      "slug": "vanitas-no-carte-part-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.13,
+      "genres": [
+        "Historical",
+        "Supernatural",
+        "Vampire"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Arifureta Shokugyou de Sekai Saikyou S2",
+      "url": "https://anime.oploverz.ac/series/arifureta-shokugyou-de-sekai-saikyou-s2",
+      "slug": "arifureta-shokugyou-de-sekai-saikyou-s2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.45,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Adventure"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "ORIENT",
+      "url": "https://anime.oploverz.ac/series/orient",
+      "slug": "orient",
+      "status": "Completed",
+      "type": "TV",
+      "score": 6.18,
+      "genres": [
+        "Action",
+        "Fantasy"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Mahouka Koukou no Rettousei: Tsuioku-hen",
+      "url": "https://anime.oploverz.ac/series/mahouka-koukou-no-rettousei-tsuioku-hen",
+      "slug": "mahouka-koukou-no-rettousei-tsuioku-hen",
+      "status": "Completed",
+      "type": "Special",
+      "score": 7.68,
+      "genres": [
+        "Action",
+        "Supernatural",
+        "Sci-Fi"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Violet Evergarden Movie Sub Indonesia",
+      "url": "https://anime.oploverz.ac/series/violet-evergarden-movie-sub-indonesia",
+      "slug": "violet-evergarden-movie-sub-indonesia",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 8.88,
+      "genres": [
+        "Drama",
+        "Fantasy",
+        "Slice of Life"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Kimetsu no Yaiba: Mugen Ressha-hen",
+      "url": "https://anime.oploverz.ac/series/kimetsu-no-yaiba-mugen-ressha-hen",
+      "slug": "kimetsu-no-yaiba-mugen-ressha-hen",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.65,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Demons",
+        "Historical",
+        "Supernatural"
+      ],
+      "total_episodes": 7
+    },
+    {
+      "title": "86 Eighty-Six Part 2",
+      "url": "https://anime.oploverz.ac/series/86-eighty-six-part-2",
+      "slug": "86-eighty-six-part-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.61,
+      "genres": [
+        "Action",
+        "Drama",
+        "Military",
+        "Sci-Fi",
+        "Mecha"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Shinka no Mi: Shiranai Uchi ni Kachigumi Jinsei",
+      "url": "https://anime.oploverz.ac/series/shinka-no-mi-shiranai-uchi-ni-kachigumi-jinsei",
+      "slug": "shinka-no-mi-shiranai-uchi-ni-kachigumi-jinsei",
+      "status": "Completed",
+      "type": "TV",
+      "score": 6.7,
+      "genres": [
+        "Fantasy",
+        "Comedy",
+        "Adventure"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "takt op.Destiny",
+      "url": "https://anime.oploverz.ac/series/takt-opdestiny",
+      "slug": "takt-opdestiny",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.08,
+      "genres": [
+        "Action",
+        "Fantasy"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Kimetsu no Yaiba S2",
+      "url": "https://anime.oploverz.ac/series/kimetsu-no-yaiba-s2",
+      "slug": "kimetsu-no-yaiba-s2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.68,
+      "genres": [
+        "Action",
+        "Supernatural"
+      ],
+      "total_episodes": 11
+    },
+    {
+      "title": "Shaman King 2021",
+      "url": "https://anime.oploverz.ac/series/shaman-king-2021",
+      "slug": "shaman-king-2021",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.44,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Super Power",
+        "Supernatural",
+        "Comedy",
+        "Adventure"
+      ],
+      "total_episodes": 52
+    },
+    {
+      "title": "Boruto: Naruto Next Generations",
+      "url": "https://anime.oploverz.ac/series/boruto-naruto-next-generations",
+      "slug": "boruto-naruto-next-generations",
+      "status": "Completed",
+      "type": "TV",
+      "score": 5.86,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Super Power",
+        "Adventure",
+        "Martial Arts"
+      ],
+      "total_episodes": 293
+    },
+    {
+      "title": "One Piece",
+      "url": "https://anime.oploverz.ac/series/one-piece",
+      "slug": "one-piece",
+      "status": "Ongoing",
+      "type": "TV",
+      "score": 8.48,
+      "genres": [
+        "Action",
+        "Drama",
+        "Fantasy",
+        "Shounen",
+        "Super Power",
+        "Comedy",
+        "Adventure"
+      ],
+      "total_episodes": 1153
+    },
+    {
+      "title": "Ao no Exorcist S1",
+      "url": "https://anime.oploverz.ac/series/ao-no-exorcist-s1",
+      "slug": "ao-no-exorcist-s1",
+      "status": "Completed",
+      "type": "BD",
+      "score": 7.48,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Shounen",
+        "Supernatural",
+        "School"
+      ],
+      "total_episodes": 25
+    },
+    {
+      "title": "86 Eighty-Six Part 1",
+      "url": "https://anime.oploverz.ac/series/86-eighty-six-part-1",
+      "slug": "86-eighty-six-part-1",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.19,
+      "genres": [
+        "Action",
+        "Drama",
+        "Military",
+        "Sci-Fi",
+        "Mecha"
+      ],
+      "total_episodes": 11
+    },
+    {
+      "title": "Tsuki ga Michibiku Isekai Douchuu",
+      "url": "https://anime.oploverz.ac/series/tsuki-ga-michibiku-isekai-douchuu",
+      "slug": "tsuki-ga-michibiku-isekai-douchuu",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.21,
+      "genres": [
+        "Fantasy",
+        "Adventure"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Isekai Maou to Shoukan Shoujo no Dorei Majutsu Season 2",
+      "url": "https://anime.oploverz.ac/series/isekai-maou-to-shoukan-shoujo-no-dorei-majutsu-season-2",
+      "slug": "isekai-maou-to-shoukan-shoujo-no-dorei-majutsu-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.33,
+      "genres": [
+        "Fantasy",
+        "Comedy",
+        "Magic",
+        "Ecchi",
+        "Harem"
+      ],
+      "total_episodes": 10
+    },
+    {
+      "title": "Boku no Hero Academia Season 5",
+      "url": "https://anime.oploverz.ac/series/boku-no-hero-academia-season-5",
+      "slug": "boku-no-hero-academia-season-5",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.62,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Super Power",
+        "Comedy",
+        "School"
+      ],
+      "total_episodes": 25
+    },
+    {
+      "title": "Gundam Build Fighters: Battlogue",
+      "url": "https://anime.oploverz.ac/series/gundam-build-fighters-battlogue",
+      "slug": "gundam-build-fighters-battlogue",
+      "status": "Completed",
+      "type": "TV",
+      "score": null,
+      "genres": [
+        "Action",
+        "Sci-Fi",
+        "Mecha"
+      ],
+      "total_episodes": 2
+    },
+    {
+      "title": "Dramatical Murder",
+      "url": "https://anime.oploverz.ac/series/dramatical-murder",
+      "slug": "dramatical-murder",
+      "status": "Completed",
+      "type": "TV",
+      "score": 6.36,
+      "genres": [
+        "Action",
+        "Super Power",
+        "Psychological",
+        "Sci-Fi"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Divine Gate",
+      "url": "https://anime.oploverz.ac/series/divine-gate",
+      "slug": "divine-gate",
+      "status": "Completed",
+      "type": "TV",
+      "score": 6.69,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Sci-Fi"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Danganronpa The Animation",
+      "url": "https://anime.oploverz.ac/series/danganronpa-the-animation",
+      "slug": "danganronpa-the-animation",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.47,
+      "genres": [
+        "Action",
+        "Mystery",
+        "Psychological",
+        "Horror"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Chuunibyou Season 2",
+      "url": "https://anime.oploverz.ac/series/chuunibyou-season-2",
+      "slug": "chuunibyou-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.59,
+      "genres": [
+        "Drama",
+        "Comedy",
+        "School",
+        "Romance",
+        "Slice of Life"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Bubuki Buranki",
+      "url": "https://anime.oploverz.ac/series/bubuki-buranki",
+      "slug": "bubuki-buranki",
+      "status": "Completed",
+      "type": "TV",
+      "score": 6.53,
+      "genres": [
+        "Sci-Fi"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "World Trigger Season 2",
+      "url": "https://anime.oploverz.ac/series/world-trigger-season-2",
+      "slug": "world-trigger-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.58,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Supernatural",
+        "School",
+        "Sci-Fi"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Shingeki no Kyojin Season 4",
+      "url": "https://anime.oploverz.ac/series/shingeki-no-kyojin-season-4",
+      "slug": "shingeki-no-kyojin-season-4",
+      "status": "Completed",
+      "type": "TV",
+      "score": 9.02,
+      "genres": [
+        "Action",
+        "Drama",
+        "Fantasy",
+        "Military",
+        "Mystery",
+        "Shounen",
+        "Super Power"
+      ],
+      "total_episodes": 28
+    },
+    {
+      "title": "Re: Zero Kara Hajimeru Isekai Seikatsu Season 2",
+      "url": "https://anime.oploverz.ac/series/re-zero-kara-hajimeru-isekai-seikatsu-season-2",
+      "slug": "re-zero-kara-hajimeru-isekai-seikatsu-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.69,
+      "genres": [
+        "Drama",
+        "Fantasy",
+        "Psychological",
+        "Thriller"
+      ],
+      "total_episodes": 25
+    },
+    {
+      "title": "Promised Neverland Season 2",
+      "url": "https://anime.oploverz.ac/series/promised-neverland-season-2",
+      "slug": "promised-neverland-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.09,
+      "genres": [
+        "Mystery",
+        "Shounen",
+        "Psychological",
+        "Thriller",
+        "Sci-Fi"
+      ],
+      "total_episodes": 11
+    },
+    {
+      "title": "Log Horizon Season 3",
+      "url": "https://anime.oploverz.ac/series/log-horizon-season-3",
+      "slug": "log-horizon-season-3",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.41,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Adventure",
+        "Magic",
+        "Game"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Dr. Stone Season 2",
+      "url": "https://anime.oploverz.ac/series/dr-stone-season-2",
+      "slug": "dr-stone-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.32,
+      "genres": [
+        "Shounen",
+        "Adventure",
+        "Sci-Fi"
+      ],
+      "total_episodes": 11
+    },
+    {
+      "title": "Tensei shitara Slime Datta Ken",
+      "url": "https://anime.oploverz.ac/series/tensei-shitara-slime-datta-ken",
+      "slug": "tensei-shitara-slime-datta-ken",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.08,
+      "genres": [
+        "Fantasy",
+        "Shounen"
+      ],
+      "total_episodes": 24
+    },
+    {
+      "title": "Jujutsu Kaisen",
+      "url": "https://anime.oploverz.ac/series/jujutsu-kaisen",
+      "slug": "jujutsu-kaisen",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.49,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Demons",
+        "Supernatural",
+        "School"
+      ],
+      "total_episodes": 24
+    },
+    {
+      "title": "Black Clover",
+      "url": "https://anime.oploverz.ac/series/black-clover",
+      "slug": "black-clover",
+      "status": "Hiatus",
+      "type": "TV",
+      "score": 7.32,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Shounen",
+        "Comedy",
+        "Magic"
+      ],
+      "total_episodes": 170
+    },
+    {
+      "title": "Boku no Hero Academia Movie 2: Heroes Rising",
+      "url": "https://anime.oploverz.ac/series/boku-no-hero-academia-movie-2-heroes-rising",
+      "slug": "boku-no-hero-academia-movie-2-heroes-rising",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 8.13,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Super Power",
+        "Comedy",
+        "School"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Boku no Hero Academia Movie 1: Futari no Hero",
+      "url": "https://anime.oploverz.ac/series/boku-no-hero-academia-movie-1-futari-no-hero",
+      "slug": "boku-no-hero-academia-movie-1-futari-no-hero",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 8.3,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Super Power",
+        "Comedy",
+        "School"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Blade and Soul",
+      "url": "https://anime.oploverz.ac/series/blade-and-soul",
+      "slug": "blade-and-soul",
+      "status": "Completed",
+      "type": "TV",
+      "score": 6.29,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Adventure",
+        "Martial Arts"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Arcana Famiglia",
+      "url": "https://anime.oploverz.ac/series/arcana-famiglia",
+      "slug": "arcana-famiglia",
+      "status": "Completed",
+      "type": "TV",
+      "score": 6.44,
+      "genres": [
+        "Action",
+        "Romance",
+        "Shoujo"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Aoharu x Kikanjuu",
+      "url": "https://anime.oploverz.ac/series/aoharu-x-kikanjuu",
+      "slug": "aoharu-x-kikanjuu",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.31,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Comedy"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Ao Haru Ride",
+      "url": "https://anime.oploverz.ac/series/ao-haru-ride",
+      "slug": "ao-haru-ride",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.95,
+      "genres": [
+        "Drama",
+        "Comedy",
+        "School",
+        "Romance",
+        "Shoujo",
+        "Slice of Life"
+      ],
+      "total_episodes": 11
+    },
+    {
+      "title": "Amaama to Inazuma",
+      "url": "https://anime.oploverz.ac/series/amaama-to-inazuma",
+      "slug": "amaama-to-inazuma",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.79,
+      "genres": [
+        "Comedy",
+        "Slice of Life",
+        "Seinen"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "All Out!!",
+      "url": "https://anime.oploverz.ac/series/all-out",
+      "slug": "all-out",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.12,
+      "genres": [
+        "School",
+        "Sports",
+        "Seinen"
+      ],
+      "total_episodes": 25
+    },
+    {
+      "title": "Akatsuki no Yona OVA",
+      "url": "https://anime.oploverz.ac/series/akatsuki-no-yona-ova",
+      "slug": "akatsuki-no-yona-ova",
+      "status": "Completed",
+      "type": "OVA",
+      "score": 7.79,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Comedy",
+        "Shoujo"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Akatsuki no Yona",
+      "url": "https://anime.oploverz.ac/series/akatsuki-no-yona",
+      "slug": "akatsuki-no-yona",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.28,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Comedy",
+        "Romance",
+        "Shoujo"
+      ],
+      "total_episodes": 24
+    },
+    {
+      "title": "Ajin Season 2",
+      "url": "https://anime.oploverz.ac/series/ajin-season-2",
+      "slug": "ajin-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.14,
+      "genres": [
+        "Action",
+        "Mystery",
+        "Supernatural",
+        "Horror",
+        "Seinen"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Ajin",
+      "url": "https://anime.oploverz.ac/series/ajin",
+      "slug": "ajin",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.68,
+      "genres": [
+        "Mystery",
+        "Supernatural",
+        "Adventure",
+        "Horror",
+        "Seinen"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "3D Kanojo Real Girl S2",
+      "url": "https://anime.oploverz.ac/series/3d-kanojo-real-girl-s2",
+      "slug": "3d-kanojo-real-girl-s2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.69,
+      "genres": [
+        "School",
+        "Romance",
+        "Shoujo"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Yuusha ni Narenakatta Ore wa Shibushibu Shuushoku wo Ketsui Shimashita",
+      "url": "https://anime.oploverz.ac/series/yuusha-ni-narenakatta-ore-wa-shibushibu-shuushoku-wo-ketsui-shimashita",
+      "slug": "yuusha-ni-narenakatta-ore-wa-shibushibu-shuushoku-wo-ketsui-shimashita",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.11,
+      "genres": [
+        "Fantasy",
+        "Comedy",
+        "Romance"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Yowamushi Pedal Season 4",
+      "url": "https://anime.oploverz.ac/series/yowamushi-pedal-season-4",
+      "slug": "yowamushi-pedal-season-4",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.84,
+      "genres": [
+        "Drama",
+        "Shounen",
+        "Comedy",
+        "Sports"
+      ],
+      "total_episodes": 25
+    },
+    {
+      "title": "Working!!!",
+      "url": "https://anime.oploverz.ac/series/working",
+      "slug": "working",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.21,
+      "genres": [
+        "Comedy",
+        "Slice of Life"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Violet Evergarden",
+      "url": "https://anime.oploverz.ac/series/violet-evergarden",
+      "slug": "violet-evergarden",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.91,
+      "genres": [
+        "Drama",
+        "Fantasy"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Vinland Saga",
+      "url": "https://anime.oploverz.ac/series/vinland-saga",
+      "slug": "vinland-saga",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.67,
+      "genres": [
+        "Action",
+        "Drama",
+        "Historical",
+        "Adventure",
+        "Seinen"
+      ],
+      "total_episodes": 24
+    },
+    {
+      "title": "Ushio to Tora",
+      "url": "https://anime.oploverz.ac/series/ushio-to-tora",
+      "slug": "ushio-to-tora",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.65,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Demons",
+        "Supernatural",
+        "Comedy",
+        "Adventure"
+      ],
+      "total_episodes": 39
+    },
+    {
+      "title": "UQ Holder!: Mahou Sensei Negima! 2",
+      "url": "https://anime.oploverz.ac/series/uq-holder-mahou-sensei-negima-2",
+      "slug": "uq-holder-mahou-sensei-negima-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.43,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Shounen",
+        "Sci-Fi",
+        "Magic"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "The Unlimited Hyobu Kyosuke",
+      "url": "https://anime.oploverz.ac/series/the-unlimited-hyobu-kyosuke",
+      "slug": "the-unlimited-hyobu-kyosuke",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.62,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Super Power",
+        "Supernatural"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Tower of God",
+      "url": "https://anime.oploverz.ac/series/tower-of-god",
+      "slug": "tower-of-god",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.04,
+      "genres": [
+        "Action",
+        "Drama",
+        "Fantasy",
+        "Mystery",
+        "Adventure"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Tokyo Ghoul:re Season 2",
+      "url": "https://anime.oploverz.ac/series/tokyo-ghoulre-season-2",
+      "slug": "tokyo-ghoulre-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": null,
+      "genres": [
+        "Action",
+        "Drama",
+        "Mystery",
+        "Supernatural",
+        "Psychological",
+        "Horror",
+        "Seinen"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Tokyo Ghoul:re",
+      "url": "https://anime.oploverz.ac/series/tokyo-ghoulre",
+      "slug": "tokyo-ghoulre",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.76,
+      "genres": [
+        "Action",
+        "Drama",
+        "Mystery",
+        "Supernatural",
+        "Psychological",
+        "Horror",
+        "Seinen"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Tokyo Ghoul Season 2",
+      "url": "https://anime.oploverz.ac/series/tokyo-ghoul-season-2",
+      "slug": "tokyo-ghoul-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.58,
+      "genres": [
+        "Action",
+        "Drama",
+        "Mystery",
+        "Supernatural",
+        "Psychological",
+        "Horror",
+        "Seinen"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Terra Formars: Revenge",
+      "url": "https://anime.oploverz.ac/series/terra-formars-revenge",
+      "slug": "terra-formars-revenge",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.82,
+      "genres": [
+        "Action",
+        "Sports",
+        "Horror",
+        "Sci-Fi"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Terra Formars",
+      "url": "https://anime.oploverz.ac/series/terra-formars",
+      "slug": "terra-formars",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.07,
+      "genres": [
+        "Action",
+        "Horror",
+        "Sci-Fi",
+        "Space"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Tate no Yuusha no Nariagari",
+      "url": "https://anime.oploverz.ac/series/tate-no-yuusha-no-nariagari",
+      "slug": "tate-no-yuusha-no-nariagari",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.24,
+      "genres": [
+        "Action",
+        "Drama",
+        "Fantasy",
+        "Comedy",
+        "Romance",
+        "Adventure",
+        "Seinen"
+      ],
+      "total_episodes": 25
+    },
+    {
+      "title": "Taboo Tatto",
+      "url": "https://anime.oploverz.ac/series/taboo-tatto",
+      "slug": "taboo-tatto",
+      "status": "Completed",
+      "type": "TV",
+      "score": 6.27,
+      "genres": [
+        "Action",
+        "Mystery",
+        "Super Power",
+        "Supernatural",
+        "Comedy",
+        "Martial Arts"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Steins Gate 0",
+      "url": "https://anime.oploverz.ac/series/steins-gate-0",
+      "slug": "steins-gate-0",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.87,
+      "genres": [
+        "Thriller",
+        "Sci-Fi"
+      ],
+      "total_episodes": 23
+    },
+    {
+      "title": "Steins;Gate",
+      "url": "https://anime.oploverz.ac/series/steinsgate",
+      "slug": "steinsgate",
+      "status": "Completed",
+      "type": "TV",
+      "score": 9.17,
+      "genres": [
+        "Thriller",
+        "Sci-Fi"
+      ],
+      "total_episodes": 24
+    },
+    {
+      "title": "Shuumatsu no Izetta",
+      "url": "https://anime.oploverz.ac/series/shuumatsu-no-izetta",
+      "slug": "shuumatsu-no-izetta",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.13,
+      "genres": [
+        "Action",
+        "Military",
+        "Historical"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Shokugeki no Souma Season 5",
+      "url": "https://anime.oploverz.ac/series/shokugeki-no-souma-season-5",
+      "slug": "shokugeki-no-souma-season-5",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.32,
+      "genres": [
+        "Shounen",
+        "School",
+        "Ecchi"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Shokugeki no Souma Season 4",
+      "url": "https://anime.oploverz.ac/series/shokugeki-no-souma-season-4",
+      "slug": "shokugeki-no-souma-season-4",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.9,
+      "genres": [
+        "Shounen",
+        "School",
+        "Ecchi"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Shokugeki no Souma Season 3",
+      "url": "https://anime.oploverz.ac/series/shokugeki-no-souma-season-3",
+      "slug": "shokugeki-no-souma-season-3",
+      "status": "Completed",
+      "type": "TV",
+      "score": 9.2,
+      "genres": [
+        "Shounen",
+        "School"
+      ],
+      "total_episodes": 24
+    },
+    {
+      "title": "Shokugeki no Souma Season 2",
+      "url": "https://anime.oploverz.ac/series/shokugeki-no-souma-season-2",
+      "slug": "shokugeki-no-souma-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.54,
+      "genres": [
+        "Shounen",
+        "School"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Shokugeki no Soma",
+      "url": "https://anime.oploverz.ac/series/shokugeki-no-soma",
+      "slug": "shokugeki-no-soma",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.71,
+      "genres": [
+        "Shounen",
+        "School"
+      ],
+      "total_episodes": 24
+    },
+    {
+      "title": "Shigatsu wa Kimi no Uso",
+      "url": "https://anime.oploverz.ac/series/shigatsu-wa-kimi-no-uso",
+      "slug": "shigatsu-wa-kimi-no-uso",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.93,
+      "genres": [
+        "Drama",
+        "Shounen",
+        "School",
+        "Romance",
+        "Music"
+      ],
+      "total_episodes": 22
+    },
+    {
+      "title": "Satsuriku no Tenshi",
+      "url": "https://anime.oploverz.ac/series/satsuriku-no-tenshi",
+      "slug": "satsuriku-no-tenshi",
+      "status": "Completed",
+      "type": "TV",
+      "score": 6.99,
+      "genres": [
+        "Psychological",
+        "Thriller",
+        "Adventure",
+        "Horror"
+      ],
+      "total_episodes": 16
+    },
+    {
+      "title": "Sakamoto desu ga?",
+      "url": "https://anime.oploverz.ac/series/sakamoto-desu-ga",
+      "slug": "sakamoto-desu-ga",
+      "status": "Completed",
+      "type": "TV",
+      "score": null,
+      "genres": [
+        "Comedy",
+        "School",
+        "Seinen"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Sakamichi no Apollon",
+      "url": "https://anime.oploverz.ac/series/sakamichi-no-apollon",
+      "slug": "sakamichi-no-apollon",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.44,
+      "genres": [
+        "Drama",
+        "School",
+        "Romance",
+        "Music",
+        "Josei"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "ReLIFE",
+      "url": "https://anime.oploverz.ac/series/relife",
+      "slug": "relife",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.36,
+      "genres": [
+        "School",
+        "Romance",
+        "Slice of Life"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Ranpo Kitan: Game of Laplace",
+      "url": "https://anime.oploverz.ac/series/ranpo-kitan-game-of-laplace",
+      "slug": "ranpo-kitan-game-of-laplace",
+      "status": "Completed",
+      "type": "TV",
+      "score": 6.92,
+      "genres": [
+        "Mystery"
+      ],
+      "total_episodes": 11
+    },
+    {
+      "title": "Psycho-Pass Season 2",
+      "url": "https://anime.oploverz.ac/series/psycho-pass-season-2",
+      "slug": "psycho-pass-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.7,
+      "genres": [
+        "Action",
+        "Psychological",
+        "Sci-Fi",
+        "Police"
+      ],
+      "total_episodes": 11
+    },
+    {
+      "title": "Psycho-Pass",
+      "url": "https://anime.oploverz.ac/series/psycho-pass",
+      "slug": "psycho-pass",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.41,
+      "genres": [
+        "Action",
+        "Psychological",
+        "Sci-Fi",
+        "Police"
+      ],
+      "total_episodes": 22
+    },
+    {
+      "title": "Prince of Stride: Alternative",
+      "url": "https://anime.oploverz.ac/series/prince-of-stride-alternative",
+      "slug": "prince-of-stride-alternative",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.49,
+      "genres": [
+        "Sports"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Plunderer",
+      "url": "https://anime.oploverz.ac/series/plunderer",
+      "slug": "plunderer",
+      "status": "Completed",
+      "type": "TV",
+      "score": 6.69,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Shounen",
+        "Ecchi"
+      ],
+      "total_episodes": 24
+    },
+    {
+      "title": "Owari no Seraph Season 2",
+      "url": "https://anime.oploverz.ac/series/owari-no-seraph-season-2",
+      "slug": "owari-no-seraph-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.1,
+      "genres": [
+        "Drama",
+        "Shounen",
+        "Supernatural",
+        "Vampire"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Owari no Seraph",
+      "url": "https://anime.oploverz.ac/series/owari-no-seraph",
+      "slug": "owari-no-seraph",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.63,
+      "genres": [
+        "Action",
+        "Drama",
+        "Shounen",
+        "Supernatural",
+        "Vampire"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Overlord Season 3",
+      "url": "https://anime.oploverz.ac/series/overlord-season-3",
+      "slug": "overlord-season-3",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.37,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Supernatural",
+        "Adventure",
+        "Magic",
+        "Game"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Overlord Season 2",
+      "url": "https://anime.oploverz.ac/series/overlord-season-2",
+      "slug": "overlord-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 9.21,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Supernatural",
+        "Adventure",
+        "Magic",
+        "Game"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Overlord",
+      "url": "https://anime.oploverz.ac/series/overlord",
+      "slug": "overlord",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.17,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Supernatural",
+        "Adventure",
+        "Game"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Oregairu Season 2",
+      "url": "https://anime.oploverz.ac/series/oregairu-season-2",
+      "slug": "oregairu-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.36,
+      "genres": [
+        "Comedy",
+        "School",
+        "Romance"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Oregairu",
+      "url": "https://anime.oploverz.ac/series/oregairu",
+      "slug": "oregairu",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.09,
+      "genres": [
+        "Drama",
+        "Comedy",
+        "School",
+        "Romance",
+        "Slice of Life"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Ore Monogatari",
+      "url": "https://anime.oploverz.ac/series/ore-monogatari",
+      "slug": "ore-monogatari",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.22,
+      "genres": [
+        "Comedy",
+        "Romance",
+        "Shoujo"
+      ],
+      "total_episodes": 24
+    },
+    {
+      "title": "Orange",
+      "url": "https://anime.oploverz.ac/series/orange",
+      "slug": "orange",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.92,
+      "genres": [
+        "Drama",
+        "School",
+        "Romance",
+        "Shoujo",
+        "Sci-Fi"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Ookami Shoujo to Kuro Ouji",
+      "url": "https://anime.oploverz.ac/series/ookami-shoujo-to-kuro-ouji",
+      "slug": "ookami-shoujo-to-kuro-ouji",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.51,
+      "genres": [
+        "Comedy",
+        "School",
+        "Romance",
+        "Shoujo"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "One Punch Man OVA : Road To Hero",
+      "url": "https://anime.oploverz.ac/series/one-punch-man-ova-road-to-hero",
+      "slug": "one-punch-man-ova-road-to-hero",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.85,
+      "genres": [
+        "Action",
+        "Super Power",
+        "Supernatural",
+        "Comedy",
+        "Sci-Fi",
+        "Seinen",
+        "Parody"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "One Punch Man Special",
+      "url": "https://anime.oploverz.ac/series/one-punch-man-special",
+      "slug": "one-punch-man-special",
+      "status": "Completed",
+      "type": "Special",
+      "score": 7.76,
+      "genres": [
+        "Action",
+        "Super Power",
+        "Supernatural",
+        "Comedy",
+        "Sci-Fi",
+        "Seinen",
+        "Parody"
+      ],
+      "total_episodes": 6
+    },
+    {
+      "title": "One Punch Man Season 2",
+      "url": "https://anime.oploverz.ac/series/one-punch-man-season-2",
+      "slug": "one-punch-man-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.83,
+      "genres": [
+        "Action",
+        "Super Power",
+        "Supernatural",
+        "Comedy",
+        "Sci-Fi",
+        "Seinen",
+        "Parody"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "One Punch Man",
+      "url": "https://anime.oploverz.ac/series/one-punch-man",
+      "slug": "one-punch-man",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.59,
+      "genres": [
+        "Action",
+        "Super Power",
+        "Supernatural",
+        "Comedy",
+        "Sci-Fi",
+        "Seinen",
+        "Parody"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "One Piece Episode Special",
+      "url": "https://anime.oploverz.ac/series/one-piece-episode-special",
+      "slug": "one-piece-episode-special",
+      "status": "Completed",
+      "type": "Special",
+      "score": null,
+      "genres": [
+        "Action",
+        "Drama",
+        "Fantasy",
+        "Shounen",
+        "Super Power",
+        "Comedy",
+        "Adventure"
+      ],
+      "total_episodes": 14
+    },
+    {
+      "title": "One Piece on Smartphone",
+      "url": "https://anime.oploverz.ac/series/one-piece-on-smartphone",
+      "slug": "one-piece-on-smartphone",
+      "status": "Completed",
+      "type": "Special",
+      "score": null,
+      "genres": [
+        "Action",
+        "Drama",
+        "Fantasy",
+        "Shounen",
+        "Super Power",
+        "Comedy",
+        "Adventure"
+      ],
+      "total_episodes": 2
+    },
+    {
+      "title": "One Piece OVA",
+      "url": "https://anime.oploverz.ac/series/one-piece-ova",
+      "slug": "one-piece-ova",
+      "status": "Completed",
+      "type": "OVA",
+      "score": null,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Shounen",
+        "Super Power",
+        "Comedy",
+        "Adventure"
+      ],
+      "total_episodes": 3
+    },
+    {
+      "title": "One Piece Movie",
+      "url": "https://anime.oploverz.ac/series/one-piece-movie",
+      "slug": "one-piece-movie",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 8.44,
+      "genres": [
+        "Action",
+        "Drama",
+        "Fantasy",
+        "Shounen",
+        "Comedy",
+        "Adventure"
+      ],
+      "total_episodes": 15
+    },
+    {
+      "title": "Noragami Aragoto",
+      "url": "https://anime.oploverz.ac/series/noragami-aragoto",
+      "slug": "noragami-aragoto",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.27,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Supernatural",
+        "Adventure"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Non Non Biyori Repeat",
+      "url": "https://anime.oploverz.ac/series/non-non-biyori-repeat",
+      "slug": "non-non-biyori-repeat",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.33,
+      "genres": [
+        "Comedy",
+        "School",
+        "Slice of Life",
+        "Seinen"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Noblesse",
+      "url": "https://anime.oploverz.ac/series/noblesse",
+      "slug": "noblesse",
+      "status": "Completed",
+      "type": "TV",
+      "score": 6.86,
+      "genres": [
+        "Action",
+        "Supernatural",
+        "School",
+        "Vampire"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "No Game No Life",
+      "url": "https://anime.oploverz.ac/series/no-game-no-life",
+      "slug": "no-game-no-life",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.55,
+      "genres": [
+        "Fantasy",
+        "Supernatural",
+        "Comedy",
+        "Adventure",
+        "Game"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Nisekoi Season 2",
+      "url": "https://anime.oploverz.ac/series/nisekoi-season-2",
+      "slug": "nisekoi-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.53,
+      "genres": [
+        "Shounen",
+        "Comedy",
+        "School",
+        "Romance"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Nisekoi",
+      "url": "https://anime.oploverz.ac/series/nisekoi",
+      "slug": "nisekoi",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.02,
+      "genres": [
+        "Shounen",
+        "Comedy",
+        "School",
+        "Romance"
+      ],
+      "total_episodes": 20
+    },
+    {
+      "title": "Nijiiro Days",
+      "url": "https://anime.oploverz.ac/series/nijiiro-days",
+      "slug": "nijiiro-days",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.29,
+      "genres": [
+        "Comedy",
+        "Shoujo",
+        "Slice of Life"
+      ],
+      "total_episodes": 24
+    },
+    {
+      "title": "New Prince of Tennis",
+      "url": "https://anime.oploverz.ac/series/new-prince-of-tennis",
+      "slug": "new-prince-of-tennis",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.57,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Comedy",
+        "Sports"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Natsume Yuujinchou Go",
+      "url": "https://anime.oploverz.ac/series/natsume-yuujinchou-go",
+      "slug": "natsume-yuujinchou-go",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.59,
+      "genres": [
+        "Drama",
+        "Demons",
+        "Supernatural",
+        "Shoujo",
+        "Slice of Life"
+      ],
+      "total_episodes": 11
+    },
+    {
+      "title": "Naruto",
+      "url": "https://anime.oploverz.ac/series/naruto",
+      "slug": "naruto",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.91,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Super Power",
+        "Comedy",
+        "Adventure",
+        "Martial Arts"
+      ],
+      "total_episodes": 220
+    },
+    {
+      "title": "Nanatsu no Taizai Season 3",
+      "url": "https://anime.oploverz.ac/series/nanatsu-no-taizai-season-3",
+      "slug": "nanatsu-no-taizai-season-3",
+      "status": "Completed",
+      "type": "TV",
+      "score": 6.41,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Shounen",
+        "Supernatural",
+        "Adventure",
+        "Magic"
+      ],
+      "total_episodes": 24
+    },
+    {
+      "title": "Nanatsu no Taizai Season 2",
+      "url": "https://anime.oploverz.ac/series/nanatsu-no-taizai-season-2",
+      "slug": "nanatsu-no-taizai-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.86,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Shounen",
+        "Supernatural",
+        "Adventure",
+        "Magic"
+      ],
+      "total_episodes": 24
+    },
+    {
+      "title": "Nanatsu no Taizai",
+      "url": "https://anime.oploverz.ac/series/nanatsu-no-taizai",
+      "slug": "nanatsu-no-taizai",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.91,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Shounen",
+        "Supernatural",
+        "Adventure",
+        "Magic",
+        "Ecchi"
+      ],
+      "total_episodes": 24
+    },
+    {
+      "title": "Musaigen no Phantom World",
+      "url": "https://anime.oploverz.ac/series/musaigen-no-phantom-world",
+      "slug": "musaigen-no-phantom-world",
+      "status": "Completed",
+      "type": "TV",
+      "score": 6.89,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Supernatural",
+        "Comedy",
+        "Slice of Life"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Mob Psycho 100 Season 2",
+      "url": "https://anime.oploverz.ac/series/mob-psycho-100-season-2",
+      "slug": "mob-psycho-100-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.85,
+      "genres": [
+        "Action",
+        "Supernatural",
+        "Comedy",
+        "Slice of Life"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Mob Psycho 100",
+      "url": "https://anime.oploverz.ac/series/mob-psycho-100",
+      "slug": "mob-psycho-100",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.49,
+      "genres": [
+        "Action",
+        "Supernatural",
+        "Comedy",
+        "Slice of Life"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Mirai Nikki",
+      "url": "https://anime.oploverz.ac/series/mirai-nikki",
+      "slug": "mirai-nikki",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.56,
+      "genres": [
+        "Action",
+        "Mystery",
+        "Shounen",
+        "Supernatural",
+        "Psychological",
+        "Thriller"
+      ],
+      "total_episodes": 26
+    },
+    {
+      "title": "Megalo Box",
+      "url": "https://anime.oploverz.ac/series/megalo-box",
+      "slug": "megalo-box",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.92,
+      "genres": [
+        "Action",
+        "Drama",
+        "Sports",
+        "Sci-Fi",
+        "Slice of Life"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Masamune-kun no Revenge",
+      "url": "https://anime.oploverz.ac/series/masamune-kun-no-revenge",
+      "slug": "masamune-kun-no-revenge",
+      "status": "Completed",
+      "type": "TV",
+      "score": 6.84,
+      "genres": [
+        "Shounen",
+        "Comedy",
+        "School",
+        "Romance",
+        "Harem"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Maou Gakuin no Futekigousha",
+      "url": "https://anime.oploverz.ac/series/maou-gakuin-no-futekigousha",
+      "slug": "maou-gakuin-no-futekigousha",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.37,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Demons",
+        "School",
+        "Magic"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Mahouka Koukou no Rettousei Season 2",
+      "url": "https://anime.oploverz.ac/series/mahouka-koukou-no-rettousei-season-2",
+      "slug": "mahouka-koukou-no-rettousei-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.32,
+      "genres": [
+        "Action",
+        "Supernatural",
+        "School",
+        "Romance",
+        "Sci-Fi",
+        "Magic"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Mahouka Koukou no Rettousei",
+      "url": "https://anime.oploverz.ac/series/mahouka-koukou-no-rettousei",
+      "slug": "mahouka-koukou-no-rettousei",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.54,
+      "genres": [
+        "Action",
+        "Supernatural",
+        "School",
+        "Romance",
+        "Sci-Fi",
+        "Magic"
+      ],
+      "total_episodes": 26
+    },
+    {
+      "title": "Magi: The Kingdom of Magic",
+      "url": "https://anime.oploverz.ac/series/magi-the-kingdom-of-magic",
+      "slug": "magi-the-kingdom-of-magic",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.29,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Shounen",
+        "Adventure",
+        "Magic"
+      ],
+      "total_episodes": 25
+    },
+    {
+      "title": "Magi: The Labyrinth of Magic",
+      "url": "https://anime.oploverz.ac/series/magi-the-labyrinth-of-magic",
+      "slug": "magi-the-labyrinth-of-magic",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.08,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Shounen",
+        "Adventure",
+        "Magic"
+      ],
+      "total_episodes": 25
+    },
+    {
+      "title": "Kuroko no Basket Movie: Last Game",
+      "url": "https://anime.oploverz.ac/series/kuroko-no-basket-movie-last-game",
+      "slug": "kuroko-no-basket-movie-last-game",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 8.08,
+      "genres": [
+        "Shounen",
+        "School",
+        "Sports"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Kuroko no Basket Season 3",
+      "url": "https://anime.oploverz.ac/series/kuroko-no-basket-season-3",
+      "slug": "kuroko-no-basket-season-3",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.35,
+      "genres": [
+        "Shounen",
+        "Comedy",
+        "School",
+        "Sports"
+      ],
+      "total_episodes": 25
+    },
+    {
+      "title": "Kuroko no Basket Season 2",
+      "url": "https://anime.oploverz.ac/series/kuroko-no-basket-season-2",
+      "slug": "kuroko-no-basket-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.3,
+      "genres": [
+        "Shounen",
+        "Comedy",
+        "School",
+        "Sports"
+      ],
+      "total_episodes": 25
+    },
+    {
+      "title": "Koutetsujou no Kabaneri",
+      "url": "https://anime.oploverz.ac/series/koutetsujou-no-kabaneri",
+      "slug": "koutetsujou-no-kabaneri",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.26,
+      "genres": [
+        "Action",
+        "Drama",
+        "Fantasy",
+        "Supernatural",
+        "Horror"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Shinchou Yuusha: Kono Yuusha ga Ore Tueee Kuse ni Shinchou Sugiru",
+      "url": "https://anime.oploverz.ac/series/shinchou-yuusha-kono-yuusha-ga-ore-tueee-kuse-ni-shinchou-sugiru",
+      "slug": "shinchou-yuusha-kono-yuusha-ga-ore-tueee-kuse-ni-shinchou-sugiru",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.55,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Comedy",
+        "Adventure"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Kono Subarashii Sekai ni Shukufuku wo Season 2",
+      "url": "https://anime.oploverz.ac/series/kono-subarashii-sekai-ni-shukufuku-wo-season-2",
+      "slug": "kono-subarashii-sekai-ni-shukufuku-wo-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.32,
+      "genres": [
+        "Fantasy",
+        "Supernatural",
+        "Comedy",
+        "Adventure",
+        "Magic",
+        "Parody"
+      ],
+      "total_episodes": 10
+    },
+    {
+      "title": "Kono Subarashii Sekai ni Shukufuku wo",
+      "url": "https://anime.oploverz.ac/series/kono-subarashii-sekai-ni-shukufuku-wo",
+      "slug": "kono-subarashii-sekai-ni-shukufuku-wo",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.16,
+      "genres": [
+        "Fantasy",
+        "Supernatural",
+        "Comedy",
+        "Adventure",
+        "Magic",
+        "Parody"
+      ],
+      "total_episodes": 10
+    },
+    {
+      "title": "Kokkoku",
+      "url": "https://anime.oploverz.ac/series/kokkoku",
+      "slug": "kokkoku",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.04,
+      "genres": [
+        "Drama",
+        "Mystery",
+        "Supernatural",
+        "Psychological",
+        "Seinen"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Koi wa Ameagari no You ni",
+      "url": "https://anime.oploverz.ac/series/koi-wa-ameagari-no-you-ni",
+      "slug": "koi-wa-ameagari-no-you-ni",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.54,
+      "genres": [
+        "Romance",
+        "Seinen"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Koi to Uso",
+      "url": "https://anime.oploverz.ac/series/koi-to-uso",
+      "slug": "koi-to-uso",
+      "status": "Completed",
+      "type": "TV",
+      "score": 6.58,
+      "genres": [
+        "Drama",
+        "School",
+        "Romance"
+      ],
+      "total_episodes": 11
+    },
+    {
+      "title": "Kiseijuu: Sei no Kakuritsu",
+      "url": "https://anime.oploverz.ac/series/kiseijuu-sei-no-kakuritsu",
+      "slug": "kiseijuu-sei-no-kakuritsu",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.41,
+      "genres": [
+        "Action",
+        "Drama",
+        "Psychological",
+        "Horror",
+        "Sci-Fi",
+        "Seinen"
+      ],
+      "total_episodes": 24
+    },
+    {
+      "title": "Mobile Suit Gundam: Iron-Blooded Orphans Season 2",
+      "url": "https://anime.oploverz.ac/series/mobile-suit-gundam-iron-blooded-orphans-season-2",
+      "slug": "mobile-suit-gundam-iron-blooded-orphans-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.24,
+      "genres": [
+        "Action",
+        "Drama",
+        "Shounen",
+        "Sci-Fi",
+        "Mecha",
+        "Space"
+      ],
+      "total_episodes": 25
+    },
+    {
+      "title": "Mobile Suit Gundam: Iron-Blooded Orphans",
+      "url": "https://anime.oploverz.ac/series/mobile-suit-gundam-iron-blooded-orphans",
+      "slug": "mobile-suit-gundam-iron-blooded-orphans",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.02,
+      "genres": [
+        "Action",
+        "Drama",
+        "Sci-Fi",
+        "Mecha",
+        "Space"
+      ],
+      "total_episodes": 25
+    },
+    {
+      "title": "Kenja no Mago",
+      "url": "https://anime.oploverz.ac/series/kenja-no-mago",
+      "slug": "kenja-no-mago",
+      "status": "Completed",
+      "type": "TV",
+      "score": 6.55,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Comedy",
+        "Romance",
+        "Magic"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "K Season 2",
+      "url": "https://anime.oploverz.ac/series/k-season-2",
+      "slug": "k-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.63,
+      "genres": [
+        "Action",
+        "Super Power",
+        "Supernatural"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "K",
+      "url": "https://anime.oploverz.ac/series/k",
+      "slug": "k",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.52,
+      "genres": [
+        "Action",
+        "Mystery",
+        "Super Power",
+        "Supernatural"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Jormungand Season 2",
+      "url": "https://anime.oploverz.ac/series/jormungand-season-2",
+      "slug": "jormungand-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.94,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Seinen"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Jormungand",
+      "url": "https://anime.oploverz.ac/series/jormungand",
+      "slug": "jormungand",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.85,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Seinen"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Joker Game",
+      "url": "https://anime.oploverz.ac/series/joker-game",
+      "slug": "joker-game",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.06,
+      "genres": [
+        "Drama",
+        "Military",
+        "Historical"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Jigoku Shoujo: Yoi no Togi",
+      "url": "https://anime.oploverz.ac/series/jigoku-shoujo-yoi-no-togi",
+      "slug": "jigoku-shoujo-yoi-no-togi",
+      "status": "Completed",
+      "type": "TV",
+      "score": 6.54,
+      "genres": [
+        "Mystery",
+        "Supernatural",
+        "Psychological",
+        "Horror"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Itai no wa Iya nano de Bougyoryoku ni Kyokufuri Shitai to Omoimasu.",
+      "url": "https://anime.oploverz.ac/series/itai-no-wa-iya-nano-de-bougyoryoku-ni-kyokufuri-shitai-to-omoimasu",
+      "slug": "itai-no-wa-iya-nano-de-bougyoryoku-ni-kyokufuri-shitai-to-omoimasu",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.6,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Comedy",
+        "Adventure",
+        "Sci-Fi",
+        "Game"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Isekai Maou to Shoukan Shoujo no Dorei Majutsu",
+      "url": "https://anime.oploverz.ac/series/isekai-maou-to-shoukan-shoujo-no-dorei-majutsu",
+      "slug": "isekai-maou-to-shoukan-shoujo-no-dorei-majutsu",
+      "status": "Completed",
+      "type": "TV",
+      "score": 6.99,
+      "genres": [
+        "Fantasy",
+        "Comedy",
+        "Magic",
+        "Ecchi",
+        "Harem"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Isekai Cheat Magician",
+      "url": "https://anime.oploverz.ac/series/isekai-cheat-magician",
+      "slug": "isekai-cheat-magician",
+      "status": "Completed",
+      "type": "TV",
+      "score": 5.39,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Adventure"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Initial D Final Stage",
+      "url": "https://anime.oploverz.ac/series/initial-d-final-stage",
+      "slug": "initial-d-final-stage",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.25,
+      "genres": [
+        "Sports",
+        "Seinen",
+        "Cars"
+      ],
+      "total_episodes": 4
+    },
+    {
+      "title": "Initial D Fifth Stage",
+      "url": "https://anime.oploverz.ac/series/initial-d-fifth-stage",
+      "slug": "initial-d-fifth-stage",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.08,
+      "genres": [
+        "Action",
+        "Drama",
+        "Sports",
+        "Seinen",
+        "Cars"
+      ],
+      "total_episodes": 14
+    },
+    {
+      "title": "Initial D Fourth Stage",
+      "url": "https://anime.oploverz.ac/series/initial-d-fourth-stage",
+      "slug": "initial-d-fourth-stage",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.16,
+      "genres": [
+        "Action",
+        "Drama",
+        "Sports",
+        "Seinen",
+        "Cars"
+      ],
+      "total_episodes": 24
+    },
+    {
+      "title": "Initial D Third Stage",
+      "url": "https://anime.oploverz.ac/series/initial-d-third-stage",
+      "slug": "initial-d-third-stage",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.9,
+      "genres": [
+        "Action",
+        "Drama",
+        "Sports",
+        "Romance",
+        "Seinen",
+        "Cars"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Initial D Second Stage",
+      "url": "https://anime.oploverz.ac/series/initial-d-second-stage",
+      "slug": "initial-d-second-stage",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.13,
+      "genres": [
+        "Action",
+        "Drama",
+        "Sports",
+        "Seinen",
+        "Cars"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Initial D First Stage",
+      "url": "https://anime.oploverz.ac/series/initial-d-first-stage",
+      "slug": "initial-d-first-stage",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.29,
+      "genres": [
+        "Action",
+        "Drama",
+        "Sports",
+        "Seinen",
+        "Cars"
+      ],
+      "total_episodes": 26
+    },
+    {
+      "title": "Infinite Dendrogram",
+      "url": "https://anime.oploverz.ac/series/infinite-dendrogram",
+      "slug": "infinite-dendrogram",
+      "status": "Completed",
+      "type": "TV",
+      "score": 6.15,
+      "genres": [
+        "Fantasy",
+        "Game"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Hibike! Euphonium Season 2",
+      "url": "https://anime.oploverz.ac/series/hibike-euphonium-season-2",
+      "slug": "hibike-euphonium-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.3,
+      "genres": [
+        "Drama",
+        "School",
+        "Music"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Hibike! Euphonium",
+      "url": "https://anime.oploverz.ac/series/hibike-euphonium",
+      "slug": "hibike-euphonium",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.01,
+      "genres": [
+        "Drama",
+        "School",
+        "Music"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Hanebado!",
+      "url": "https://anime.oploverz.ac/series/hanebado",
+      "slug": "hanebado",
+      "status": "Completed",
+      "type": "TV",
+      "score": 6.94,
+      "genres": [
+        "Sports",
+        "Seinen"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Handa-kun",
+      "url": "https://anime.oploverz.ac/series/handa-kun",
+      "slug": "handa-kun",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.4,
+      "genres": [
+        "Shounen",
+        "Comedy",
+        "Slice of Life"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Hakkenden: Touhou Hakken Ibun",
+      "url": "https://anime.oploverz.ac/series/hakkenden-touhou-hakken-ibun",
+      "slug": "hakkenden-touhou-hakken-ibun",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.44,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Demons",
+        "Supernatural",
+        "Shoujo"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Haikyuu!!: Riku vs. Kuu",
+      "url": "https://anime.oploverz.ac/series/haikyuu-riku-vs-kuu",
+      "slug": "haikyuu-riku-vs-kuu",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.81,
+      "genres": [
+        "Drama",
+        "Shounen",
+        "Comedy",
+        "School",
+        "Sports"
+      ],
+      "total_episodes": 2
+    },
+    {
+      "title": "Hachi-nan tte, Sore wa Nai deshou!",
+      "url": "https://anime.oploverz.ac/series/hachi-nan-tte-sore-wa-nai-deshou",
+      "slug": "hachi-nan-tte-sore-wa-nai-deshou",
+      "status": "Completed",
+      "type": "TV",
+      "score": 6.19,
+      "genres": [
+        "Action",
+        "Fantasy"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Gundam Build Fighters Try",
+      "url": "https://anime.oploverz.ac/series/gundam-build-fighters-try",
+      "slug": "gundam-build-fighters-try",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.28,
+      "genres": [
+        "Action",
+        "Sci-Fi",
+        "Mecha"
+      ],
+      "total_episodes": 25
+    },
+    {
+      "title": "Gundam Build Fighters",
+      "url": "https://anime.oploverz.ac/series/gundam-build-fighters",
+      "slug": "gundam-build-fighters",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.8,
+      "genres": [
+        "Action",
+        "Sci-Fi",
+        "Mecha"
+      ],
+      "total_episodes": 25
+    },
+    {
+      "title": "Gugure! Kokkuri-san",
+      "url": "https://anime.oploverz.ac/series/gugure-kokkuri-san",
+      "slug": "gugure-kokkuri-san",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.58,
+      "genres": [
+        "Shounen",
+        "Supernatural",
+        "Comedy"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Golden Time",
+      "url": "https://anime.oploverz.ac/series/golden-time",
+      "slug": "golden-time",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.78,
+      "genres": [
+        "Drama",
+        "Comedy",
+        "Romance"
+      ],
+      "total_episodes": 24
+    },
+    {
+      "title": "Gokukoku no Brynhildr",
+      "url": "https://anime.oploverz.ac/series/gokukoku-no-brynhildr",
+      "slug": "gokukoku-no-brynhildr",
+      "status": "Completed",
+      "type": "TV",
+      "score": 6.93,
+      "genres": [
+        "Drama",
+        "Mystery",
+        "Sci-Fi",
+        "Seinen"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Glasslip",
+      "url": "https://anime.oploverz.ac/series/glasslip",
+      "slug": "glasslip",
+      "status": "Completed",
+      "type": "TV",
+      "score": 5.45,
+      "genres": [
+        "Supernatural",
+        "Romance",
+        "Slice of Life"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Gintama S4 : Gintama°",
+      "url": "https://anime.oploverz.ac/series/gintama-s4-gintama",
+      "slug": "gintama-s4-gintama",
+      "status": "Completed",
+      "type": "TV",
+      "score": 9.11,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Historical",
+        "Comedy",
+        "Sci-Fi",
+        "Samurai",
+        "Parody"
+      ],
+      "total_episodes": 51
+    },
+    {
+      "title": "Gintama S5 : Gintama.",
+      "url": "https://anime.oploverz.ac/series/gintama-s5-gintama",
+      "slug": "gintama-s5-gintama",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.99,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Historical",
+        "Comedy",
+        "Sci-Fi",
+        "Samurai",
+        "Parody"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Gintama S7 : Shirogane no Tamashii-hen",
+      "url": "https://anime.oploverz.ac/series/gintama-s7-shirogane-no-tamashii-hen",
+      "slug": "gintama-s7-shirogane-no-tamashii-hen",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.86,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Historical",
+        "Comedy",
+        "Sci-Fi",
+        "Samurai",
+        "Parody"
+      ],
+      "total_episodes": 26
+    },
+    {
+      "title": "Gintama S6 : Porori-hen",
+      "url": "https://anime.oploverz.ac/series/gintama-s6-porori-hen",
+      "slug": "gintama-s6-porori-hen",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.99,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Historical",
+        "Comedy",
+        "Sci-Fi",
+        "Samurai",
+        "Parody"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Gangsta.",
+      "url": "https://anime.oploverz.ac/series/gangsta",
+      "slug": "gangsta",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.4,
+      "genres": [
+        "Action",
+        "Drama",
+        "Seinen"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Fuuun Ishin Dai Shogun",
+      "url": "https://anime.oploverz.ac/series/fuuun-ishin-dai-shogun",
+      "slug": "fuuun-ishin-dai-shogun",
+      "status": "Completed",
+      "type": "TV",
+      "score": 5.73,
+      "genres": [
+        "Action",
+        "Historical",
+        "Mecha"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Fullmetal Alchemist: Brotherhood",
+      "url": "https://anime.oploverz.ac/series/fullmetal-alchemist-brotherhood",
+      "slug": "fullmetal-alchemist-brotherhood",
+      "status": "Completed",
+      "type": "TV",
+      "score": 9.21,
+      "genres": [
+        "Action",
+        "Drama",
+        "Fantasy",
+        "Military",
+        "Shounen",
+        "Comedy",
+        "Adventure",
+        "Magic"
+      ],
+      "total_episodes": 63
+    },
+    {
+      "title": "Free! Season 2",
+      "url": "https://anime.oploverz.ac/series/free-season-2",
+      "slug": "free-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.69,
+      "genres": [
+        "Drama",
+        "Comedy",
+        "School",
+        "Sports",
+        "Slice of Life"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Free!",
+      "url": "https://anime.oploverz.ac/series/free",
+      "slug": "free",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.4,
+      "genres": [
+        "Drama",
+        "Comedy",
+        "School",
+        "Sports",
+        "Slice of Life"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Fire Force Season 2",
+      "url": "https://anime.oploverz.ac/series/fire-force-season-2",
+      "slug": "fire-force-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.79,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Supernatural"
+      ],
+      "total_episodes": 24
+    },
+    {
+      "title": "Fire Force",
+      "url": "https://anime.oploverz.ac/series/fire-force",
+      "slug": "fire-force",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.7,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Supernatural"
+      ],
+      "total_episodes": 24
+    },
+    {
+      "title": "Fate/stay night: Unlimited Blade Works",
+      "url": "https://anime.oploverz.ac/series/fate-stay-night-unlimited-blade-works",
+      "slug": "fate-stay-night-unlimited-blade-works",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.23,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Supernatural",
+        "Magic"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Fate Apocrypha",
+      "url": "https://anime.oploverz.ac/series/fate-apocrypha",
+      "slug": "fate-apocrypha",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.16,
+      "genres": [
+        "Action",
+        "Drama",
+        "Fantasy",
+        "Supernatural",
+        "Magic"
+      ],
+      "total_episodes": 25
+    },
+    {
+      "title": "Fairy Tail Movie 2: Dragon Cry",
+      "url": "https://anime.oploverz.ac/series/fairy-tail-movie-2-dragon-cry",
+      "slug": "fairy-tail-movie-2-dragon-cry",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 7.53,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Shounen",
+        "Comedy",
+        "Adventure",
+        "Magic"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Drifters",
+      "url": "https://anime.oploverz.ac/series/drifters",
+      "slug": "drifters",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.95,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Historical",
+        "Comedy",
+        "Adventure",
+        "Seinen",
+        "Samurai"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Dragon Ball Super Movie: Broly",
+      "url": "https://anime.oploverz.ac/series/dragon-ball-super-movie-broly",
+      "slug": "dragon-ball-super-movie-broly",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 8.11,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Shounen",
+        "Super Power",
+        "Adventure",
+        "Martial Arts"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Dragon Ball Kai",
+      "url": "https://anime.oploverz.ac/series/dragon-ball-kai-2014",
+      "slug": "dragon-ball-kai-2014",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.7,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Shounen",
+        "Super Power",
+        "Comedy",
+        "Adventure",
+        "Martial Arts"
+      ],
+      "total_episodes": 131
+    },
+    {
+      "title": "Domestic na Kanojo",
+      "url": "https://anime.oploverz.ac/series/domestic-na-kanojo",
+      "slug": "domestic-na-kanojo",
+      "status": "Completed",
+      "type": "TV",
+      "score": 6.79,
+      "genres": [
+        "Drama",
+        "Shounen",
+        "School",
+        "Romance"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Digimon Adventure tri. 6: Bokura no Mirai",
+      "url": "https://anime.oploverz.ac/series/digimon-adventure-tri-6-bokura-no-mirai",
+      "slug": "digimon-adventure-tri-6-bokura-no-mirai",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.23,
+      "genres": [
+        "Action",
+        "Drama",
+        "Comedy",
+        "Adventure"
+      ],
+      "total_episodes": 5
+    },
+    {
+      "title": "Digimon Adventure tri. 5: Kyousei",
+      "url": "https://anime.oploverz.ac/series/digimon-adventure-tri-5-kyousei",
+      "slug": "digimon-adventure-tri-5-kyousei",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.21,
+      "genres": [
+        "Action",
+        "Drama",
+        "Comedy",
+        "Adventure"
+      ],
+      "total_episodes": 4
+    },
+    {
+      "title": "Digimon Adventure tri. 4: Soushitsu",
+      "url": "https://anime.oploverz.ac/series/digimon-adventure-tri-4-soushitsu",
+      "slug": "digimon-adventure-tri-4-soushitsu",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.35,
+      "genres": [
+        "Action",
+        "Drama",
+        "Comedy",
+        "Adventure"
+      ],
+      "total_episodes": 4
+    },
+    {
+      "title": "Digimon Adventure tri. 3: Kokuhaku",
+      "url": "https://anime.oploverz.ac/series/digimon-adventure-tri-3-kokuhaku",
+      "slug": "digimon-adventure-tri-3-kokuhaku",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.72,
+      "genres": [
+        "Action",
+        "Drama",
+        "Comedy",
+        "Adventure"
+      ],
+      "total_episodes": 5
+    },
+    {
+      "title": "Digimon Adventure tri. 2: Ketsui",
+      "url": "https://anime.oploverz.ac/series/digimon-adventure-tri-2-ketsui",
+      "slug": "digimon-adventure-tri-2-ketsui",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.52,
+      "genres": [
+        "Action",
+        "Drama",
+        "Comedy",
+        "Adventure"
+      ],
+      "total_episodes": 4
+    },
+    {
+      "title": "Digimon Adventure tri. 1: Saikai",
+      "url": "https://anime.oploverz.ac/series/digimon-adventure-tri-1-saikai",
+      "slug": "digimon-adventure-tri-1-saikai",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.49,
+      "genres": [
+        "Action",
+        "Drama",
+        "Comedy",
+        "Adventure"
+      ],
+      "total_episodes": 4
+    },
+    {
+      "title": "Digimon Adventure: Last Evolution Kizuna",
+      "url": "https://anime.oploverz.ac/series/digimon-adventure-last-evolution-kizuna",
+      "slug": "digimon-adventure-last-evolution-kizuna",
+      "status": "Completed",
+      "type": "Movie",
+      "score": 8.21,
+      "genres": [
+        "Action",
+        "Drama",
+        "Comedy",
+        "Adventure"
+      ],
+      "total_episodes": 1
+    },
+    {
+      "title": "Diamond no Ace Season 3",
+      "url": "https://anime.oploverz.ac/series/diamond-no-ace-season-3",
+      "slug": "diamond-no-ace-season-3",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.23,
+      "genres": [
+        "Shounen",
+        "Comedy",
+        "School",
+        "Sports"
+      ],
+      "total_episodes": 52
+    },
+    {
+      "title": "Diamond no Ace Season 2",
+      "url": "https://anime.oploverz.ac/series/diamond-no-ace-season-2",
+      "slug": "diamond-no-ace-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.33,
+      "genres": [
+        "Shounen",
+        "Comedy",
+        "School",
+        "Sports"
+      ],
+      "total_episodes": 51
+    },
+    {
+      "title": "Death Note",
+      "url": "https://anime.oploverz.ac/series/death-note",
+      "slug": "death-note",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.63,
+      "genres": [
+        "Mystery",
+        "Shounen",
+        "Supernatural",
+        "Psychological",
+        "Thriller",
+        "Police"
+      ],
+      "total_episodes": 37
+    },
+    {
+      "title": "Death March kara Hajimaru Isekai Kyousoukyoku",
+      "url": "https://anime.oploverz.ac/series/death-march-kara-hajimaru-isekai-kyousoukyoku",
+      "slug": "death-march-kara-hajimaru-isekai-kyousoukyoku",
+      "status": "Completed",
+      "type": "TV",
+      "score": 6.56,
+      "genres": [
+        "Fantasy",
+        "Adventure",
+        "Harem"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Date A Live Season 3",
+      "url": "https://anime.oploverz.ac/series/date-a-live-season-3",
+      "slug": "date-a-live-season-3",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.14,
+      "genres": [
+        "Comedy",
+        "School",
+        "Romance",
+        "Sci-Fi",
+        "Mecha",
+        "Harem"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Date A Live Season 2",
+      "url": "https://anime.oploverz.ac/series/date-a-live-season-2",
+      "slug": "date-a-live-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.25,
+      "genres": [
+        "Comedy",
+        "School",
+        "Romance",
+        "Sci-Fi",
+        "Mecha",
+        "Harem"
+      ],
+      "total_episodes": 10
+    },
+    {
+      "title": "Date A Live",
+      "url": "https://anime.oploverz.ac/series/date-a-live",
+      "slug": "date-a-live",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.24,
+      "genres": [
+        "Comedy",
+        "School",
+        "Romance",
+        "Sci-Fi",
+        "Mecha",
+        "Harem"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Darwin's Game",
+      "url": "https://anime.oploverz.ac/series/darwins-game",
+      "slug": "darwins-game",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.32,
+      "genres": [
+        "Action",
+        "Mystery",
+        "Shounen",
+        "Super Power",
+        "Sci-Fi"
+      ],
+      "total_episodes": 11
+    },
+    {
+      "title": "Darling in the FranXX",
+      "url": "https://anime.oploverz.ac/series/darling-in-the-franxx",
+      "slug": "darling-in-the-franxx",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.35,
+      "genres": [
+        "Action",
+        "Drama",
+        "Romance",
+        "Sci-Fi",
+        "Mecha"
+      ],
+      "total_episodes": 24
+    },
+    {
+      "title": "Dungeon ni Deai wo Motomeru no wa Machigatteiru Darou ka Season 3",
+      "url": "https://anime.oploverz.ac/series/dungeon-ni-deai-wo-motomeru-no-wa-machigatteiru-darou-ka-season-3",
+      "slug": "dungeon-ni-deai-wo-motomeru-no-wa-machigatteiru-darou-ka-season-3",
+      "status": "Completed",
+      "type": "TV",
+      "score": null,
+      "genres": [],
+      "total_episodes": 12
+    },
+    {
+      "title": "Dungeon ni Deai wo Motomeru no wa Machigatteiru Darou ka Season 2",
+      "url": "https://anime.oploverz.ac/series/dungeon-ni-deai-wo-motomeru-no-wa-machigatteiru-darou-ka-season-2",
+      "slug": "dungeon-ni-deai-wo-motomeru-no-wa-machigatteiru-darou-ka-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.26,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Comedy",
+        "Romance",
+        "Adventure"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Charlotte",
+      "url": "https://anime.oploverz.ac/series/charlotte",
+      "slug": "charlotte",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.78,
+      "genres": [
+        "Drama",
+        "Super Power",
+        "School"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Captain Tsubasa 2018 S1",
+      "url": "https://anime.oploverz.ac/series/captain-tsubasa-2018-s1",
+      "slug": "captain-tsubasa-2018-s1",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.43,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Sports"
+      ],
+      "total_episodes": 52
+    },
+    {
+      "title": "Bungou Stray Dogs Season 3",
+      "url": "https://anime.oploverz.ac/series/bungou-stray-dogs-season-3",
+      "slug": "bungou-stray-dogs-season-3",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.17,
+      "genres": [
+        "Action",
+        "Mystery",
+        "Super Power",
+        "Supernatural",
+        "Seinen"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Bungou Stray Dogs Season 2",
+      "url": "https://anime.oploverz.ac/series/bungou-stray-dogs-season-2",
+      "slug": "bungou-stray-dogs-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.21,
+      "genres": [
+        "Action",
+        "Mystery",
+        "Super Power",
+        "Supernatural",
+        "Seinen"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Bungou Stray Dogs",
+      "url": "https://anime.oploverz.ac/series/bungou-stray-dogs",
+      "slug": "bungou-stray-dogs",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.79,
+      "genres": [
+        "Action",
+        "Mystery",
+        "Super Power",
+        "Supernatural",
+        "Comedy",
+        "Seinen"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Yowamushi Pedal Season 3",
+      "url": "https://anime.oploverz.ac/series/yowamushi-pedal-season-3",
+      "slug": "yowamushi-pedal-season-3",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.71,
+      "genres": [
+        "Drama",
+        "Shounen",
+        "Comedy",
+        "Sports"
+      ],
+      "total_episodes": 25
+    },
+    {
+      "title": "Boku no Hero Academia Season 4",
+      "url": "https://anime.oploverz.ac/series/boku-no-hero-academia-season-4",
+      "slug": "boku-no-hero-academia-season-4",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.09,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Super Power",
+        "Comedy",
+        "School"
+      ],
+      "total_episodes": 25
+    },
+    {
+      "title": "Boku no Hero Academia Season 3",
+      "url": "https://anime.oploverz.ac/series/boku-no-hero-academia-season-3",
+      "slug": "boku-no-hero-academia-season-3",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.29,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Super Power",
+        "Comedy",
+        "School"
+      ],
+      "total_episodes": 25
+    },
+    {
+      "title": "Boku no Hero Academia Season 2",
+      "url": "https://anime.oploverz.ac/series/boku-no-hero-academia-season-2",
+      "slug": "boku-no-hero-academia-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.36,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Super Power",
+        "Comedy",
+        "School"
+      ],
+      "total_episodes": 25
+    },
+    {
+      "title": "Boku no Hero Academia Season 1",
+      "url": "https://anime.oploverz.ac/series/boku-no-hero-academia-season-1",
+      "slug": "boku-no-hero-academia-season-1",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.13,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Super Power",
+        "Comedy",
+        "School"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Boku dake ga Inai Machi",
+      "url": "https://anime.oploverz.ac/series/boku-dake-ga-inai-machi",
+      "slug": "boku-dake-ga-inai-machi",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.38,
+      "genres": [
+        "Mystery",
+        "Supernatural",
+        "Psychological",
+        "Seinen"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Blood Lad",
+      "url": "https://anime.oploverz.ac/series/blood-lad",
+      "slug": "blood-lad",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.35,
+      "genres": [
+        "Action",
+        "Demons",
+        "Supernatural",
+        "Comedy",
+        "Seinen",
+        "Vampire"
+      ],
+      "total_episodes": 10
+    },
+    {
+      "title": "Bleach",
+      "url": "https://anime.oploverz.ac/series/bleach",
+      "slug": "bleach",
+      "status": "Ongoing",
+      "type": "TV",
+      "score": 9.11,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Super Power",
+        "Supernatural",
+        "Comedy",
+        "Adventure"
+      ],
+      "total_episodes": 405
+    },
+    {
+      "title": "Black Bullet",
+      "url": "https://anime.oploverz.ac/series/black-bullet",
+      "slug": "black-bullet",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.19,
+      "genres": [
+        "Action",
+        "Mystery",
+        "Sci-Fi",
+        "Seinen"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Arifureta Shokugyou de Sekai Saikyou",
+      "url": "https://anime.oploverz.ac/series/arifureta-shokugyou-de-sekai-saikyou",
+      "slug": "arifureta-shokugyou-de-sekai-saikyou",
+      "status": "Completed",
+      "type": "TV",
+      "score": 6.52,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Adventure",
+        "Harem"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Amagi Brilliant Park",
+      "url": "https://anime.oploverz.ac/series/amagi-brilliant-park",
+      "slug": "amagi-brilliant-park",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.53,
+      "genres": [
+        "Drama",
+        "Fantasy",
+        "Comedy",
+        "Magic"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Aldnoah Zero Season 2",
+      "url": "https://anime.oploverz.ac/series/aldnoah-zero-season-2",
+      "slug": "aldnoah-zero-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7,
+      "genres": [
+        "Action",
+        "Sci-Fi",
+        "Mecha",
+        "Space"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Aldnoah.Zero",
+      "url": "https://anime.oploverz.ac/series/aldnoah-zero",
+      "slug": "aldnoah-zero",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.45,
+      "genres": [
+        "Action",
+        "Military",
+        "Sci-Fi",
+        "Mecha"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Akame ga Kill!",
+      "url": "https://anime.oploverz.ac/series/akame-ga-kill",
+      "slug": "akame-ga-kill",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.56,
+      "genres": [
+        "Action",
+        "Drama",
+        "Fantasy",
+        "Shounen",
+        "Adventure"
+      ],
+      "total_episodes": 24
+    },
+    {
+      "title": "Area no Kishi",
+      "url": "https://anime.oploverz.ac/series/area-no-kishi",
+      "slug": "area-no-kishi",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.23,
+      "genres": [
+        "Shounen",
+        "Comedy",
+        "School",
+        "Sports"
+      ],
+      "total_episodes": 37
+    },
+    {
+      "title": "Ao no Exorcist S2: Kyoto Fujouou-hen",
+      "url": "https://anime.oploverz.ac/series/ao-no-exorcist-s2-kyoto-fujouou-hen",
+      "slug": "ao-no-exorcist-s2-kyoto-fujouou-hen",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.45,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Shounen",
+        "Demons",
+        "Supernatural"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Ansatsu Kyoushitsu Season 2",
+      "url": "https://anime.oploverz.ac/series/ansatsu-kyoushitsu-season-2",
+      "slug": "ansatsu-kyoushitsu-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.54,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Comedy",
+        "School"
+      ],
+      "total_episodes": 25
+    },
+    {
+      "title": "Ansatsu Kyoushitsu",
+      "url": "https://anime.oploverz.ac/series/ansatsu-kyoushitsu",
+      "slug": "ansatsu-kyoushitsu",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.13,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Comedy",
+        "School"
+      ],
+      "total_episodes": 22
+    },
+    {
+      "title": "Dragon Ball Super",
+      "url": "https://anime.oploverz.ac/series/dragon-ball-super",
+      "slug": "dragon-ball-super",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.43,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Shounen",
+        "Super Power",
+        "Comedy",
+        "Adventure",
+        "Martial Arts"
+      ],
+      "total_episodes": 130
+    },
+    {
+      "title": "Dr. Stone",
+      "url": "https://anime.oploverz.ac/series/dr-stone",
+      "slug": "dr-stone",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.35,
+      "genres": [
+        "Shounen",
+        "Adventure",
+        "Sci-Fi"
+      ],
+      "total_episodes": 24
+    },
+    {
+      "title": "Log Horizon Season 2",
+      "url": "https://anime.oploverz.ac/series/log-horizon-season-2",
+      "slug": "log-horizon-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.63,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Adventure",
+        "Magic",
+        "Game"
+      ],
+      "total_episodes": 25
+    },
+    {
+      "title": "Log Horizon",
+      "url": "https://anime.oploverz.ac/series/log-horizon",
+      "slug": "log-horizon",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.01,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Adventure",
+        "Magic",
+        "Game"
+      ],
+      "total_episodes": 25
+    },
+    {
+      "title": "Re:Zero kara Hajimeru Isekai Seikatsu",
+      "url": "https://anime.oploverz.ac/series/rezero-kara-hajimeru-isekai-seikatsu",
+      "slug": "rezero-kara-hajimeru-isekai-seikatsu",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.3,
+      "genres": [
+        "Drama",
+        "Fantasy",
+        "Psychological",
+        "Thriller"
+      ],
+      "total_episodes": 25
+    },
+    {
+      "title": "World Trigger",
+      "url": "https://anime.oploverz.ac/series/world-trigger",
+      "slug": "world-trigger",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.58,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Supernatural",
+        "School",
+        "Sci-Fi"
+      ],
+      "total_episodes": 73
+    },
+    {
+      "title": "Aho Girl",
+      "url": "https://anime.oploverz.ac/series/aho-girl",
+      "slug": "aho-girl",
+      "status": "Completed",
+      "type": "TV",
+      "score": 6.93,
+      "genres": [
+        "Shounen",
+        "Comedy",
+        "School",
+        "Romance"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Sword Art Online Alicization",
+      "url": "https://anime.oploverz.ac/series/sword-art-online-alicization",
+      "slug": "sword-art-online-alicization",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.58,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Romance",
+        "Adventure",
+        "Game"
+      ],
+      "total_episodes": 47
+    },
+    {
+      "title": "Sword Art Online Alternative: Gun Gale Online",
+      "url": "https://anime.oploverz.ac/series/sword-art-online-alternative-gun-gale-online",
+      "slug": "sword-art-online-alternative-gun-gale-online",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.09,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Military",
+        "Sci-Fi",
+        "Game"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Grand Blue",
+      "url": "https://anime.oploverz.ac/series/grand-blue",
+      "slug": "grand-blue",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.44,
+      "genres": [
+        "Comedy",
+        "Ecchi",
+        "Slice of Life",
+        "Zero-G"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Yowamushi Pedal Season 2",
+      "url": "https://anime.oploverz.ac/series/yowamushi-pedal-season-2",
+      "slug": "yowamushi-pedal-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.13,
+      "genres": [
+        "Drama",
+        "Shounen",
+        "Comedy",
+        "Sports"
+      ],
+      "total_episodes": 24
+    },
+    {
+      "title": "Sword Art Online Season 2",
+      "url": "https://anime.oploverz.ac/series/sword-art-online-season-2",
+      "slug": "sword-art-online-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 6.83,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Romance",
+        "Adventure",
+        "Game"
+      ],
+      "total_episodes": 24
+    },
+    {
+      "title": "Sword Art Online",
+      "url": "https://anime.oploverz.ac/series/sword-art-online",
+      "slug": "sword-art-online",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.28,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Romance",
+        "Adventure",
+        "Game"
+      ],
+      "total_episodes": 25
+    },
+    {
+      "title": "The God of High School",
+      "url": "https://anime.oploverz.ac/series/the-god-of-high-school",
+      "slug": "the-god-of-high-school",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.14,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Supernatural",
+        "Comedy",
+        "Adventure",
+        "Sci-Fi",
+        "Martial Arts"
+      ],
+      "total_episodes": 13
+    },
+    {
+      "title": "Haikyuu Season 4",
+      "url": "https://anime.oploverz.ac/series/haikyuu-season-4",
+      "slug": "haikyuu-season-4",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.41,
+      "genres": [
+        "Drama",
+        "Shounen",
+        "Comedy",
+        "School",
+        "Sports"
+      ],
+      "total_episodes": 25
+    },
+    {
+      "title": "Haikyuu Season 3",
+      "url": "https://anime.oploverz.ac/series/haikyuu-season-3",
+      "slug": "haikyuu-season-3",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.89,
+      "genres": [
+        "Drama",
+        "Shounen",
+        "Comedy",
+        "School",
+        "Sports"
+      ],
+      "total_episodes": 10
+    },
+    {
+      "title": "Haikyuu Season 2",
+      "url": "https://anime.oploverz.ac/series/haikyuu-season-2",
+      "slug": "haikyuu-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.55,
+      "genres": [
+        "Drama",
+        "Shounen",
+        "Comedy",
+        "School",
+        "Sports"
+      ],
+      "total_episodes": 25
+    },
+    {
+      "title": "Fairy Tail",
+      "url": "https://anime.oploverz.ac/series/fairy-tail",
+      "slug": "fairy-tail",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.71,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Shounen",
+        "Comedy",
+        "Adventure",
+        "Magic"
+      ],
+      "total_episodes": 328
+    },
+    {
+      "title": "Hunter x Hunter (2011)",
+      "url": "https://anime.oploverz.ac/series/hunter-x-hunter-2011",
+      "slug": "hunter-x-hunter-2011",
+      "status": "Completed",
+      "type": "TV",
+      "score": 9.11,
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Shounen",
+        "Super Power",
+        "Adventure"
+      ],
+      "total_episodes": 148
+    },
+    {
+      "title": "Naruto Shippuuden",
+      "url": "https://anime.oploverz.ac/series/naruto-shippuuden",
+      "slug": "naruto-shippuuden",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.16,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Super Power",
+        "Comedy",
+        "Adventure",
+        "Martial Arts"
+      ],
+      "total_episodes": 494
+    },
+    {
+      "title": "Promised Neverland",
+      "url": "https://anime.oploverz.ac/series/promised-neverland",
+      "slug": "promised-neverland",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.66,
+      "genres": [
+        "Mystery",
+        "Shounen",
+        "Psychological",
+        "Thriller",
+        "Horror",
+        "Sci-Fi"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Hai to Gensou no Grimgar",
+      "url": "https://anime.oploverz.ac/series/hai-to-gensou-no-grimgar",
+      "slug": "hai-to-gensou-no-grimgar",
+      "status": "Completed",
+      "type": "TV",
+      "score": 7.7,
+      "genres": [
+        "Action",
+        "Drama",
+        "Fantasy",
+        "Adventure"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "3D Kanojo: Real Girl",
+      "url": "https://anime.oploverz.ac/series/3d-kanojo-real-girl",
+      "slug": "3d-kanojo-real-girl",
+      "status": "Completed",
+      "type": "TV",
+      "score": 6.77,
+      "genres": [
+        "School",
+        "Romance",
+        "Shoujo"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Zankyou no Terror",
+      "url": "https://anime.oploverz.ac/series/zankyou-no-terror",
+      "slug": "zankyou-no-terror",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.13,
+      "genres": [
+        "Mystery",
+        "Psychological",
+        "Thriller"
+      ],
+      "total_episodes": 11
+    },
+    {
+      "title": "Haikyuu",
+      "url": "https://anime.oploverz.ac/series/haikyuu",
+      "slug": "haikyuu",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.56,
+      "genres": [
+        "Drama",
+        "Shounen",
+        "Comedy",
+        "School",
+        "Sports"
+      ],
+      "total_episodes": 25
+    },
+    {
+      "title": "Kimetsu no Yaiba",
+      "url": "https://anime.oploverz.ac/series/kimetsu-no-yaiba",
+      "slug": "kimetsu-no-yaiba",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.66,
+      "genres": [
+        "Action",
+        "Shounen",
+        "Demons",
+        "Historical",
+        "Supernatural"
+      ],
+      "total_episodes": 26
+    },
+    {
+      "title": "Shingeki no Kyojin Season 3",
+      "url": "https://anime.oploverz.ac/series/shingeki-no-kyojin-season-3",
+      "slug": "shingeki-no-kyojin-season-3",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.54,
+      "genres": [
+        "Action",
+        "Drama",
+        "Fantasy",
+        "Military",
+        "Mystery",
+        "Shounen",
+        "Super Power"
+      ],
+      "total_episodes": 22
+    },
+    {
+      "title": "Shingeki no Kyojin Season 2",
+      "url": "https://anime.oploverz.ac/series/shingeki-no-kyojin-season-2",
+      "slug": "shingeki-no-kyojin-season-2",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.41,
+      "genres": [
+        "Action",
+        "Drama",
+        "Fantasy",
+        "Military",
+        "Mystery",
+        "Shounen",
+        "Super Power"
+      ],
+      "total_episodes": 12
+    },
+    {
+      "title": "Shingeki no Kyojin",
+      "url": "https://anime.oploverz.ac/series/shingeki-no-kyojin",
+      "slug": "shingeki-no-kyojin",
+      "status": "Completed",
+      "type": "TV",
+      "score": 8.45,
+      "genres": [
+        "Action",
+        "Drama",
+        "Fantasy",
+        "Military",
+        "Mystery",
+        "Shounen",
+        "Super Power"
+      ],
+      "total_episodes": 25
+    }
+  ]
+}

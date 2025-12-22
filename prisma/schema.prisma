@@ -7,12 +7,8 @@ datasource db {
   provider   = "postgresql"
   url        = env("DATABASE_URL")
   directUrl  = env("DIRECT_URL")
-  extensions = [pg_trgm]
+  extensions = [pg_trgm, pgcrypto] 
 }
-
-// =======================
-// USER & ROLE
-// ==========================================
 
 model User {
   id            String         @id @default(uuid()) @db.Uuid
@@ -39,13 +35,8 @@ model Role {
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
   users     User[]
 
-  // Sesuai error log sebelumnya, tabel di DB bernama 'role'
-  @@map("role") 
+  @@map("role")
 }
-
-// =======================
-// MANGA SECTION
-// ==========================================
 
 model Manga {
   id          String       @id @default(uuid()) @db.Uuid
@@ -105,133 +96,134 @@ model Chapter {
   @@map("chapters")
 }
 
-// =======================
-// ANIME SECTION
-// ==========================================
-
 model Server {
-  id           Int           @id @default(autoincrement())
-  name         String        @unique
-  url          String        @map("url")
-  type         String        @default("anime")
-  isActive     Boolean       @default(true) @map("is_active")
-  createdAt    DateTime      @default(now()) @map("created_at") @db.Timestamp(0)
-  updatedAt    DateTime      @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
-  animeServers AnimeServer[]
-  serverGenres ServerGenre[]
+  id        Int       @id @default(autoincrement())
+  title     String    @unique @db.VarChar(50)
+  baseUrl   String?   @map("base_url")
+  isActive  Boolean?  @default(true) @map("is_active")
+  createdAt DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt DateTime? @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
 
-  // KEMBALI KE "servers" AGAR DATA TIDAK HILANG
+  animeSources   AnimeSource[]
+  serverGenres   ServerGenre[]
+  episodeStreams EpisodeStream[]
+
   @@map("servers")
 }
 
-model ServerGenre {
-  id        String             @id @default(uuid()) @db.Uuid
-  serverId  Int                @map("server_id")
-  name      String
-  slug      String
-  url       String?
-  createdAt DateTime?          @default(now()) @map("created_at") @db.Timestamp(0)
-  updatedAt DateTime?          @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
-  server    Server             @relation(fields: [serverId], references: [id], onDelete: Cascade)
-  animes    AnimeServerGenre[]
-
-  @@unique([serverId, slug])
-  @@map("server_genres")
-}
-
 model Anime {
-  id            String        @id @default(uuid()) @db.Uuid
+  id            String    @id @default(uuid()) @db.Uuid
   title         String
-  slug          String        @unique
-  altTitle      String?       @map("alt_title")
-  posterUrl     String?       @map("poster_url")
+  slug          String    @unique
+  altTitle      String?   @map("alt_title")
+  posterUrl     String?   @map("poster_url")
   synopsis      String?
-  totalEpisodes Int?          @map("total_episodes")
-  malId         Int?          @map("mal_id")
-  createdAt     DateTime?     @default(now()) @map("created_at") @db.Timestamp(0)
-  updatedAt     DateTime?     @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
-  animeServers  AnimeServer[]
-  favorites     Favorite[]
+  status        String?   @db.VarChar(50)
+  season        String?   @db.VarChar(50)
+  type          String?   @db.VarChar(50)jaju
+  duration      String?   @db.VarChar(50)
+  rating        String?   @db.VarChar(50)
+  score         Decimal?  @db.Decimal(3, 2)
+  studio        String?   @db.VarChar(255)
+  totalEpisodes Int?      @map("total_episodes")
+  createdAt     DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt     DateTime? @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
 
-  @@index([title(ops: raw("gin_trgm_ops"))], type: Gin, name: "anime_title_search_idx")
+  animeSources      AnimeSource[]
+  animeServerGenres AnimeServerGenre[]
+  episodes          Episode[]
+  favorites         Favorite[]
+
   @@map("anime")
 }
 
-model AnimeServer {
-  id        String             @id @default(uuid()) @db.Uuid
-  animeId   String             @map("anime_id") @db.Uuid
-  serverId  Int                @map("server_id")
-  title     String
-  slug      String
-  posterUrl String?            @map("poster_url")
-  synopsis  String?
-  status    String?
-  type      String?
-  season    String?
-  duration  String?
-  quality   String?
-  rating    String?
-  score     String?
-  country   String?
-  sourceUrl String             @map("source_url")
-  scrapedAt DateTime?          @map("scraped_at") @db.Timestamp(0)
-  createdAt DateTime?          @default(now()) @map("created_at") @db.Timestamp(0)
-  updatedAt DateTime?          @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
-  anime     Anime              @relation(fields: [animeId], references: [id], onDelete: Cascade)
-  server    Server             @relation(fields: [serverId], references: [id], onDelete: Cascade)
-  episodes  Episode[]
-  genres    AnimeServerGenre[]
+model AnimeSource {
+  id        String    @id @default(uuid()) @db.Uuid
+  animeId   String    @map("anime_id") @db.Uuid
+  serverId  Int       @map("server_id")
+  sourceUrl String?   @map("source_url")
+  scrapedAt DateTime? @default(now()) @map("scraped_at") @db.Timestamp(0)
 
-  @@unique([serverId, slug])
-  @@map("anime_servers")
+  anime  Anime  @relation(fields: [animeId], references: [id], onDelete: Cascade)
+  server Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+
+  @@map("anime_sources")
+}
+
+model ServerGenre {
+  id       String @id @default(uuid()) @db.Uuid
+  serverId Int    @map("server_id")
+  name     String @db.VarChar(100)
+  slug     String @db.VarChar(100)
+
+  server            Server             @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  animeServerGenres AnimeServerGenre[]
+
+  @@unique([serverId, name], map: "unique_genre_per_server")
+  @@unique([serverId, slug], map: "unique_slug_per_server")
+  @@map("server_genres")
 }
 
 model AnimeServerGenre {
-  animeServerId String      @map("anime_server_id") @db.Uuid
-  serverGenreId String      @map("server_genre_id") @db.Uuid
-  animeServer   AnimeServer @relation(fields: [animeServerId], references: [id], onDelete: Cascade)
-  serverGenre   ServerGenre @relation(fields: [serverGenreId], references: [id], onDelete: Cascade)
+  animeId       String @map("anime_id") @db.Uuid
+  serverGenreId String @map("server_genre_id") @db.Uuid
 
-  @@id([animeServerId, serverGenreId])
+  anime       Anime       @relation(fields: [animeId], references: [id], onDelete: Cascade)
+  serverGenre ServerGenre @relation(fields: [serverGenreId], references: [id], onDelete: Cascade)
+
+  @@id([animeId, serverGenreId])
   @@map("anime_server_genres")
 }
 
 model Episode {
-  id            String          @id @default(uuid()) @db.Uuid
-  animeServerId String          @map("anime_server_id") @db.Uuid
-  episodeNumber Float           @map("episode_number")
+  id            String    @id @default(uuid()) @db.Uuid
+  animeId       String    @map("anime_id") @db.Uuid
+  episodeNumber Float     @map("episode_number")
   title         String?
-  slug          String?
-  url           String
-  thumbnailUrl  String?         @map("thumbnail_url")
-  releasedAt    DateTime?       @map("released_at") @db.Timestamp(0)
-  createdAt     DateTime?       @default(now()) @map("created_at") @db.Timestamp(0)
-  updatedAt     DateTime?       @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
-  animeServer   AnimeServer     @relation(fields: [animeServerId], references: [id], onDelete: Cascade)
-  streams       EpisodeStream[]
+  sourceUrl     String?   @map("source_url")
+  createdAt     DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt     DateTime? @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
 
-  @@unique([animeServerId, episodeNumber])
+  anime     Anime             @relation(fields: [animeId], references: [id], onDelete: Cascade)
+  streams   EpisodeStream[]
+  downloads EpisodeDownload[]
+
+  @@unique([animeId, episodeNumber], map: "unique_episode_per_anime")
+  @@index([animeId], map: "idx_episodes_anime")
   @@map("episodes")
 }
 
 model EpisodeStream {
-  id         String    @id @default(uuid()) @db.Uuid
-  episodeId  String    @map("episode_id") @db.Uuid
-  serverName String?   @map("server_name")
-  quality    String
-  url        String
-  isEmbed    Boolean   @default(false) @map("is_embed")
-  priority   Int?      @default(0)
-  createdAt  DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
-  updatedAt  DateTime? @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
-  episode    Episode   @relation(fields: [episodeId], references: [id], onDelete: Cascade)
+  id        String    @id @default(uuid()) @db.Uuid
+  episodeId String    @map("episode_id") @db.Uuid
+  serverId  Int?      @map("server_id")
+  host  String?   @db.VarChar(50)
+  quality   String?   @default("SD") @db.VarChar(100)
+  url       String
+  createdAt DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
 
+  episode Episode @relation(fields: [episodeId], references: [id], onDelete: Cascade)
+  server  Server? @relation(fields: [serverId], references: [id]) // OnDelete SetNull
+
+  @@index([episodeId], map: "idx_streams_episode")
   @@map("episode_streams")
 }
 
-// =======================
-// SYSTEM & LOGS
-// ==========================================
+model EpisodeDownload {
+  id        String    @id @default(uuid()) @db.Uuid
+  episodeId String    @map("episode_id") @db.Uuid
+  format    String    @db.VarChar(50)
+  resolutions   String    @db.VarChar(50)
+  host      String    @db.VarChar(50)
+  url       String
+  createdAt DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt DateTime? @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
+
+  episode Episode @relation(fields: [episodeId], references: [id], onDelete: Cascade)
+
+  @@index([episodeId], map: "idx_downloads_episode")
+  @@map("episode_downloads")
+}
 
 model Favorite {
   id        String   @id @default(uuid()) @db.Uuid

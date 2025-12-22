@@ -5,11 +5,11 @@ class resHandler {
         this.data = data;
     }
 
-    static success(message = 'Success', data = null, statusCode = 200) {
+    static success(message = 'Success', data = null) {
         return new resHandler(true, message, data);
     }
 
-    static error(message = 'Error', data = null, statusCode = 500) {
+    static error(message = 'Error', data = null) {
         return new resHandler(false, message, data);
     }
 
@@ -17,16 +17,25 @@ class resHandler {
         const response = {
             success: this.success,
             message: this.message,
-            creator: "Nostzy",
+            creator: 'Nostzy',
         };
 
-        if (this.data && typeof this.data === 'object' && 'totalPages' in this.data && 'mangas' in this.data) {
-            response.data = this.data.mangas;
+        if (
+            this.data &&
+            typeof this.data === 'object' &&
+            Array.isArray(this.data.data) &&
+            typeof this.data.total === 'number' &&
+            typeof this.data.page === 'number' &&
+            typeof this.data.limit === 'number' &&
+            typeof this.data.totalPages === 'number'
+        ) {
+            response.data = this.data.data;
             response.total = this.data.total;
             response.page = this.data.page;
             response.limit = this.data.limit;
             response.totalPages = this.data.totalPages;
-        } else {
+        }
+        else {
             response.data = this.data;
         }
 

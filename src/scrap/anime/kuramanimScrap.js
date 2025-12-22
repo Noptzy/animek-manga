@@ -10,8 +10,8 @@ const { detectQualityFromUrl } = require('../../utils/qualityHelper.js');
 const { getBrowser } = require('../../utils/browser.js');
 
 const kuramaUrl = process.env.KURAMANIME_URL || 'https://v8.kuramanime.tel/';
-const USER_AGENT =
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36';
+    const USER_AGENT =
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36';
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -110,8 +110,8 @@ class KuramanimeScrap {
     //         if (browser) await browser.close();
     //     }
     // }
- 
-    async getStreamEpsKuramanime(link) {
+
+    async getStreamEpsKuramanimeIniBisaXStrreamnyaCPT(link) {
         let page;
         try {
             const browser = await getBrowser();
@@ -154,6 +154,85 @@ class KuramanimeScrap {
             );
 
             return sources.filter((s) => s.url);
+        } catch (err) {
+            logger.error('[Kuramanime] getStreamEpsKuramanime:', err);
+            return [];
+        } finally {
+            if (page) await page.close();
+        }
+    }
+
+    async getStreamEpsKuramanime(link) {
+        let page;
+        try {
+            const browser = await getBrowser();
+            page = await browser.newPage();
+
+            await page.setUserAgent(USER_AGENT);
+            await page.setExtraHTTPHeaders({
+                'Accept-Language': 'en-US,en;q=0.9',
+                Referer: 'https://v8.kuramanime.tel/',
+            });
+
+            const results = [];
+            const seen = new Set();
+
+            // === DENGERIN RESPONSE XHR (INI KUNCI) ===
+            page.on('response', async (res) => {
+                try {
+                    const url = res.url();
+
+                    // ini request SERVER SWITCH (HTML)
+                    if (
+                        res.request().resourceType() === 'xhr' &&
+                        url.includes('/episode/') &&
+                        url.includes('kuramadrive')
+                    ) {
+                        const html = await res.text();
+
+                        const regex = /https?:\/\/[^"' ]+\/kdrive\/[^"' ]+\.mp4\?[^"' ]+/g;
+                        const matches = html.match(regex) || [];
+
+                        for (const u of matches) {
+                            if (seen.has(u)) continue;
+                            seen.add(u);
+
+                            const m = u.match(/(\d{3,4})p/i);
+                            results.push({
+                                url: u,
+                                resolution: m ? `${m[1]}p` : null,
+                            });
+                        }
+                    }
+                } catch {}
+            });
+
+            await page.setRequestInterception(true);
+            page.on('request', (req) => {
+                const type = req.resourceType();
+                if (['document', 'script', 'xhr', 'fetch'].includes(type)) {
+                    req.continue();
+                } else {
+                    req.abort();
+                }
+            });
+
+            await page.goto(link, {
+                waitUntil: 'domcontentloaded',
+                timeout: 30000,
+            });
+
+            // === TUNGGU XHR SERVER SWITCH (MAX 5 DETIK) ===
+            const start = Date.now();
+            while (results.length === 0 && Date.now() - start < 5000) {
+                await new Promise((r) => setTimeout(r, 200));
+            }
+
+            return results.sort((a, b) => {
+                const ra = parseInt(a.resolution) || 0;
+                const rb = parseInt(b.resolution) || 0;
+                return rb - ra;
+            });
         } catch (err) {
             logger.error('[Kuramanime] getStreamEpsKuramanime:', err);
             return [];
