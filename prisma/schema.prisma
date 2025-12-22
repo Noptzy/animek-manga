@@ -120,7 +120,7 @@ model Anime {
   synopsis      String?
   status        String?   @db.VarChar(50)
   season        String?   @db.VarChar(50)
-  type          String?   @db.VarChar(50)jaju
+  type          String?   @db.VarChar(50)
   duration      String?   @db.VarChar(50)
   rating        String?   @db.VarChar(50)
   score         Decimal?  @db.Decimal(3, 2)
