@@ -8,6 +8,7 @@ router.get('/ongoing', oploverzController.getAnimeOngoing);
 router.get('/completed', oploverzController.getAnimeCompleted);
 router.get('/movie', oploverzController.getAnimeMovie);
 router.get('/search', oploverzController.searchAnime);
+router.get('/id/:id', oploverzController.getAnimeById);
 router.get('/:slug', oploverzController.getAnimeBySlug);
 
 module.exports = router;

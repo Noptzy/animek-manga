@@ -9,8 +9,8 @@ const requireAuthUser = async (req) => {
 exports.requireAdmin = async (req, res, next) => {
   try {
     const u = await requireAuthUser(req);
-    const prof = await userRepository.profile(u.id);
-    if (!prof || prof.roleId !== 2) {
+    // Role ID 2 is Admin
+    if (u.roleId !== 2) {
       return res.status(403).json(resHandler.error('Forbidden').toJSON());
     }
     next();
@@ -22,8 +22,9 @@ exports.requireAdmin = async (req, res, next) => {
 exports.requireMember = async (req, res, next) => {
   try {
     const u = await requireAuthUser(req);
-    const prof = await userRepository.profile(u.id);
-    if (!prof || (prof.roleId !== 1 && prof.roleId !== 2)) {
+    // Role ID 1 is User/Member, 2 is Admin (Admins usually have access to Member routes too, but strictly enforcing role 1 here if that's the requirement. 
+    // Usually Member routes are accessible by Admin too. But strict requires 1.)
+    if (u.roleId !== 1 && u.roleId !== 2) {
       return res.status(403).json(resHandler.error('Forbidden').toJSON());
     }
     next();

@@ -93,6 +93,13 @@ const getMangaDetailBySlug = async (slug, options = {}) => {
     return manga;
 };
 
+const getMangaDetailById = async (id) => {
+    const cacheKey = `manga:detail:id:${id}`;
+    return cacheHandler.remember(cacheKey, TTL.MEDIUM, async () => {
+        return await mangaRepository.getMangaById(id);
+    });
+};
+
 const searchMangas = async ({ q, genre, status, author, page = 1, limit = 20 }) => {
     const searchParams = { q, genre, status, author, page, limit };
 
@@ -128,10 +135,73 @@ const getChapterImages = async (chapterPath) => {
 module.exports = {
     getAllMangas,
     getMangaDetailBySlug,
+    getMangaDetailById,
     searchMangas,
     getCountAllMangas,
     getCountAllChapterMangas,
     getGenres,
     scrapeAndCheckForUpdate,
     getChapterImages,
+    async updateMangaManual(slug, data) {
+        const result = await mangaRepository.updateMangaManual(slug, data);
+
+        // Invalidate Cache
+        cacheHandler.invalidate(KEYS.DETAIL(slug, { chapterOrder: 'asc' }));
+        cacheHandler.invalidate(KEYS.DETAIL(slug, { chapterOrder: 'desc' }));
+        cacheHandler.deletePattern('manga:search:*');
+        cacheHandler.deletePattern('manga:list:*');
+
+        return result;
+    },
+
+    async createMangaManual(data) {
+        if (!data.slug) {
+             data.slug = data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+        }
+
+        const exists = await mangaRepository.findMangaBySlug(data.slug);
+        if (exists) throw new Error('Manga with this slug already exists');
+
+        const result = await mangaRepository.createManga(data);
+        cacheHandler.deletePattern('manga:list:*');
+        cacheHandler.deletePattern('manga:search:*');
+        return result;
+    },
+
+    async deleteChapter(slug, chapterIndex) {
+        const manga = await mangaRepository.findMangaBySlug(slug);
+        if (!manga) throw new Error('Manga not found');
+
+        await mangaRepository.deleteChapter(manga.id, chapterIndex);
+        
+        cacheHandler.invalidate(KEYS.DETAIL(slug, { chapterOrder: 'asc' }));
+        cacheHandler.invalidate(KEYS.DETAIL(slug, { chapterOrder: 'desc' }));
+        return { message: 'Chapter deleted successfully' };
+    },
+
+    async upsertChapterManual(slug, chapterData) {
+        const result = await mangaRepository.upsertChapterManual(slug, chapterData);
+
+        // Invalidate Cache
+        cacheHandler.invalidate(KEYS.DETAIL(slug, { chapterOrder: 'asc' }));
+        cacheHandler.invalidate(KEYS.DETAIL(slug, { chapterOrder: 'desc' }));
+        return result;
+    },
+
+    async deleteManga(slug) {
+        // 1. Delete from DB
+        try {
+             await mangaRepository.deleteManga(slug);
+        } catch (error) {
+             throw error;
+        }
+
+        // 2. Invalidate Cache
+        cacheHandler.invalidate(KEYS.DETAIL(slug, { chapterOrder: 'asc' }));
+        cacheHandler.invalidate(KEYS.DETAIL(slug, { chapterOrder: 'desc' }));
+        cacheHandler.deletePattern('manga:search:*');
+        cacheHandler.deletePattern('manga:list:*');
+
+        return { message: 'Manga deleted successfully' };
+    },
 };

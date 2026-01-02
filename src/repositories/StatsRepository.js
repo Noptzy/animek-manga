@@ -1,11 +1,18 @@
 const prisma = require('../config/prisma');
 
 class StatsRepository {
-    async getServer1Stats() {
+    async getServer2Stats() {
+        const SERVER_ID = 2; 
         const [totalAnimes, totalEpisodes, episodesWithStreams] = await Promise.all([
-            prisma.animeServer.count(),
-            prisma.episode.count(),
-            prisma.episodeStream.count(),
+            prisma.anime.count({
+                where: { animeSources: { some: { serverId: SERVER_ID } } }
+            }),
+            prisma.episode.count({
+                where: { anime: { animeSources: { some: { serverId: SERVER_ID } } } }
+            }),
+            prisma.episodeStream.count({
+                where: { serverId: SERVER_ID }
+            }),
         ]);
 
         return {

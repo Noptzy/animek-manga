@@ -1,3 +1,4 @@
+const { getBrowser } = require('../../utils/browser');
 const axios = require('axios');
 const cheerio = require('cheerio');
 const logger = require('../../utils/logger');
@@ -7,7 +8,7 @@ const CONFIG = {
     userAgent:
         'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
     timeout: 30000,
-    concurrency: 10, // [SPEED UP] Naikkan worker agar lebih ngebut
+    concurrency: 1, // [FIX] Dibuat jadi 1 untuk menghindari timeout. Proses lebih lambat tapi stabil.
     maxRetries: 3,
 };
 
@@ -165,31 +166,88 @@ class OploverzScrap {
 
     async getAnimeMetadata(url) {
         try {
-            const { data } = await axiosInstance.get(url);
+            let response;
+            try {
+                response = await axiosInstance.get(url);
+            } catch (err) {
+                const isSeries = url.includes('/series/');
+                if ((err.response?.status === 404 || err.response?.status === 500) && isSeries) {
+                    logger.warning(`[OploverzScrap] Metadata fetch failed for ${url}. Trying /movie/ fallback...`);
+                    const fallbackUrl = url.replace('/series/', '/movie/');
+                    try {
+                        response = await axiosInstance.get(fallbackUrl);
+                        logger.info(`[OploverzScrap] Fallback to ${fallbackUrl} successful.`);
+                        url = fallbackUrl; // Update url for downstream logic
+                    } catch (err2) {
+                        throw err; // Throw original error if fallback also fails
+                    }
+                } else {
+                    throw err;
+                }
+            }
+            
+            const data = response.data;
             const $ = cheerio.load(data);
             const rawData = this._extractSvelteData($);
 
-            // [FIX] Ekstraksi Slug yang Lebih Aman
+            // [FIX] Ekstraksi Slug yang Lebih Aman (Support /series/ dan /movie/)
             let seriesSlug = '';
+            let urlType = 'series'; // Default
 
-            // Cara 1: Ambil dari URL
-            const urlParts = url.split('/series/');
-            if (urlParts.length > 1) {
-                seriesSlug = urlParts[1].split('/')[0].split('?')[0].replace(/\/$/, '');
+            // [NEW] Cek Final URL (Redirection) untuk deteksi lebih akurat
+            const finalUrl = response.request?.res?.responseUrl || url;
+            logger.info(`[OploverzScrap] Original: ${url} -> Final: ${finalUrl}`);
+
+            // Cara 1: Ambil dari Final URL (Prioritas Utama)
+            if (finalUrl.includes('/series/')) {
+                const urlParts = finalUrl.split('/series/');
+                if (urlParts.length > 1) {
+                    seriesSlug = urlParts[1].split('/')[0].split('?')[0].replace(/\/$/, '');
+                    urlType = 'series';
+                }
+            } else if (finalUrl.includes('/movie/')) {
+                const urlParts = finalUrl.split('/movie/');
+                if (urlParts.length > 1) {
+                    seriesSlug = urlParts[1].split('/')[0].split('?')[0].replace(/\/$/, '');
+                    urlType = 'movie';
+                }
+            } else if (finalUrl.includes('/anime/')) {
+                 // Kadang masih /anime/ (jarang), coba parse slugnya saja
+                 const urlParts = finalUrl.split('/anime/');
+                 if (urlParts.length > 1) {
+                    seriesSlug = urlParts[1].split('/')[0].split('?')[0].replace(/\/$/, '');
+                 }
             }
 
-            // Cara 2: Ambil dari JSON Svelte (Fallback)
-            if (!seriesSlug) {
+            // Cara 2: Ambil dari JSON Svelte (Fallback & Verification)
+            if (!seriesSlug || urlType === 'series') {
                 const sData = this._findDataRecursive(rawData, 'series');
-                if (sData && sData.slug) seriesSlug = sData.slug;
+                if (sData) {
+                    if (!seriesSlug && sData.slug) seriesSlug = sData.slug;
+
+                    // Cek tipe dari metadata jika URL belum konfirmasi 'movie'
+                    if (sData.type && typeof sData.type === 'string') {
+                        const typeLower = sData.type.toLowerCase();
+                        if (typeLower.includes('movie')) {
+                            urlType = 'movie';
+                        }
+                    }
+                }
             }
 
-            // Cara 3: Fallback Darurat (Jika URL formatnya aneh, misal /anime/judul)
+            logger.info(`[OploverzScrap] Detected ID: ${seriesSlug}, Type: ${urlType}`);
+
+            // Cara 3: Fallback Darurat (Canonical)
             if (!seriesSlug) {
-                // Coba ambil dari canonical link atau og:url
                 const canonical = $('link[rel="canonical"]').attr('href');
-                if (canonical && canonical.includes('/series/')) {
-                    seriesSlug = canonical.split('/series/')[1].split('/')[0].replace(/\/$/, '');
+                if (canonical) {
+                     if (canonical.includes('/series/')) {
+                        seriesSlug = canonical.split('/series/')[1].split('/')[0].replace(/\/$/, '');
+                        urlType = 'series';
+                     } else if (canonical.includes('/movie/')) {
+                        seriesSlug = canonical.split('/movie/')[1].split('/')[0].replace(/\/$/, '');
+                        urlType = 'movie';
+                     }
                 }
             }
 
@@ -241,11 +299,16 @@ class OploverzScrap {
                             // Cek apakah episodeNumber ada. Jika Movie/Special seringkali null -> Default ke 1
                             const epNum =
                                 ep.episodeNumber !== null && ep.episodeNumber !== undefined ? ep.episodeNumber : 1;
+                            
+                            // Konstruksi URL Episode yang benar sesuai type
+                            const epUrl = urlType === 'movie' 
+                                ? `${CONFIG.baseUrl}/movie/${seriesSlug}/${ep.slug || epNum}` // Sesuai format movie user
+                                : `${CONFIG.baseUrl}/series/${seriesSlug}/episode/${epNum}`;
 
                             return {
                                 episode_number: String(epNum),
                                 title: ep.title || `Episode ${epNum}`,
-                                url: `${CONFIG.baseUrl}/series/${seriesSlug}/episode/${epNum}`,
+                                url: epUrl, 
                             };
                         });
                 }
@@ -283,9 +346,49 @@ class OploverzScrap {
 
     async getEpisodeStreams(episodeInfo) {
         let attempts = 0;
+        let targetUrl = episodeInfo.url;
+        
         while (attempts < CONFIG.maxRetries) {
             try {
-                const { data } = await axiosInstance.get(episodeInfo.url);
+                // [NEW] Smart Fallback Handling
+                // Jika URL awal gagal (404/500), coba variasi /movie/ atau /series/
+                let response;
+                try {
+                    response = await axiosInstance.get(targetUrl);
+                } catch (err) {
+                    const status = err.response?.status;
+                    if ((status === 404 || status === 500) && targetUrl.includes('/series/')) {
+                        logger.warning(`[OploverzScrap] Failed at ${targetUrl} (${status}). Trying Movie fallback...`);
+                        
+                        // Coba format Movie: /movie/slug atau /movie/slug/epNum
+                        const parts = targetUrl.split('/series/');
+                        if (parts.length > 1) {
+                            const tail = parts[1]; // slug/episode/1
+                            const slug = tail.split('/')[0]; 
+                            const epNum = tail.split('/episode/')[1] || '1';
+                            
+                            // Try Fallback 1: /movie/slug (seringkali movie halamannya langsung di sini)
+                            const fallbackUrl1 = `${CONFIG.baseUrl}/movie/${slug}`;
+                            logger.info(`[OploverzScrap] Retry Fallback 1: ${fallbackUrl1}`);
+                            try {
+                                response = await axiosInstance.get(fallbackUrl1);
+                                targetUrl = fallbackUrl1; // Update target valid
+                            } catch (e1) {
+                                // Try Fallback 2: /movie/slug/1 (kadang movie pake penomoran)
+                                const fallbackUrl2 = `${CONFIG.baseUrl}/movie/${slug}/${epNum}`;
+                                logger.info(`[OploverzScrap] Retry Fallback 2: ${fallbackUrl2}`);
+                                response = await axiosInstance.get(fallbackUrl2);
+                                targetUrl = fallbackUrl2;
+                            }
+                        } else {
+                            throw err;
+                        }
+                    } else {
+                        throw err; // Lempar error lain
+                    }
+                }
+
+                const { data } = response;
                 const $ = cheerio.load(data);
                 const rawData = this._extractSvelteData($);
 
@@ -382,7 +485,7 @@ class OploverzScrap {
                 return {
                     episode_number: parseFloat(episodeInfo.episode_number),
                     title: episodeInfo.title,
-                    url: episodeInfo.url,
+                    url: targetUrl, // Use the effective URL (targetUrl) instead of original episodeInfo.url
                     streaming,
                     downloads,
                 };
@@ -393,7 +496,7 @@ class OploverzScrap {
                     return {
                         episode_number: parseFloat(episodeInfo.episode_number),
                         title: episodeInfo.title,
-                        url: episodeInfo.url,
+                        url: targetUrl, // Return failed URL as well
                         streaming: [],
                         downloads: [],
                     };
@@ -453,9 +556,60 @@ class OploverzScrap {
     async getEpisodeUrl(episodeUrl) {
         let attempts = 0;
         while (attempts < CONFIG.maxRetries) {
+            let page;
             try {
-                // logger.info(`Scraping streams for: ${episodeUrl}`);
-                const { data } = await axiosInstance.get(episodeUrl);
+                const browser = await getBrowser();
+                page = await browser.newPage();
+                await page.setUserAgent(CONFIG.userAgent);
+                await page.setExtraHTTPHeaders({ 'Referer': CONFIG.baseUrl });
+
+                await page.setRequestInterception(true);
+                page.on('request', (req) => {
+                    if (['image', 'stylesheet', 'font'].includes(req.resourceType())) {
+                        req.abort();
+                    } else {
+                        req.continue();
+                    }
+                });
+
+                const response = await page.goto(episodeUrl, {
+                    waitUntil: 'domcontentloaded',
+                    timeout: CONFIG.timeout,
+                });
+
+                if (!response.ok()) {
+                     // [NEW] Smart Fallback Puppeteer
+                     if ((response.status() === 404 || response.status() === 500) && episodeUrl.includes('/series/')) {
+                         const parts = episodeUrl.split('/series/');
+                         if (parts.length > 1) {
+                             const tail = parts[1];
+                             const slug = tail.split('/')[0];
+                             const epNum = tail.split('/episode/')[1] || '1'; // Default 1
+
+                             // Fallback 1: /movie/{slug}
+                             const fallbackUrl1 = `${CONFIG.baseUrl}/movie/${slug}`;
+                             logger.info(`[OploverzScrap] Puppeteer Fallback 1: ${fallbackUrl1}`);
+                             const resp1 = await page.goto(fallbackUrl1, { waitUntil: 'domcontentloaded' });
+                             if (resp1.ok()) {
+                                 logger.info(`[OploverzScrap] Fallback 1 Success!`);
+                             } else {
+                                  // Fallback 2: /movie/{slug}/{epNum}
+                                 const fallbackUrl2 = `${CONFIG.baseUrl}/movie/${slug}/${epNum}`;
+                                 logger.info(`[OploverzScrap] Puppeteer Fallback 2: ${fallbackUrl2}`);
+                                 const resp2 = await page.goto(fallbackUrl2, { waitUntil: 'domcontentloaded' });
+                                 if (!resp2.ok()) {
+                                     throw new Error(`Fallback failed with status code ${resp2.status()}`);
+                                 }
+                             }
+                         } else {
+                             throw new Error(`Request failed with status code ${response.status()}`);
+                         }
+                     } else {
+                        throw new Error(`Request failed with status code ${response.status()}`);
+                     }
+                }
+
+                const data = await page.content();
                 const $ = cheerio.load(data);
                 const rawData = this._extractSvelteData($);
 
@@ -464,6 +618,7 @@ class OploverzScrap {
 
                 // Fallback HTML jika Svelte kosong
                 if (!streamUrl.length && !downloadUrl.length) {
+                    logger.debug(`[OploverzScrap] Svelte data not found for ${episodeUrl}. Falling back to HTML scraping.`);
                     // Fallback Download
                     $('.soradl a, .dl a, .op-download a').each((i, el) => {
                         const href = $(el).attr('href');
@@ -542,13 +697,19 @@ class OploverzScrap {
                     });
                 }
 
-                return { streaming, downloads };
+                return { streaming, downloads, effectiveUrl: response.url() };
             } catch (error) {
                 attempts++;
-                if (attempts >= CONFIG.maxRetries) return { streaming: [], downloads: [] };
+                logger.error(`[OploverzScrap] Attempt ${attempts} failed for ${episodeUrl}: ${error.message}`);
+                if (attempts >= CONFIG.maxRetries) {
+                    return { streaming: [], downloads: [], effectiveUrl: episodeUrl };
+                }
                 await sleep(1000);
+            } finally {
+                if (page) await page.close();
             }
         }
+        return { streaming: [], downloads: [], effectiveUrl: episodeUrl }; // Should not be reached if maxRetries is > 0
     }
 }
 

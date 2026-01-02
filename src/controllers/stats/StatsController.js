@@ -2,12 +2,12 @@ const logger = require('../../utils/logger.js');
 const statsService = require('../../services/StatsService.js');
 const resHandler = require('../../utils/resHandler.js');
 
-exports.getServer1Stats = async (req, res) => {
+exports.getServer2Stats = async (req, res) => {
     try {
-        const stats = await statsService.getServer1Stats();
-        return res.json(resHandler.success('Success get server 1 stats', stats).toJSON());
+        const stats = await statsService.getServer2Stats();
+        return res.json(resHandler.success('Success get server 2 stats', stats).toJSON());
     } catch (error) {
-        logger.error('Error fetching server 1 stats:', error);
+        logger.error('Error fetching server 2 stats:', error);
         return res.status(500).json(resHandler.error('Internal Server Error').toJSON());
     }
 };

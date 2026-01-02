@@ -6,6 +6,8 @@ const logger = require('../utils/logger');
 const runScraping = () => {
     logger.info('Starting scraping process...');
     const scriptPath = path.resolve(__dirname, '../scripts/runUnifiedScrape.js');
+    console.log('[DEBUG] Forking script at:', scriptPath);
+    logger.info(`Forking script at: ${scriptPath}`);
     const child = fork(scriptPath);
 
     child.on('message', (message) => {

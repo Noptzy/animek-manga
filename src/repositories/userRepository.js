@@ -79,12 +79,23 @@ class userRepository {
     }
 
     async findUsers({ where, offset, limit }) {
+        const { q, ...otherWhere } = where || {};
+        
+        const prismaWhere = {
+            ...otherWhere,
+            roleId: 1,
+        };
+
+        if (q) {
+            prismaWhere.OR = [
+                { name: { contains: q, mode: 'insensitive' } },
+                { email: { contains: q, mode: 'insensitive' } },
+            ];
+        }
+
         const [data, total] = await Promise.all([
             prisma.user.findMany({
-                where: {
-                    ...where,
-                    roleId: 1,
-                },
+                where: prismaWhere,
                 select: {
                     id: true,
                     email: true,
@@ -93,15 +104,39 @@ class userRepository {
                     isActive: true,
                     roleId: true,
                 },
-                skip:
-                    typeof offset === 'number' ? offset : 0,
-                take:
-                    typeof limit === 'number' ? limit : 10,
+                skip: typeof offset === 'number' ? offset : 0,
+                take: typeof limit === 'number' ? limit : 10,
+            }),
+            prisma.user.count({ where: prismaWhere }),
+        ]);
+
+        return { data, total };
+    }
+
+    async findAllUsers({ where, page = 1, limit = 10 }) {
+        const skip = (page - 1) * limit;
+        const [data, total] = await Promise.all([
+            prisma.user.findMany({
+                where: {
+                    ...(where || {}),
+                    roleId: 1
+                },
+                select: {
+                    id: true,
+                    email: true,
+                    name: true,
+                    isActive: true,
+                    roleId: true,
+                    createdAt: true,
+                },
+                skip,
+                take: limit,
+                orderBy: { createdAt: 'desc' },
             }),
             prisma.user.count({ where: where || {} }),
         ]);
 
-        return { data, total };
+        return { data, total, page, limit, totalPages: Math.ceil(total / limit) };
     }
 
     async updateUser(id, data) {
@@ -155,7 +190,6 @@ class userRepository {
                     id: true,
                     name: true,
                     email: true,
-                    photoUrl: true,
                     isActive: true,
                     roleId: true,
                 },
@@ -233,15 +267,45 @@ class userRepository {
                 id: true,
                 name: true,
                 email: true,
-                photoUrl: true,
-                isActive: true,
-                password: true,
+                // photoUrl: true,
                 roleId: true,
-                metadata: true,
+                isActive: true,
+                // metadata: true,
             },
         });
+        return userProfile;
 
         return userProfile;
+    }
+    async banUser(id) {
+        return this.updateUser(id, { isActive: false });
+    }
+
+    async unbanUser(id) {
+        return this.updateUser(id, { isActive: true });
+    }
+
+    async searchUserByName(name) {
+        return prisma.user.findMany({
+            where: {
+                name: {
+                    contains: name,
+                    mode: 'insensitive',
+                },
+                roleId: 1
+            },
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                isActive: true,
+                photoUrl: true
+            }
+        });
+    }
+
+    async searchUserById(id) {
+        return this.getUser(id);
     }
 }
 

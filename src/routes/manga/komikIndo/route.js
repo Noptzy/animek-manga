@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const komikuIndoController = require('../../../controllers/manga/komikuIndoController');
 
+router.get('/id/:id', komikuIndoController.getMangaById);
 router.get('/chapter/:chapterPath', komikuIndoController.getChapterImage);
 router.get('/genres', komikuIndoController.getGenres);
 router.get('/mangas/search', komikuIndoController.getMangaSearch);

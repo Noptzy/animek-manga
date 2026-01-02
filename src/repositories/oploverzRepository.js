@@ -1,5 +1,6 @@
 const prisma = require('../config/prisma');
 const ScrapeLogRepository = require('./scrapeLogRepository');
+const notificationService = require('../services/notificationService');
 
 const SERVER_ID = 2;
 const SERVER_NAME = 'Oploverz';
@@ -24,9 +25,26 @@ class OploverzRepository {
         }
 
         try {
-            // ============================================================
-            // TAHAP 1: SIMPAN METADATA ANIME (JUDUL, GENRE, POSTER)
-            // ============================================================
+            // Pre-check for new episodes notifications
+            let newEpisodesToNotify = [];
+            try {
+                const existingAnime = await prisma.anime.findUnique({
+                    where: { slug: animeData.slug },
+                    select: { id: true, episodes: { select: { episodeNumber: true } } }
+                });
+
+                if (existingAnime && animeData.episodes) {
+                    const existingNumbers = new Set(existingAnime.episodes.map(e => e.episodeNumber));
+                    newEpisodesToNotify = animeData.episodes.filter(ep => {
+                        const num = parseFloat(ep.episode_number);
+                        return !isNaN(num) && !existingNumbers.has(num);
+                    });
+                }
+            } catch (err) {
+                console.warn(`[SKIP] Notification check failed for ${animeData.title}:`, err.message);
+            }
+
+            // Save Anime Metadata (Title, Genre, Poster)
             const savedAnime = await prisma.$transaction(
                 async (tx) => {
                     // 1. Upsert Anime
@@ -110,9 +128,7 @@ class OploverzRepository {
                 { timeout: 10000 },
             );
 
-            // ============================================================
-            // TAHAP 2: CLEANUP EPISODES (HAPUS YANG TIDAK VALID)
-            // ============================================================
+            // Cleanup invalid episodes (ghost episodes)
             // Ini akan menghapus episode "hantu" (misal 36255) yang ada di DB tapi tidak ada di hasil scrape baru
             if (animeData.episodes) {
                 const validEpisodeNumbers = animeData.episodes
@@ -129,9 +145,7 @@ class OploverzRepository {
                 }
             }
 
-            // ============================================================
-            // TAHAP 3: SIMPAN EPISODE BARU
-            // ============================================================
+            // Save New Episodes
             let episodeCount = 0;
             if (animeData.episodes && animeData.episodes.length > 0) {
                 for (const ep of animeData.episodes) {
@@ -224,7 +238,35 @@ class OploverzRepository {
                 error: null,
             });
 
-            return savedAnime;
+            // Send Notifications (Async)
+            if (newEpisodesToNotify.length > 0) {
+                // Fire and forget, jangan await agar tidak memblokir scraping
+                (async () => {
+                   for (const ep of newEpisodesToNotify) {
+                       const epNum = parseFloat(ep.episode_number);
+                       await notificationService.notifySubscribers('anime', savedAnime.id, {
+                           title: `Episode Baru: ${savedAnime.title}`,
+                           message: `Episode ${epNum} dari ${savedAnime.title} telah rilis!`,
+                           payload: {
+                               slug: savedAnime.slug,
+                               episodeNumber: epNum
+                           }
+                       });
+                   }
+                })().catch(err => console.error(`[Notification] Auto-alert failed for ${animeData.title}:`, err));
+            }
+
+            // Return Full Object (Ensure episodes are included for Service)
+            return await tx.anime.findUnique({
+                where: { id: savedAnime.id },
+                include: {
+                    animeServerGenres: { include: { serverGenre: true } },
+                    episodes: {
+                        orderBy: { episodeNumber: 'asc' },
+                        include: { streams: true, downloads: true },
+                    },
+                },
+            });
         } catch (error) {
             console.error(`ERROR Repository Upsert ${animeData.title}:`, error);
             await ScrapeLogRepository.createLog({
@@ -399,7 +441,7 @@ class OploverzRepository {
         return { data, total };
     }
 
-    async getAllAnime(page = 1, limit = 10) {
+    async getAllAnime(page = 1, limit = 10, { genre, status, type, order } = {}) {
         const pageInt = Math.max(1, parseInt(page) || 1);
         const limitInt = parseInt(limit) || 10;
         const skip = (pageInt - 1) * limitInt;
@@ -407,6 +449,32 @@ class OploverzRepository {
         const where = {
             animeSources: { some: { serverId: SERVER_ID } },
         };
+
+        if (status) {
+            where.status = status;
+        }
+
+        if (type) {
+            where.type = type;
+        }
+
+        if (genre) {
+            where.animeServerGenres = {
+                some: {
+                    serverGenre: {
+                        slug: genre
+                    }
+                }
+            };
+        }
+
+        let orderBy = { updatedAt: 'desc' }; // Default: Latest Update
+        if (order === 'a-z') orderBy = { title: 'asc' };
+        else if (order === 'z-a') orderBy = { title: 'desc' };
+        else if (order === 'newest') orderBy = { updatedAt: 'desc' };
+        else if (order === 'oldest') orderBy = { updatedAt: 'asc' };
+        else if (order === 'release_newest') orderBy = { createdAt: 'desc' };
+        else if (order === 'release_oldest') orderBy = { createdAt: 'asc' };
 
         const [data, total] = await Promise.all([
             prisma.anime.findMany({
@@ -420,7 +488,7 @@ class OploverzRepository {
                     totalEpisodes: true,
                     score: true,
                 },
-                orderBy: { updatedAt: 'desc' },
+                orderBy,
                 skip,
                 take: limitInt,
             }),
@@ -451,6 +519,115 @@ class OploverzRepository {
     }
 
     // 2. Hapus anime (Jika di Oploverz sudah tidak ada)
+    async createAnime(data) {
+        return await prisma.$transaction(async (tx) => {
+            // 1. Create/Connect Genres
+            const genreIds = [];
+            if (data.genres && Array.isArray(data.genres)) {
+                for (const g of data.genres) {
+                    let name, slug;
+                    if (typeof g === 'string') {
+                        name = g;
+                        slug = g.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+                    } else {
+                        name = g.name;
+                        slug = g.slug || g.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+                    }
+                    
+                    // Upsert Genre per Server (since ServerGenre is unique per server+slug)
+                    let genre = await tx.serverGenre.findFirst({
+                        where: { serverId: SERVER_ID, slug: slug }
+                    });
+
+                    if (!genre) {
+                        genre = await tx.serverGenre.create({
+                            data: {
+                                serverId: SERVER_ID,
+                                name: name,
+                                slug: slug
+                            }
+                        });
+                    }
+                    genreIds.push(genre.id);
+                }
+            }
+
+            // 2. Create Anime
+            const anime = await tx.anime.create({
+                data: {
+                    title: data.title,
+                    slug: data.slug,
+                    altTitle: data.altTitle,
+                    posterUrl: data.posterUrl,
+                    synopsis: data.synopsis,
+                    status: data.status || 'Ongoing',
+                    season: data.season,
+                    type: data.type || 'TV',
+                    duration: data.duration,
+                    rating: data.rating,
+                    score: data.score,
+                    studio: data.studio,
+                    totalEpisodes: data.totalEpisodes,
+                    
+                    // Creates relations
+                    animeSources: {
+                        create: {
+                             serverId: SERVER_ID,
+                             sourceUrl: data.sourceUrl || null
+                        }
+                    },
+                    episodes: data.episodes && Array.isArray(data.episodes) ? {
+                        create: data.episodes.map(ep => ({
+                            episodeNumber: parseFloat(ep.episodeNumber),
+                            title: ep.title || `Episode ${ep.episodeNumber}`,
+                            sourceUrl: ep.sourceUrl || null,
+                            streams: {
+                                create: ep.streams ? ep.streams.map(s => ({
+                                    serverId: SERVER_ID,
+                                    host: s.host || 'Default',
+                                    quality: s.quality || 'SD',
+                                    url: s.url
+                                })) : []
+                            },
+                        downloads: {
+                            create: ep.downloads ? ep.downloads.map(d => ({
+                                format: d.format || 'mp4',
+                                resolutions: d.resolutions || '720p',
+                                host: d.host || 'Default',
+                                url: d.url
+                            })) : []
+                        }
+                        }))
+                    } : undefined
+                }
+            });
+
+            // 3. Link Genres
+            if (genreIds.length > 0) {
+                await tx.animeServerGenre.createMany({
+                    data: genreIds.map(gid => ({
+                        animeId: anime.id,
+                        serverGenreId: gid
+                    })),
+                    skipDuplicates: true
+                });
+            }
+
+            return anime;
+        });
+    }
+
+    async deleteEpisode(animeId, episodeNumber) {
+        return await prisma.episode.delete({
+            where: {
+                animeId_episodeNumber: {
+                    animeId: animeId,
+                    episodeNumber: parseFloat(episodeNumber)
+                }
+            }
+        });
+    }
+
     async deleteAnime(slug) {
         return prisma.anime.delete({
             where: { slug: slug },
@@ -506,6 +683,272 @@ class OploverzRepository {
             }
 
             return true;
+        });
+    }
+    async updateAnimeManual(slug, data) {
+        return await prisma.$transaction(async (tx) => {
+            // 1. Get Anime ID first
+            const anime = await tx.anime.findUnique({ where: { slug } });
+            if (!anime) throw new Error('Anime not found');
+
+            // 2. Update Metadata
+            const updatedAnime = await tx.anime.update({
+                where: { slug },
+                data: {
+                    title: data.title,
+                    posterUrl: data.posterUrl,
+                    synopsis: data.synopsis,
+                    status: data.status,
+                    type: data.type,
+                    rating: data.rating,
+                    score: data.score,
+                    studio: data.studio,
+                    season: data.season,
+                    duration: data.duration,
+                    totalEpisodes: data.totalEpisodes,
+                    updatedAt: new Date(),
+                }
+            });
+
+            // 3. Sync Genres (Replace Strategy)
+            if (data.genres && Array.isArray(data.genres)) {
+                // Delete existing relations
+                await tx.animeServerGenre.deleteMany({ where: { animeId: anime.id } });
+                
+                const genreIds = [];
+                for (const g of data.genres) {
+                    let name, genreSlug;
+                    if (typeof g === 'string') {
+                        name = g;
+                        genreSlug = g.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+                    } else {
+                        name = g.name;
+                        genreSlug = g.slug || g.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+                    }
+
+                    // Upsert Genre
+                    let genre = await tx.serverGenre.findFirst({
+                         where: { serverId: SERVER_ID, slug: genreSlug }
+                    });
+                    if (!genre) {
+                        genre = await tx.serverGenre.create({
+                            data: { serverId: SERVER_ID, name, slug: genreSlug }
+                        });
+                    }
+                    genreIds.push(genre.id);
+                }
+
+                // Create new relations
+                if (genreIds.length > 0) {
+                    await tx.animeServerGenre.createMany({
+                        data: genreIds.map(gid => ({ animeId: anime.id, serverGenreId: gid })),
+                        skipDuplicates: true
+                    });
+                }
+            }
+
+            // 4. Sync Episodes (Upsert + Replace Nested)
+            if (data.episodes && Array.isArray(data.episodes)) {
+               for (const ep of data.episodes) {
+                   const epNum = parseFloat(ep.episodeNumber);
+                   
+                   // Upsert Episode
+                   const episode = await tx.episode.upsert({
+                       where: {
+                           animeId_episodeNumber: { animeId: anime.id, episodeNumber: epNum }
+                       },
+                       update: {
+                           title: ep.title || `Episode ${epNum}`,
+                           sourceUrl: ep.sourceUrl || null,
+                           updatedAt: new Date()
+                       },
+                       create: {
+                           animeId: anime.id,
+                           episodeNumber: epNum,
+                           title: ep.title || `Episode ${epNum}`,
+                           sourceUrl: ep.sourceUrl || null
+                       }
+                   });
+
+                   // Sync Streams (Replace)
+                   if (ep.streams && Array.isArray(ep.streams)) {
+                       await tx.episodeStream.deleteMany({ where: { episodeId: episode.id } });
+                       if (ep.streams.length > 0) {
+                           await tx.episodeStream.createMany({
+                               data: ep.streams.map(s => ({
+                                   episodeId: episode.id,
+                                   serverId: SERVER_ID,
+                                   host: s.host || 'Default',
+                                   quality: s.quality || 'SD',
+                                   url: s.url
+                               }))
+                           });
+                       }
+                   }
+
+                   // Sync Downloads (Replace)
+                   if (ep.downloads && Array.isArray(ep.downloads)) {
+                       await tx.episodeDownload.deleteMany({ where: { episodeId: episode.id } });
+                       if (ep.downloads.length > 0) {
+                           await tx.episodeDownload.createMany({
+                               data: ep.downloads.map(d => ({
+                                   episodeId: episode.id,
+                                   format: d.format || 'mp4',
+                                   resolutions: d.resolutions || '720p',
+                                   host: d.host || 'Default',
+                                   url: d.url
+                               }))
+                           });
+                       }
+                   }
+               }
+            }
+
+            // 5. Return Full Object
+            return await tx.anime.findUnique({
+                where: { id: anime.id },
+                include: {
+                    animeServerGenres: { include: { serverGenre: true } },
+                    episodes: {
+                        orderBy: { episodeNumber: 'asc' },
+                        include: { streams: true, downloads: true }
+                    }
+                }
+            });
+        });
+    }
+
+    async upsertEpisodeManual(slug, episodeData) {
+        const anime = await prisma.anime.findUnique({ where: { slug } });
+        if (!anime) throw new Error(`Anime with slug ${slug} not found`);
+
+        const epNumVal = parseFloat(episodeData.episodeNumber);
+        const safeEpNum = isNaN(epNumVal) ? 99999 : epNumVal;
+
+        // Check availability for notification (Pre-Transaction check)
+        const exists = await prisma.episode.findUnique({
+            where: {
+                animeId_episodeNumber: {
+                    animeId: anime.id,
+                    episodeNumber: safeEpNum,
+                }
+            },
+            select: { id: true }
+        });
+
+        if (!exists) {
+            notificationService.notifySubscribers('anime', anime.id, {
+                title: `Episode Baru: ${anime.title}`,
+                message: `Episode ${safeEpNum === 99999 ? 'Terbaru' : safeEpNum} dari ${anime.title} baru saja rilis!`,
+                payload: {
+                    slug: anime.slug,
+                    episodeNumber: episodeData.episodeNumber
+                }
+            }).catch(err => console.error(`Notify Error: ${err.message}`));
+        }
+
+        return await prisma.$transaction(async (tx) => {
+             const episode = await tx.episode.upsert({
+                where: {
+                    animeId_episodeNumber: {
+                        animeId: anime.id,
+                        episodeNumber: safeEpNum,
+                    },
+                },
+                update: {
+                    title: episodeData.title,
+                    sourceUrl: episodeData.sourceUrl || '#',
+                    updatedAt: new Date(),
+                },
+                create: {
+                    animeId: anime.id,
+                    episodeNumber: safeEpNum,
+                    title: episodeData.title,
+                    sourceUrl: episodeData.sourceUrl || '#',
+                },
+            });
+
+            // Streams
+            if (episodeData.streams && Array.isArray(episodeData.streams)) {
+                await tx.episodeStream.deleteMany({ where: { episodeId: episode.id } });
+                if (episodeData.streams.length > 0) {
+                     await tx.episodeStream.createMany({
+                        data: episodeData.streams.map((s) => ({
+                            episodeId: episode.id,
+                            serverId: SERVER_ID,
+                            host: s.host,
+                            quality: s.quality,
+                            url: s.url,
+                        })),
+                    });
+                }
+            }
+
+            // Downloads
+            if (episodeData.downloads && Array.isArray(episodeData.downloads)) {
+                await tx.episodeDownload.deleteMany({ where: { episodeId: episode.id } });
+                const downloadsPayload = [];
+
+                episodeData.downloads.forEach((dlGroup) => {
+                    const format = (dlGroup.format || 'mp4').substring(0, 50);
+                    
+                    // Handle Nested Resolutions (from Scraper)
+                    if (dlGroup.resolutions && Array.isArray(dlGroup.resolutions)) {
+                        dlGroup.resolutions.forEach((res) => {
+                            const quality = (res.quality || 'Unknown').substring(0, 50);
+                            
+                            // Handle Links array inside Resolution
+                            if (res.links && Array.isArray(res.links)) {
+                                res.links.forEach((link) => {
+                                    if (link.url && link.url.trim() !== '') {
+                                        downloadsPayload.push({
+                                            episodeId: episode.id,
+                                            format: format,
+                                            resolutions: quality,
+                                            host: (link.host || 'Unknown').substring(0, 50),
+                                            url: link.url,
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                    } 
+                    // Handle Flat Structure (if passed differently)
+                    else if (dlGroup.url) {
+                         downloadsPayload.push({
+                            episodeId: episode.id,
+                            format: format,
+                            resolutions: (dlGroup.resolutions || '720p').substring(0, 50),
+                            host: (dlGroup.host || 'Default').substring(0, 50),
+                            url: dlGroup.url
+                        });
+                    }
+                });
+
+                if (downloadsPayload.length > 0) {
+                    await tx.episodeDownload.createMany({
+                        data: downloadsPayload
+                    });
+                }
+            }
+            
+            return episode;
+        });
+    }
+    async getAnimeById(id) {
+        return prisma.anime.findUnique({
+            where: { id },
+            include: {
+                animeServerGenres: {
+                    select: {
+                        serverGenre: { select: { name: true, slug: true } },
+                    },
+                },
+                episodes: {
+                    orderBy: { episodeNumber: 'desc' },
+                    include: { streams: true, downloads: true },
+                },
+            },
         });
     }
 }

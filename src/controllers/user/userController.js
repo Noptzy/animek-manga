@@ -65,18 +65,10 @@ exports.getProfile = async (req, res) => {
                     .toJSON());
         }
 
-        const data = {
-            id: profile.id,
-            name: profile.name,
-            email: profile.email,
-            photoUrl: profile.photoUrl,
-            metadata: profile.metadata,
-        };
-
         return res
             .status(200)
             .json(resHandler
-                .success('Profile retrieved successfully', data)
+                .success('Profile retrieved successfully', profile)
                 .toJSON());
     } catch (error) {
         logger.error('Failed To Get Profile', error, { route: '/users/profile', userId: id });
@@ -110,9 +102,9 @@ exports.deleteProfile = async (req, res) => {
 
     try {
         const existing = await userService.profileUser(id);
-        if (existing && existing.photoUrl) {
-            await photoService.deleteFileFromUrl(existing.photoUrl, req).catch(() => {});
-        }
+        // if (existing && existing.photoUrl) {
+        //     await photoService.deleteFileFromUrl(existing.photoUrl, req).catch(() => {});
+        // }
 
         const deleted = await userService.deleteUser(id);
         if (!deleted) {
@@ -200,15 +192,16 @@ exports.storeUser = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    await photoService.ensureDirsAndDefault();
+    // await photoService.ensureDirsAndDefault();
 
-    const defaultPhotoUrl = photoService.buildFileUrl(req, photoService.DEFAULT_FILENAME);
+    // const defaultPhotoUrl = photoService.buildFileUrl(req, photoService.DEFAULT_FILENAME);
 
     const newUser = await userService.storeUser({
       name,
       email,
       password: hashedPassword,
-      photoUrl: defaultPhotoUrl,
+      // photoUrl: defaultPhotoUrl,
+      photoUrl: null, // Disabled temporarily
     });
 
     return res.status(201).json(resHandler.success('User created successfully', newUser).toJSON());
@@ -256,26 +249,26 @@ exports.updateUser = async (req, res) => {
         if (name !== undefined) payload.name = name;
         if (email !== undefined) payload.email = email;
         if (password !== undefined) payload.password = password; 
-        if (photoUrl !== undefined) payload.photoUrl = photoUrl;
+        // if (photoUrl !== undefined) payload.photoUrl = photoUrl;
         if (typeof isActive !== 'undefined') payload.isActive = isActive;
 
-        if (req.file && req.file.buffer) {
-            await photoService.ensureDirsAndDefault();
-            const existing = await userService.profileUser(id);
-            const saved = await photoService.saveProfileImage(req.file.buffer, req);
-            const relativePath = `public/photoProfile/${saved.filename}`;
+        // if (req.file && req.file.buffer) {
+        //     await photoService.ensureDirsAndDefault();
+        //     const existing = await userService.profileUser(id);
+        //     const saved = await photoService.saveProfileImage(req.file.buffer, req);
+        //     const relativePath = `public/photoProfile/${saved.filename}`;
 
-            if (existing && existing.photoUrl) {
-                await photoService.deleteFileFromUrl(existing.photoUrl, req).catch(() => {});
-            }
+        //     if (existing && existing.photoUrl) {
+        //         await photoService.deleteFileFromUrl(existing.photoUrl, req).catch(() => {});
+        //     }
 
-            const mergedMeta = Object.assign({}, (existing && existing.metadata) || {}, {
-                profileOriginalName: req.file.originalname,
-            });
+        //     const mergedMeta = Object.assign({}, (existing && existing.metadata) || {}, {
+        //         profileOriginalName: req.file.originalname,
+        //     });
 
-            payload.photoUrl = relativePath;
-            payload.metadata = mergedMeta;
-        }
+        //     payload.photoUrl = relativePath;
+        //     payload.metadata = mergedMeta;
+        // }
 
         if (Object.keys(payload).length === 0) {
             return res
@@ -323,7 +316,7 @@ exports.updateProfile = async (req, res) => {
 
     try {
         const body = req.body;
-        const { name, email, password, photoUrl } = body;
+        const { name, email, password } = body;
 
         if (email) {
             const existing = await userService.findUser({ email });
@@ -341,25 +334,25 @@ exports.updateProfile = async (req, res) => {
         if (name !== undefined) payload.name = name;
         if (email !== undefined) payload.email = email;
         if (password !== undefined) payload.password = password; 
-        if (photoUrl !== undefined) payload.photoUrl = photoUrl;
+        // if (photoUrl !== undefined) payload.photoUrl = photoUrl;
 
-        if (req.file && req.file.buffer) {
-            await photoService.ensureDirsAndDefault();
-            const existing = await userService.profileUser(id);
-            const saved = await photoService.saveProfileImage(req.file.buffer, req);
-            const relativePath = `public/photoProfile/${saved.filename}`;
+        // if (req.file && req.file.buffer) {
+        //     await photoService.ensureDirsAndDefault();
+        //     const existing = await userService.profileUser(id);
+        //     const saved = await photoService.saveProfileImage(req.file.buffer, req);
+        //     const relativePath = `public/photoProfile/${saved.filename}`;
 
-            if (existing && existing.photoUrl) {
-                await photoService.deleteFileFromUrl(existing.photoUrl, req).catch(() => {});
-            }
+        //     if (existing && existing.photoUrl) {
+        //         await photoService.deleteFileFromUrl(existing.photoUrl, req).catch(() => {});
+        //     }
 
-            const mergedMeta = Object.assign({}, (existing && existing.metadata) || {}, {
-                profileOriginalName: req.file.originalname,
-            });
+        //     const mergedMeta = Object.assign({}, (existing && existing.metadata) || {}, {
+        //         profileOriginalName: req.file.originalname,
+        //     });
 
-            payload.photoUrl = relativePath;
-            payload.metadata = mergedMeta;
-        }
+        //     payload.photoUrl = relativePath;
+        //     payload.metadata = mergedMeta;
+        // }
 
         if (Object.keys(payload).length === 0) {
             return res

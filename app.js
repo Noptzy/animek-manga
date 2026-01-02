@@ -8,6 +8,8 @@ const apiV1 = require('./src/routes/index.js');
 const path = require('path');
 const recentMangaWorker = require('./src/workers/recentMangaWorker.js');
 const cleanupWorker = require('./src/workers/cleanupWorker.js');
+const healthController = require('./src/controllers/health/healthController');
+const globalErrorHandler = require('./src/middlewares/globalErrorHandler');
 
 const app = express();
 const port = process.env.PORT ?? 3000;
@@ -28,6 +30,7 @@ app.use(morgan('dev'));
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use('/photoProfile', express.static(path.join(__dirname, 'public', 'photoProfile')));
+app.get('/health', healthController.checkHealth);
 
 app.use('/docs', (req, res) => {
     res.redirect('https://nopsy.gitbook.io/animek/');
@@ -38,5 +41,7 @@ app.use('/api/v1', apiV1);
 app.use((req, res) => {
     return res.status(404).json({ error: '404 not found', message: 'you can see docs at /docs' });
 });
+
+app.use(globalErrorHandler);
 
 module.exports = app;

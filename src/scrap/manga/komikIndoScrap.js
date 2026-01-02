@@ -16,7 +16,7 @@ const axiosWithRetry = async (url, config, retries = 3, delayMs = 2000) => {
             return await axios.get(url, config);
         } catch (error) {
             if (i < retries - 1) {
-                logger.warn(`Request to ${url} failed. Retrying in ${delayMs}ms... (${i + 1}/${retries})`);
+                logger.warning(`Request to ${url} failed. Retrying in ${delayMs}ms... (${i + 1}/${retries})`);
                 await delay(delayMs);
             } else {
                 throw error;
@@ -157,9 +157,8 @@ class komikIndoScrap {
                 const mangaUrl = $link.attr('href');
 
                 const posterRaw = $element.find('img').attr('src');
-                const title = $element.find('.bigors h4 a').text().trim();
-
-                const ratingText = $element.find('.rating i').text().trim() || null;
+                                const title = $element.find('.bigors .tt a').text().trim();
+                                const ratingText = $element.find('.rating i').text().trim() || null;
 
                 if (mangaUrl && title) {
                     const slugMatch = mangaUrl.match(/\/komik\/(.+?)\/?$/);
@@ -226,6 +225,7 @@ class komikIndoScrap {
 
             if ($mainContainer.length === 0) {
                 logger.error(`Container .listupd .film-list not found on page ${pageNum}.`);
+                logger.debug(response.data);
                 return { page: pageNum, totalPage: 1, data: [], hasNext: false };
             }
 
@@ -235,7 +235,7 @@ class komikIndoScrap {
                 const mangaUrl = $link.attr('href');
 
                 const posterRaw = $element.find('img').attr('src');
-                const title = $element.find('.bigors h4 a').text().trim();
+                const title = $element.find('.bigors .tt a').text().trim();
                 const latestChapterLink = $element.find('.lsch a');
                 const latestChapterTitle = latestChapterLink.text().trim();
                 const latestChapterUrl = latestChapterLink.attr('href');
@@ -297,7 +297,7 @@ class komikIndoScrap {
                 totalMangas: mangaList.length,
             };
         } catch (error) {
-            logger.error(`Error fetching KomikIndo list page ${page}:`, error.message);
+            logger.error(`Error fetching KomikIndo list page ${page}:`, error);
             return { page: parseInt(page), totalPage: 1, data: [], hasNext: false, error: error.message };
         }
     }
@@ -356,7 +356,7 @@ class komikIndoScrap {
                 const mangaUrl = $link.attr('href');
 
                 const posterRaw = $element.find('img').attr('src');
-                const title = $element.find('.bigors h4 a').text().trim();
+                const title = $element.find('.bigors .tt a').text().trim();
 
                 const ratingValue = $element.find('.adds .rating i').text().trim() || null;
 

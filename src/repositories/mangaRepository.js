@@ -1,5 +1,6 @@
 const prisma = require('../config/prisma.js');
 const logger = require('../utils/logger');
+const notificationService = require('../services/notificationService');
 require('dotenv').config();
 
 class MangaRepository {
@@ -24,6 +25,7 @@ class MangaRepository {
             take: limit,
             orderBy: order,
             select: {
+                id: true,
                 title: true,
                 slug: true,
                 status: true,
@@ -43,6 +45,7 @@ class MangaRepository {
             const manga = await prisma.manga.findUnique({
                 where: { slug: decodedSlug },
                 select: {
+                    id: true,
                     title: true,
                     slug: true,
                     posterUrl: true,
@@ -63,6 +66,7 @@ class MangaRepository {
                     },
                     chapters: {
                         select: {
+                            id: true,
                             title: true,
                             chapterIndex: true,
                             url: true,
@@ -170,6 +174,7 @@ class MangaRepository {
                 take: limit,
                 orderBy,
                 select: {
+                    id: true,
                     title: true,
                     slug: true,
                     posterUrl: true,
@@ -319,7 +324,52 @@ class MangaRepository {
                     }
 
                     try {
-                        await prisma.chapter.upsert({
+
+
+                        // Check if new (created just now) or use explicit check
+                        // Since upsert doesn't tell us, let's look at the result
+                        // If createdAt is very close to now AND updatedAt is also now (which is true for update)
+                        // It's hard. Let's use the explicit pre-check approach cleanly.
+                        
+                        /* 
+                           Wait, doing pre-check for every chapter in loop is expensive.
+                           Optimization: Only check if we SUSPECT it's new? 
+                           The loop iterates ALL chapters from source.
+                           Most will be old.
+                           
+                           Better approach:
+                           Fetch ALL existing chapter indexes for this manga once.
+                           Compare incoming with existing.
+                           Only Upsert & Notify the NEW ones.
+                        */
+                       
+                       // For now, let's trust the upsert but we lose the "new" distinction.
+                       // Let's implement the pre-fetch optimization in a separate step or stick to simple check.
+                       // Given the file size, let's keep it simple: Check only if we successfully upserted? No.
+                       
+                       // Let's do the fetch check. It's robust.
+                       const exists = await prisma.chapter.findFirst({
+                           where: { 
+                               mangaId: manga.id, 
+                               chapterIndex: chapterIndex 
+                            },
+                            select: { id: true }
+                       });
+
+                       if (!exists) {
+                           logger.info(`New Chapter found: ${decodedSlug} Ch ${chapterIndex}`);
+                           // Notify
+                           notificationService.notifySubscribers('manga', manga.id, {
+                               title: `Chapter Baru: ${data.title}`,
+                               message: `Chapter ${chapterIndex} dari ${data.title} baru saja rilis!`,
+                               payload: {
+                                   slug: decodedSlug,
+                                   chapterIndex: chapterIndex
+                               }
+                           }).catch(err => logger.error(`Notify Error: ${err.message}`));
+                       }
+
+                       await prisma.chapter.upsert({
                             where: {
                                 mangaId_chapterIndex: {
                                     mangaId: manga.id,
@@ -329,6 +379,7 @@ class MangaRepository {
                             update: {
                                 title: chapter.title,
                                 url: chapter.url,
+                                updatedAt: new Date(), // Important to mark as active
                             },
                             create: {
                                 chapterIndex: chapterIndex,
@@ -473,7 +524,7 @@ class MangaRepository {
                 endpoint: data.endpoint,
                 slug: data.slug,
                 status: data.status,
-                response: data.response ? JSON.stringify(data.response) : null,
+                response: data.response, 
                 scrapedAt: new Date(),
             },
         });
@@ -487,6 +538,243 @@ class MangaRepository {
                 response: data.response ? JSON.stringify(data.response) : undefined,
                 error: data.error,
             },
+        });
+    }
+    async updateMangaManual(slug, data) {
+        logger.info(`[REPO-UPDATE] Attempting to update manga with slug: '${slug}'`);
+        return await prisma.$transaction(async (tx) => {
+            // 1. Get Manga
+            const manga = await tx.manga.findUnique({ where: { slug } });
+            logger.info(`[REPO-UPDATE] Find result for '${slug}': ${manga ? `Found (${manga.id})` : 'Not Found'}`);
+            
+            if (!manga) throw new Error('Manga not found');
+
+            // 2. Update Metadata
+            const updatedManga = await tx.manga.update({
+                where: { slug },
+                data: {
+                    title: data.title,
+                    posterUrl: data.posterUrl,
+                    status: data.status,
+                    author: data.author,
+                    illustrator: data.illustrator,
+                    altTitle: data.altTitle,
+                    synopsis: data.synopsis,
+                    updatedAt: new Date(),
+                }
+            });
+
+            // 3. Sync Genres (Replace Strategy)
+            if (data.genres && Array.isArray(data.genres)) {
+                 await tx.mangaGenre.deleteMany({ where: { mangaId: manga.id } });
+                 
+                 const genreIds = [];
+                 for (const g of data.genres) {
+                    let name, genreSlug;
+                    // Handle string or object structure
+                    if (typeof g === 'string') {
+                        name = g;
+                        genreSlug = g.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+                    } else {
+                        name = g.name;
+                        genreSlug = g.slug || g.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+                    }
+
+                    // Upsert Genre
+                    let genre = await tx.genre.findUnique({ where: { slug: genreSlug } });
+                    if (!genre) {
+                        genre = await tx.genre.create({ data: { name, slug: genreSlug } });
+                    }
+                    genreIds.push(genre.id);
+                 }
+
+                 if (genreIds.length > 0) {
+                     await tx.mangaGenre.createMany({
+                         data: genreIds.map(gid => ({ mangaId: manga.id, genreId: gid })),
+                         skipDuplicates: true
+                     });
+                 }
+            }
+
+            // 4. Sync Chapters
+            if (data.chapters && Array.isArray(data.chapters)) {
+                for (const ch of data.chapters) {
+                    const chIndex = String(ch.chapterIndex).trim();
+                    await tx.chapter.upsert({
+                        where: {
+                            mangaId_chapterIndex: { mangaId: manga.id, chapterIndex: chIndex }
+                        },
+                        update: {
+                            title: ch.title || `Chapter ${chIndex}`,
+                            url: ch.url || '#',
+                            updatedAt: new Date()
+                        },
+                        create: {
+                             mangaId: manga.id,
+                             chapterIndex: chIndex,
+                             title: ch.title || `Chapter ${chIndex}`,
+                             url: ch.url || '#'
+                        }
+                    });
+                }
+            }
+
+            return updatedManga;
+        }, {
+             maxWait: 20000, // 20s
+             timeout: 30000, // 30s
+        });
+    }
+
+    async upsertChapterManual(slug, chapterData) {
+        const manga = await prisma.manga.findUnique({ where: { slug } });
+        if (!manga) throw new Error(`Manga with slug ${slug} not found`);
+
+        const chapterIndex = String(chapterData.chapterIndex).trim();
+        
+        return await prisma.$transaction(async (tx) => {
+            const chapter = await tx.chapter.upsert({
+                where: {
+                    mangaId_chapterIndex: {
+                        mangaId: manga.id,
+                        chapterIndex: chapterIndex,
+                    },
+                },
+                update: {
+                    title: chapterData.title,
+                    url: chapterData.url || '#',
+                    updatedAt: new Date(),
+                },
+                create: {
+                    mangaId: manga.id,
+                    chapterIndex: chapterIndex,
+                    title: chapterData.title,
+                    url: chapterData.url || '#',
+                },
+            });
+            
+            return chapter;
+        });
+    }
+
+    async createManga(data) {
+        return await prisma.$transaction(async (tx) => {
+            // 1. Handle Genres
+            const genreIds = [];
+            if (data.genres && Array.isArray(data.genres)) {
+                for (const genreName of data.genres) {
+                    const slug = genreName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+                    
+                    let genre = await tx.genre.findUnique({ where: { slug } });
+                    if (!genre) {
+                        genre = await tx.genre.create({
+                             data: { name: genreName, slug }
+                        });
+                    }
+                    genreIds.push(genre.id);
+                }
+            }
+
+            // 2. Create Manga
+            const manga = await tx.manga.create({
+                data: {
+                    title: data.title,
+                    slug: data.slug,
+                    altTitle: data.altTitle,
+                    posterUrl: data.posterUrl,
+                    synopsis: data.synopsis,
+                    status: data.status || 'Ongoing',
+                    rating: data.rating,
+                    author: data.author,
+                    illustrator: data.illustrator,
+                    sourceUrl: data.sourceUrl,
+                    // releaseDate: data.releaseDate ? new Date(data.releaseDate) : null, // Not in schema directly? Ah schema doesn't have releaseDate for Manga, it has createdAt/scrapedAt.
+                    
+                    chapters: data.chapters && Array.isArray(data.chapters) ? {
+                        create: data.chapters.map(ch => ({
+                            chapterIndex: String(ch.chapterIndex), // Ensure string
+                            title: ch.title || `Chapter ${ch.chapterIndex}`,
+                            url: ch.url || '#'
+                        }))
+                    } : undefined
+                }
+            });
+
+            // 3. Link Genres
+            if (genreIds.length > 0) {
+                await tx.mangaGenre.createMany({
+                    data: genreIds.map(gid => ({
+                        mangaId: manga.id,
+                        genreId: gid
+                    })),
+                    skipDuplicates: true
+                });
+            }
+
+            return manga;
+        });
+    }
+
+    async deleteChapter(mangaId, chapterIndex) {
+        return await prisma.chapter.delete({
+            where: {
+                mangaId_chapterIndex: {
+                    mangaId: mangaId,
+                    chapterIndex: chapterIndex
+                }
+            }
+        });
+    }
+
+    async deleteManga(slug) {
+        try {
+            logger.info(`[REPO-DELETE] Deleting manga with slug: '${slug}'`);
+            return await prisma.manga.delete({
+                where: { slug },
+            });
+        } catch (error) {
+            if (error.code === 'P2025') {
+                 throw new Error('Manga not found');
+            }
+            throw error;
+        }
+    }
+
+    async getMangaById(id) {
+        return await prisma.manga.findUnique({
+             where: { id },
+             select: {
+                id: true,
+                title: true,
+                slug: true,
+                posterUrl: true,
+                status: true,
+                author: true,
+                illustrator: true,
+                altTitle: true,
+                synopsis: true,
+                genres: {
+                    select: {
+                        genre: {
+                            select: {
+                                name: true,
+                                slug: true,
+                            },
+                        },
+                    },
+                },
+                chapters: {
+                    orderBy: {
+                        createdAt: 'desc' 
+                    },
+                    select: {
+                        id: true,
+                        title: true,
+                        chapterIndex: true,
+                        url: true,
+                    },
+                },
+            }
         });
     }
 }

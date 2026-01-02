@@ -1,0 +1,88 @@
+bun test v1.2.22 (6bafe260)
+
+src\tests\adminFeatures.test.js:
+[dotenv@17.2.3] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+[dotenv@17.2.3] injecting env (0) from .env -- tip: ✅ audit secrets and track compliance: https://dotenvx.com/ops
+[dotenv@17.2.3] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+[dotenv@17.2.3] injecting env (0) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+[dotenv@17.2.3] injecting env (0) from .env -- tip: ⚙️  override existing env vars with { override: true }
+Starting Setup...
+prisma:info Starting a postgresql pool with 2 connections in PgBouncer mode.
+2025-12-26 06:48:28 [[33mwarning[39m]: [SLOW QUERY] detected: 516ms {"query":"BEGIN","params":"[]","duration":516}
+[0mPOST /api/v1/auth/login [32m200[0m 189.055 ms - 382[0m
+[0mPOST /api/v1/auth/login [32m200[0m 181.740 ms - 385[0m
+[0mGET /api/v1/admin/users [32m200[0m 799.187 ms - 936[0m
+128 |             const res = await request(app)
+129 |                 .get('/api/v1/admin/users')
+130 |                 .set('Authorization', `Bearer ${adminToken}`);
+131 | 
+132 |             expect(res.status).toBe(200);
+133 |             expect(res.body.data.data).toBeInstanceOf(Array);
+                                             ^
+error: expect(received).toBeInstanceOf(expected)
+
+Expected constructor: [class Array]
+Received value: undefined
+
+      at <anonymous> (D:\Codingan\Project Iseng\Animek1\src\tests\adminFeatures.test.js:133:40)
+(fail) Admin Features Integration Tests > User Management > should list users as Admin [813.00ms]
+[0mGET /api/v1/admin/users [33m403[0m 222.542 ms - 70[0m
+(pass) Admin Features Integration Tests > User Management > should forbid Member from listing users [219.00ms]
+[0mPUT /api/v1/admin/users/613e1480-a83e-4ffb-ba5a-3acf7ebcfea5 [32m200[0m 344.720 ms - 214[0m
+Target User ID: 613e1480-a83e-4ffb-ba5a-3acf7ebcfea5 Exists: true
+(pass) Admin Features Integration Tests > User Management > should update user status (Ban) as Admin [578.00ms]
+[0mPUT /api/v1/admin/users/613e1480-a83e-4ffb-ba5a-3acf7ebcfea5 [32m200[0m 336.113 ms - 213[0m
+(pass) Admin Features Integration Tests > User Management > should update user status (Unban) as Admin [453.00ms]
+[0mPUT /api/v1/admin/users/613e1480-a83e-4ffb-ba5a-3acf7ebcfea5 [33m400[0m 221.632 ms - 117[0m
+(pass) Admin Features Integration Tests > User Management > should fail update user with invalid data (trying to change role) [234.00ms]
+2025-12-26 06:48:31 [[36minfo[39m]: User deleted successfully
+[0mDELETE /api/v1/admin/users/613e1480-a83e-4ffb-ba5a-3acf7ebcfea5 [32m200[0m 336.017 ms - 126[0m
+(pass) Admin Features Integration Tests > User Management > should delete user as Admin [453.00ms]
+[0mGET /api/v1/admin/logs [32m200[0m 340.895 ms - 5698[0m
+200 |              const res = await request(app)
+201 |                 .get('/api/v1/admin/logs')
+202 |                 .set('Authorization', `Bearer ${adminToken}`);
+203 | 
+204 |             expect(res.status).toBe(200);
+205 |             expect(res.body.data.data).toBeInstanceOf(Array);
+                                             ^
+error: expect(received).toBeInstanceOf(expected)
+
+Expected constructor: [class Array]
+Received value: undefined
+
+      at <anonymous> (D:\Codingan\Project Iseng\Animek1\src\tests\adminFeatures.test.js:205:40)
+(fail) Admin Features Integration Tests > Log Management > should retrieve logs as Admin [344.00ms]
+[0mDELETE /api/v1/admin/anime/oploverz/test-anime-deletion-123 [32m200[0m 352.840 ms - 122[0m
+(pass) Admin Features Integration Tests > Content Deletion > should delete anime as Admin [484.00ms]
+prisma:error 
+Invalid `prisma.anime.delete()` invocation:
+
+
+An operation failed because it depends on one or more records that were required but not found. No record was found for a delete.
+2025-12-26 06:48:33 [[31merror[39m]: [ADMIN-ANIME-DELETE] 
+Invalid `prisma.anime.delete()` invocation:
+
+
+An operation failed because it depends on one or more records that were required but not found. No record was found for a delete.
+[0mDELETE /api/v1/admin/anime/oploverz/test-anime-deletion-123 [33m404[0m 352.324 ms - 241[0m
+(pass) Admin Features Integration Tests > Content Deletion > should return 404 when deleting non-existent anime [360.00ms]
+[0mDELETE /api/v1/admin/manga/komikIndo/test-manga-deletion-123 [32m200[0m 351.240 ms - 122[0m
+(pass) Admin Features Integration Tests > Content Deletion > should delete manga as Admin [469.00ms]
+prisma:error 
+Invalid `prisma.manga.delete()` invocation in
+D:\Codingan\Project Iseng\Animek1\src\repositories\mangaRepository.js:548:39
+
+  545 
+  546 async deleteManga(slug) {
+  547     try {
+→ 548         return await prisma.manga.delete(
+An operation failed because it depends on one or more records that were required but not found. No record was found for a delete.
+2025-12-26 06:48:34 [[31merror[39m]: [ADMIN-MANGA-DELETE] Manga not found
+[0mDELETE /api/v1/admin/manga/komikIndo/test-manga-deletion-123 [33m404[0m 351.124 ms - 76[0m
+(pass) Admin Features Integration Tests > Content Deletion > should return 404 when deleting non-existent manga [359.00ms]
+
+ 9 pass
+ 2 fail
+ 20 expect() calls
+Ran 11 tests across 1 file. [8.45s]

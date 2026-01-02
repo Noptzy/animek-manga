@@ -63,9 +63,27 @@ exports.searchAnime = async (req, res) => {
     }
 };
 
+exports.getAnimeById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const anime = await OploverzService.getAnimeDetailById(id);
+         if (!anime) {
+            return res.status(404).json(resHandler.error('Anime not found').toJSON());
+        }
+        return res.status(200).json(resHandler.success('Successfully get anime detail by ID', anime).toJSON());
+    } catch (error) {
+        logger.error(`[OPLOVERZ-DETAIL-ID] ${error.message}`);
+         return res.status(500).json(resHandler.error('Failed to retrieve anime detail by ID').toJSON());
+    }
+};
+
 exports.getAnimeBySlug = async (req, res) => {
     try {
         const { slug } = req.params;
+
+        if (!slug || slug === 'undefined' || slug === 'null') {
+            return res.status(400).json(resHandler.error('Invalid slug provided').toJSON());
+        }
 
         const anime = await OploverzService.getAnimeDetail(slug);
 
@@ -84,8 +102,9 @@ exports.getAllAnime = async (req, res) => {
     try {
         const page = Number(req.query.page) || 1;
         const limit = Number(req.query.limit) || 10;
+        const { genre, status, type, order } = req.query;
 
-        const result = await OploverzService.getAllAnime(page, limit);
+        const result = await OploverzService.getAllAnime(page, limit, { genre, status, type, order });
 
         return res.status(200).json(resHandler.success('Successfully get all anime', result).toJSON());
     } catch (error) {
@@ -104,3 +123,4 @@ exports.getGenres = async (req, res) => {
         return res.status(500).json(resHandler.error('Failed to retrieve genres').toJSON());
     }
 };
+

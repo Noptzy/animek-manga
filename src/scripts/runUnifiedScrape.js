@@ -1,11 +1,13 @@
+console.log('[DEBUG] runUnifiedScrape.js LOADED');
+console.log('[DEBUG] CWD:', process.cwd());
 require('dotenv').config();
 const { v4: uuidv4 } = require('uuid');
 const komikIndoScrap = require('../scrap/manga/komikIndoScrap');
 const mangaRepository = require('../repositories/mangaRepository');
 const logger = require('../utils/logger');
 
-const RECENT_MANGA_SCRAP = process.env.RECENT_MANGA_SCRAP || 5;
-const MANGA_MAX_PAGES = process.env.MANGA_MAX_PAGES || 2;
+const RECENT_MANGA_SCRAP = process.env.RECENT_MANGA_SCRAP || 10000;
+const MANGA_MAX_PAGES = process.env.MANGA_MAX_PAGES || 10000    ;
 
 async function runUnifiedScrape() {
     logger.info('Starting Unified Scrape Process...');
@@ -54,7 +56,6 @@ async function checkOngoingMangaChapters() {
     }
 }
 
-
 async function scrapeRecentManga() {
     const logId = uuidv4();
     const logData = {
@@ -70,7 +71,7 @@ async function scrapeRecentManga() {
         await mangaRepository.createScrapeLog(logData);
         logger.info('Scraping recent manga...');
 
-        const recentResponse = await komikIndoScrap.getKomikIndoManga(1 ); // Page 1 aja
+        const recentResponse = await komikIndoScrap.getKomikIndoManga(RECENT_MANGA_SCRAP); // Page 1 aja
         const recentMangas = recentResponse.data || [];
         let processedCount = 0;
 
@@ -107,13 +108,15 @@ async function scrapeRecentManga() {
 
 async function scrapeAllGenres() {
     try {
-
-        const genres = await mangaRepository.getGenres(); 
+        logger.info('Fetching genre list from source...');
+        const genres = await komikIndoScrap.getGenreList(); 
         
         if (!genres || genres.length === 0) {
-            logger.warn('No genres found in database. Skipping genre scrape.');
+            logger.warn('No genres found from source. Skipping genre scrape.');
             return;
         }
+
+        logger.info(`Found ${genres.length} genres to scrape.`);
 
         for (const genre of genres) {
             await scrapeGenre(genre);
@@ -140,11 +143,25 @@ async function scrapeGenre(genre) {
         logger.info(`Scraping genre: ${genre.name} (${genre.slug})`);
 
         let totalProcessed = 0;
-        for (let page = 1; page <= MANGA_MAX_PAGES; page++) {
-            const response = await komikIndoScrap.getKomikindoMangaByFilter(page, { genre: [genre.slug] });
+        let currentPage = 1;
+        let consecutiveEmptyPages = 0;
+
+        while (true) {
+            const response = await komikIndoScrap.getKomikindoMangaByFilter(currentPage, { genre: [genre.slug] });
             const mangas = response.mangaList || [];
             
-            if (!mangas || mangas.length === 0) break;
+            if (!mangas || mangas.length === 0) {
+                consecutiveEmptyPages++;
+                logger.warning(`No manga found on page ${currentPage} for genre ${genre.name}. Consecutive empty pages: ${consecutiveEmptyPages}`);
+                if (consecutiveEmptyPages >= 3) {
+                    logger.info(`Found 3 consecutive empty pages for genre ${genre.name}. Moving to next genre.`);
+                    break;
+                }
+                currentPage++;
+                continue;
+            }
+
+            consecutiveEmptyPages = 0;
 
             for (const manga of mangas) {
                 try {
@@ -156,6 +173,12 @@ async function scrapeGenre(genre) {
                 } catch (err) {
                     logger.error(`Failed to process manga ${manga.slug} in genre ${genre.name}: ${err.message}`);
                 }
+            }
+
+            if (response.hasNext) {
+                currentPage = response.next_page_num || (currentPage + 1);
+            } else {
+                break; 
             }
         }
 
@@ -173,4 +196,14 @@ async function scrapeGenre(genre) {
     }
 }
 
-runUnifiedScrape();
+const args = process.argv.slice(2);
+
+if (args.includes('--genres')) {
+    scrapeAllGenres().then(() => {
+        logger.info('Genre scraping completed.');
+        process.exit(0);
+    });
+} else {
+    runUnifiedScrape();
+}
+

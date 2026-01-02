@@ -1,3 +1,4 @@
+const redis = require('../config/RedisUpstash');
 const resHandler = require('../utils/resHandler');
 const { verifyToken } = require('../utils/jwt');
 const userRepository = require('../repositories/userRepository');
@@ -15,6 +16,17 @@ module.exports = async function auth(req, res, next) {
       return res.status(401).json(resHandler.error('Unauthorized').toJSON());
     }
 
+    // STATEFUL CHECK: Verify if this Access Token is the one stored in Redis
+    const storedAccessToken = await redis.get(`access_token:${decoded.id}`);
+    
+    if (!storedAccessToken || storedAccessToken !== token) {
+        // This means either:
+        // 1. Session expired
+        // 2. Token rotated (fresh login/refresh occurred elsewhere) -> OLD TOKEN INVALIDATED
+        // 3. User logged out
+        return res.status(401).json(resHandler.error('Session Expired or Revoked. Please Login Again.').toJSON());
+    }
+
     const user = await userRepository.profile(decoded.id);
     const lastLogoutAt = user && user.metadata && user.metadata.lastLogoutAt;
     if (lastLogoutAt) {
@@ -29,7 +41,7 @@ module.exports = async function auth(req, res, next) {
       return res.status(403).json(resHandler.error('Your Account Is Not Active Anymore').toJSON());
     }
 
-    req.user = { id: decoded.id, name: decoded.name, email: decoded.email };
+    req.user = user;
     next();
   } catch (e) {
     return res.status(401).json(resHandler.error('Unauthorized').toJSON());

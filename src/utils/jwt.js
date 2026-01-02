@@ -2,14 +2,15 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const JWT_SECRET = process.env.JWT_SECRET;
-const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN; 
-const REFRESH_EXPIRES_IN = process.env.REFRESH_EXPIRES_IN || '7d';
+const JWT_EXPIRES_IN = '1d'; 
+const REFRESH_EXPIRES_IN = '7d';
 
 const generateToken = (payload, type = 'at') => {
     if (typeof payload !== 'object' || payload === null || Array.isArray(payload)) {
         throw new Error('JWT payload must be a plain object');
     }
-    return jwt.sign(payload, JWT_SECRET, { expiresIn: type === 'at' ? JWT_EXPIRES_IN : REFRESH_EXPIRES_IN });
+    const payloadWithType = { ...payload, type: type === 'at' ? 'access' : 'refresh' };
+    return jwt.sign(payloadWithType, JWT_SECRET, { expiresIn: type === 'at' ? JWT_EXPIRES_IN : REFRESH_EXPIRES_IN });
 };
 
 const verifyToken = (token) => {
@@ -23,8 +24,17 @@ const verifyToken = (token) => {
 const refreshToken = (token) => {
     try {
         const decoded = jwt.verify(token, JWT_SECRET);
-        const { iat, exp, ...userData } = decoded;
-        return jwt.sign(userData, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
+        
+        if (decoded.type !== 'refresh') {
+            return null; // Reject if not a refresh token
+        }
+
+        const { iat, exp, type, ...userData } = decoded;
+        // Issue a new access token AND a new refresh token (Rotation)
+        return {
+            accessToken: generateToken(userData, 'at'),
+            refreshToken: generateToken(userData, 'rt')
+        };
     } catch (error) {
         return null;
     }

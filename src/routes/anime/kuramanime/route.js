@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const kuramanimeController = require('../../../controllers/anime/kuramanimeController');
 
-// Routes for Server 1 (Kuramanime)
+
 router.get('/1/stats', kuramanimeController.getAnimeStats);
 router.get('/1/search', kuramanimeController.searchAnime);
 router.get('/1/ongoing', kuramanimeController.getOngoingAnime);

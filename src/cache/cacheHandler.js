@@ -39,6 +39,18 @@ class CacheHandler {
             logger.error(`[CACHE DEL ERROR] ${key}`, error);
         }
     }
+
+    async deletePattern(pattern) {
+        try {
+            const keys = await redis.keys(pattern);
+            if (keys.length > 0) {
+                await redis.del(keys);
+                logger.debug(`[CACHE PATTERN INVALIDATED] ${pattern} (${keys.length} keys)`);
+            }
+        } catch (error) {
+            logger.error(`[CACHE PATTERN DEL ERROR] ${pattern}`, error);
+        }
+    }
 }
 
 module.exports = new CacheHandler();

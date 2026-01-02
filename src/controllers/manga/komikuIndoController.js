@@ -4,6 +4,20 @@ const mangaService = require('../../services/mangaService');
 const logger = require('../../utils/logger');
 const resHandler = require('../../utils/resHandler');
 
+exports.getMangaById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const manga = await mangaService.getMangaDetailById(id);
+        if (!manga) {
+             return res.status(404).json(resHandler.error('Manga not found').toJSON());
+        }
+        return res.status(200).json(resHandler.success('Manga detail by ID', manga).toJSON());
+    } catch (error) {
+         logger.error(`[KOMIKINDO-DETAIL-ID] ${error.message}`);
+         return res.status(500).json(resHandler.error(error.message).toJSON());
+    }
+};
+
 exports.getMangaDetailBySlugSWR = async (req, res) => {
     const { slug } = req.params;
     const ONE_HOUR_IN_MS = 3600 * 1000;
@@ -162,3 +176,4 @@ exports.getGenres = async (req, res) => {
         return res.status(500).json(resHandler.error('Internal Server Error').toJSON());
     }
 };
+

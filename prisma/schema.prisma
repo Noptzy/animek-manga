@@ -23,6 +23,7 @@ model User {
   updatedAt     DateTime?      @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
   favorites     Favorite[]
   notifications Notification[]
+  history       UserHistory[]
   role          Role           @relation(fields: [roleId], references: [id])
 
   @@map("users")
@@ -54,6 +55,7 @@ model Manga {
   updatedAt   DateTime?    @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
   chapters    Chapter[]
   favorites   Favorite[]
+  history     UserHistory[]
   genres      MangaGenre[]
 
   @@index([createdAt])
@@ -91,6 +93,7 @@ model Chapter {
   createdAt    DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
   updatedAt    DateTime? @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
   manga        Manga?    @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  history      UserHistory[]
 
   @@unique([mangaId, chapterIndex])
   @@map("chapters")
@@ -129,11 +132,17 @@ model Anime {
   createdAt     DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
   updatedAt     DateTime? @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
 
+  history           UserHistory[]
   animeSources      AnimeSource[]
   animeServerGenres AnimeServerGenre[]
   episodes          Episode[]
   favorites         Favorite[]
 
+  @@index([updatedAt])
+  @@index([createdAt])
+  @@index([slug])
+  @@index([title(ops: raw("gin_trgm_ops"))], type: Gin, name: "anime_title_search_idx")
+  @@index([altTitle(ops: raw("gin_trgm_ops"))], type: Gin, name: "anime_alttitle_search_idx")
   @@map("anime")
 }
 
@@ -147,6 +156,9 @@ model AnimeSource {
   anime  Anime  @relation(fields: [animeId], references: [id], onDelete: Cascade)
   server Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
 
+  @@index([serverId])
+  @@index([animeId])
+  @@index([serverId, animeId])
   @@map("anime_sources")
 }
 
@@ -187,6 +199,7 @@ model Episode {
   anime     Anime             @relation(fields: [animeId], references: [id], onDelete: Cascade)
   streams   EpisodeStream[]
   downloads EpisodeDownload[]
+  history   UserHistory[]
 
   @@unique([animeId, episodeNumber], map: "unique_episode_per_anime")
   @@index([animeId], map: "idx_episodes_anime")
@@ -197,8 +210,8 @@ model EpisodeStream {
   id        String    @id @default(uuid()) @db.Uuid
   episodeId String    @map("episode_id") @db.Uuid
   serverId  Int?      @map("server_id")
-  host  String?   @db.VarChar(50)
-  quality   String?   @default("SD") @db.VarChar(100)
+  host      String?
+  quality   String?   @default("SD")
   url       String
   createdAt DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
 
@@ -212,9 +225,9 @@ model EpisodeStream {
 model EpisodeDownload {
   id        String    @id @default(uuid()) @db.Uuid
   episodeId String    @map("episode_id") @db.Uuid
-  format    String    @db.VarChar(50)
-  resolutions   String    @db.VarChar(50)
-  host      String    @db.VarChar(50)
+  format    String
+  resolutions   String
+  host      String
   url       String
   createdAt DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
   updatedAt DateTime? @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
@@ -275,4 +288,31 @@ model AuditLog {
   createdAt  DateTime @default(now()) @map("created_at") @db.Timestamp(0)
 
   @@map("audit_logs")
+}
+
+model UserHistory {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @map("user_id") @db.Uuid
+  
+  animeId   String?  @map("anime_id") @db.Uuid
+  episodeId String?  @map("episode_id") @db.Uuid
+  
+  mangaId   String?  @map("manga_id") @db.Uuid
+  chapterId String?  @map("chapter_id") @db.Uuid
+
+  watchedAt     DateTime @default(now()) @map("watched_at") @db.Timestamp(0)
+  progress      Int?     @default(0) // Seconds for anime, Page for manga
+  totalDuration Int?     @map("total_duration") @default(0) // Total seconds or Total pages
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  anime     Anime?   @relation(fields: [animeId], references: [id], onDelete: Cascade)
+  episode   Episode? @relation(fields: [episodeId], references: [id], onDelete: Cascade)
+  manga     Manga?   @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  chapter   Chapter? @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, episodeId])
+  @@unique([userId, chapterId])
+  @@index([userId])
+  @@index([watchedAt])
+  @@map("user_histories")
 }
