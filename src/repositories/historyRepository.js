@@ -55,7 +55,7 @@ class HistoryRepository {
                     anime: type === 'anime' || !type ? { select: { id: true, title: true, slug: true, posterUrl: true } } : false,
                     episode: type === 'anime' || !type ? { select: { id: true, episodeNumber: true, title: true } } : false,
                     manga: type === 'manga' || !type ? { select: { id: true, title: true, slug: true, posterUrl: true } } : false,
-                    chapter: type === 'manga' || !type ? { select: { id: true, chapterIndex: true, title: true } } : false,
+                    chapter: type === 'manga' || !type ? { select: { id: true, chapterIndex: true, title: true, url: true } } : false,
                 },
                 distinct: distinct, 
                 skip,

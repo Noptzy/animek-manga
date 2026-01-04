@@ -567,7 +567,7 @@ class OploverzRepository {
                     rating: data.rating,
                     score: data.score,
                     studio: data.studio,
-                    totalEpisodes: data.totalEpisodes,
+                    totalEpisodes: isNaN(parseInt(data.totalEpisodes)) ? null : parseInt(data.totalEpisodes),
                     
                     // Creates relations
                     animeSources: {
@@ -705,7 +705,7 @@ class OploverzRepository {
                     studio: data.studio,
                     season: data.season,
                     duration: data.duration,
-                    totalEpisodes: data.totalEpisodes,
+                    totalEpisodes: isNaN(parseInt(data.totalEpisodes)) ? null : parseInt(data.totalEpisodes),
                     updatedAt: new Date(),
                 }
             });
@@ -932,6 +932,17 @@ class OploverzRepository {
                 }
             }
             
+            
+            // 4. Update Auto Total Episodes
+            const totalEpisodes = await tx.episode.count({
+                where: { animeId: anime.id }
+            });
+            
+            await tx.anime.update({
+                where: { id: anime.id },
+                data: { totalEpisodes: totalEpisodes }
+            });
+
             return episode;
         });
     }

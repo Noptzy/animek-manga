@@ -9,7 +9,7 @@ class InteractionService {
     _getKeys(userId) {
         return {
             FAVORITES: (type, page, limit) => `user:${userId}:favorites:${type || 'all'}:${page}:${limit}`,
-            HISTORY: (type, page, limit) => `user:${userId}:history:${type || 'all'}:${page}:${limit}`,
+            HISTORY: (type, page, limit) => `user:${userId}:history:${type || 'all'}:${page}:${limit}:v2`,
             STATS: () => `user:${userId}:stats`,
             FAVORITES_PATTERN: `user:${userId}:favorites:*`,
             HISTORY_PATTERN: `user:${userId}:history:*`,
